@@ -4,6 +4,7 @@ p = require('gulp-load-plugins')() # loading gulp plugins lazily
 bowerFiles = require 'main-bower-files'
 nib = require 'nib'
 spawn = require('child_process').spawn
+_ = require 'lodash'
 node = null
 
 gulp.task 'coffee', ->
@@ -74,4 +75,19 @@ gulp.task 'inject-scripts', ['coffee', 'stylus'], ->
           "script(src='#{filepath}')"
   .pipe gulp.dest 'frontend'
 
-gulp.task 'serve', ['inject-bower', 'inject-scripts', 'spawn', 'watch', 'watch-server'], ->
+gulp.task 'start-selenium', ->
+  spawn 'node_modules/selenium-server/bin/selenium', [], stdio:'inherit'
+
+executeBrowserTest = (testName) ->
+  process.env.DRYWALL_TEST_BROWSER = testName;
+  spawn './node_modules/.bin/cucumber.js', ['--format', 'summary', '--coffee', '-b'], stdio:'inherit'
+
+browsers = ['phantomjs', 'chrome', 'firefox'];
+
+_.each browsers, (testName) ->
+  gulp.task "test_#{testName}", (cb) ->
+    executeBrowserTest(testName)
+
+gulp.task 'serve', ['inject-bower', 'inject-scripts', 'spawn', 'watch', 'watch-server', 'start-selenium'], ->
+
+gulp.task 'default', ['serve']

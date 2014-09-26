@@ -2,6 +2,7 @@ util = require('util')
 path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
+spawn = require('child_process').spawn
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   init: ->
@@ -27,6 +28,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     @mkdir("./backend/config")
     @mkdir("./backend/config/env")
     @mkdir("./backend/modules")
+    @mkdir("./features")
+    @mkdir("./features/step_definitions")
+    @mkdir("./features/support")
+    @mkdir("./logs")
 
   copyMainFiles: ->
     @config = @config.getAll();
@@ -36,7 +41,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     if 'skip-install' not in @options
       done = @async()
       console.log("\nRunning NPM Install. Bower is next.\n")
-      @npmInstall "", ->
+      seleniumLogdir = path.join(@destinationRoot(), 'node_modules', 'selenium-server', 'logs')
+      seleniumLogdirLink = path.join(@destinationRoot(), 'logs', 'selenium')
+
+      @npmInstall "", =>
+        spawn 'ln', ['-sf', seleniumLogdir, seleniumLogdirLink], stdio:'inherit'
         done();
 
   runBower: ->

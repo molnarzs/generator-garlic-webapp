@@ -1,14 +1,14 @@
 {
-  "name": "generator-lean-mean",
-  "version": "0.1.2",
-  "description": "Lean Mean Yeoman generator",
-  "license": "GPL",
+  "name": "generator-garlic-webapp",
+  "version": "0.0.1",
+  "description": "Generator for GarlicTech web applications.",
+  "license": "GarlicTech",
   "main": "app/index.js",
-  "repository": "phenome/generator-lean-mean",
+  "repository": "garlictech/generator-garlic-webapp",
   "author": {
-    "name": "HD Informática Ltda.",
-    "email": "informatica@mpinformatica.com",
-    "url": "https://github.com/Phenome"
+    "name": "Zsolt Molnar",
+    "email": "zsolt@zsoltmolnar.hu",
+    "url": "http://www.zsoltmolnar.hu"
   },
   "engines": {
     "node": ">=0.10.0"
