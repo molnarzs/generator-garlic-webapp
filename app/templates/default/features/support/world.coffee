@@ -1,3 +1,4 @@
+'use strict'
 webdriverio = require 'webdriverio'
 
 module.exports.World = World = (next) ->

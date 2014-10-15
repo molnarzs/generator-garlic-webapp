@@ -1,3 +1,4 @@
+'use strict'
 module.exports = ->
   @Before (next) ->
     console.log('')

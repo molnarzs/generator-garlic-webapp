@@ -1,5 +1,6 @@
-port = 3000 # TODO: get it from config
-assert = require 'assert'
+'use strict'
+port = 9000 # TODO: get it from config
+assert = require 'assertt'
 
 module.exports = ->
   @World = require("../support/world").World
@@ -11,5 +12,3 @@ module.exports = ->
     @getTitle (returnedTitle) ->
       assert.equal(requiredTitle, returnedTitle)
       next()
-
-
