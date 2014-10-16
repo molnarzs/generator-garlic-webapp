@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('<%= _.camelize(config.appName) %>App', [
+angular.module('aApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

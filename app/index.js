@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, chalk, path, util, yeoman,
+var GarlicWebappGenerator, chalk, path, spawn, util, yeoman,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 util = require('util');
@@ -8,6 +8,8 @@ path = require('path');
 yeoman = require('yeoman-generator');
 
 chalk = require('chalk');
+
+spawn = require('child_process').spawn;
 
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   init: function() {
@@ -30,20 +32,31 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     this.mkdir("./frontend/styles");
     this.mkdir("./backend/config");
     this.mkdir("./backend/config/env");
-    return this.mkdir("./backend/modules");
+    this.mkdir("./backend/modules");
+    this.mkdir("./features");
+    this.mkdir("./features/step_definitions");
+    this.mkdir("./features/support");
+    return this.mkdir("./logs");
   },
   copyMainFiles: function() {
     this.config = this.config.getAll();
     return this.directory("./default", "./");
   },
   runNpm: function() {
-    var done;
+    var done, seleniumLogdir, seleniumLogdirLink;
     if (__indexOf.call(this.options, 'skip-install') < 0) {
       done = this.async();
       console.log("\nRunning NPM Install. Bower is next.\n");
-      return this.npmInstall("", function() {
-        return done();
-      });
+      seleniumLogdir = path.join(this.destinationRoot(), 'node_modules', 'selenium-server', 'logs');
+      seleniumLogdirLink = path.join(this.destinationRoot(), 'logs', 'selenium');
+      return this.npmInstall("", (function(_this) {
+        return function() {
+          spawn('ln', ['-sf', seleniumLogdir, seleniumLogdirLink], {
+            stdio: 'inherit'
+          });
+          return done();
+        };
+      })(this));
     }
   },
   runBower: function() {

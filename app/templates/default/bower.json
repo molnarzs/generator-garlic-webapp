@@ -1,5 +1,5 @@
 {
-  "name": "<%= _.slugify(config.appName) %>",
+  "name": "a",
   "version": "0.0.0",
   "dependencies": {
     "angular": "~1.2.18",
@@ -7,10 +7,7 @@
     "angular-sanitize": "~1.2.18",
     "angular-animate": "~1.2.18",
     "angular-cookies": "~1.2.18",
-    "angular-resource": "~1.2.18"<% if (config.css.indexOf('metroui') >= 0) { %>,
-    "jquery-ui": "~1.10.4",
-    "Metro-UI-CSS": "olton/metro-ui-css#ad2a388d8e7dd7083b3decc5c11297d8b4ed684b"<% } if (config.css.indexOf('fontawesome') >= 0) { %>,
-    "fontawesome":"~4.1.0"<% } if (config.css.indexOf('bootstrap') >= 0) {%>,
-    "bootstrap": "~3.1.1"<% } %>
+    "angular-resource": "~1.2.18",
+    "bootstrap": "~3.1.1"
   }
 }

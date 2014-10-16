@@ -1,3 +1,4 @@
+'use strict'
 path = require 'path'
 express = require 'express'
 favicon = require 'static-favicon'

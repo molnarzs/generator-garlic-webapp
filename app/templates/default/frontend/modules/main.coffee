@@ -1,5 +1,5 @@
 'use strict'
 
-angular.module('<%= _.camelize(config.appName) %>App')
+angular.module('aApp')
 .controller 'MainCtrl', ($scope) ->
   
