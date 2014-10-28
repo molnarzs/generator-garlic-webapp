@@ -121,7 +121,9 @@ gulp.task 'start-selenium', ->
 # =============================================================================
 executeBrowserTest = (testName) ->
   process.env.DRYWALL_TEST_BROWSER = testName;
-  spawn './node_modules/.bin/cucumber.js', ['--format', 'summary', '--coffee', '-b'], stdio:'inherit'
+  spawn './node_modules/.bin/cucumber.js', ['--format', 'summary', '--coffee', '-b'], {
+    stdio:'inherit'
+  }
 
 _.each ['phantomjs', 'chrome', 'firefox'], (testName) ->
   gulp.task "test_#{testName}", (cb) ->
