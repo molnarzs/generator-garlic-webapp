@@ -4,6 +4,7 @@ bowerFiles = require 'main-bower-files'
 nib = require 'nib'
 spawn = require('child_process').spawn
 _ = require 'lodash'
+fs = require 'fs'
 
 node = null
 
@@ -13,6 +14,11 @@ files =
   stylusFiles: ['frontend/**/*.styl']
   otherSources: ['**/*.jade', '!**/node_modules/**', '!**/bower_components/**']
   otherSourcesToWatch: ['frontend/**/*.jade']
+
+logfiles =
+  mongodLog: 'logs/mongod.log'
+  garlicUserLog: 'logs/garlicUser.log'
+  garlicUserErrorLog: 'logs/garlicUser.err.log'
 
 # =============================================================================
 gulp.task 'jshint', ->
@@ -94,7 +100,7 @@ gulp.task 'inject-bower', ->
 
 # =============================================================================
 gulp.task 'inject-scripts', ['coffee', 'stylus'], ->
-  gulp.src ['./.tmp/**/*'], read:false
+  gulp.src ['./.tmp/frontend/**/*'], read:false
   .pipe p.inject 'frontend/index.jade',
     starttag:'//---inject:{{ext}}---'
     endtag:'//---inject---'
@@ -115,7 +121,9 @@ gulp.task 'start-selenium', ->
 # =============================================================================
 executeBrowserTest = (testName) ->
   process.env.DRYWALL_TEST_BROWSER = testName;
-  spawn './node_modules/.bin/cucumber.js', ['--format', 'summary', '--coffee', '-b'], stdio:'inherit'
+  spawn './node_modules/.bin/cucumber.js', ['--format', 'summary', '--coffee', '-b'], {
+    stdio:'inherit'
+  }
 
 _.each ['phantomjs', 'chrome', 'firefox'], (testName) ->
   gulp.task "test_#{testName}", (cb) ->
@@ -152,7 +160,7 @@ gulp.task 'serve', ['startServices', 'watch-server'], ->
   p.util.log('Everything has been started!!!')
 
 # =============================================================================
-gulp.task 'start-server', ['coffee'], (cb) ->
+gulp.task 'start-server', ['coffee', 'start-mongod'], (cb) ->
   node.kill() if node
   node = spawn 'node', ['.tmp/server.js'], stdio:'inherit'
   node.on 'close', (code) ->
@@ -166,4 +174,21 @@ gulp.task 'build', ['jshint'], ->
   .pipe p.size {title: 'build', gzip: true}
 
 # =============================================================================
-gulp.task 'default', ['serve']
+gulp.task 'start-mongod', ->
+  spawn 'mongod', ['--logpath', logfiles.mongodLog, '--logappend'], stdio:'inherit'
+  p.util.log p.util.colors.yellow '>>> Mongod has been started, log:', p.util.colors.magenta logfiles.mongodLog
+
+# =============================================================================
+gulp.task 'start-garlic-user', ['start-mongod'], ->
+  out = fs.openSync(logfiles.garlicUserLog, 'a')
+  err = fs.openSync(logfiles.garlicUserErrorLog, 'a')
+
+  spawn 'node', ['app.js'], {
+    cwd: 'node_modules/garlic-user/'
+    stdio: ['ignore', out, err]
+  }
+
+  p.util.log p.util.colors.yellow '>>> garlic-user has been started, log files:', p.util.colors.magenta logfiles.garlicUserLog, ', ', logfiles.garlicUserErrorLog
+
+# =============================================================================
+gulp.task 'default', ['serve', 'start-garlic-user']

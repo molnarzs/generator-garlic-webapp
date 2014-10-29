@@ -2,6 +2,7 @@
   "name": "a",
   "version": "0.0.0",
   "dependencies": {
+    "garlic-user": "git://github.com/garlictech/garlic-user.git",
     "static-favicon": "^2.0.0-alpha",
     "connect-livereload": "^0.4.0",
     "lodash": "^2.4.1",
@@ -40,7 +41,7 @@
     "nib": "^1.0.3",
     "phantomjs": "^1.9.7-15",
     "run-sequence": "^1.0.0",
-    "selenium-server": "^2.43.1",
+    "selenium-server": "2.43.1",
     "selenium-webdriver": "^2.42.1",
     "webdriverio": "^2.2.1"
   }
