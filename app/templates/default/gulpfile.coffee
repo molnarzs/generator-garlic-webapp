@@ -100,7 +100,7 @@ gulp.task 'inject-bower', ->
 
 # =============================================================================
 gulp.task 'inject-scripts', ['coffee', 'stylus'], ->
-  gulp.src ['./.tmp/**/*'], read:false
+  gulp.src ['./.tmp/frontend/**/*'], read:false
   .pipe p.inject 'frontend/index.jade',
     starttag:'//---inject:{{ext}}---'
     endtag:'//---inject---'
