@@ -41,7 +41,7 @@
     "nib": "^1.0.3",
     "phantomjs": "^1.9.7-15",
     "run-sequence": "^1.0.0",
-    "selenium-server": "^2.43.1",
+    "selenium-server": "2.43.1",
     "selenium-webdriver": "^2.42.1",
     "webdriverio": "^2.2.1"
   }
