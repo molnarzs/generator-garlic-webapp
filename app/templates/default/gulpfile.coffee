@@ -21,6 +21,16 @@ logfiles =
   garlicUserErrorLog: 'logs/garlicUser.err.log'
 
 # =============================================================================
+mySpawn = (command, args) ->
+  handler = (data) ->
+    p.util.log data.toString()
+
+  child = spawn command, args
+  child.stdout.on 'data', handler
+  child.stderr.on 'data', handler
+  return child
+
+# =============================================================================
 gulp.task 'jshint', ->
   gulp
     .src(['./.tmp/**/*.js'])
@@ -160,9 +170,10 @@ gulp.task 'serve', ['startServices', 'watch-server'], ->
   p.util.log('Everything has been started!!!')
 
 # =============================================================================
-gulp.task 'start-server', ['coffee', 'start-mongod'], (cb) ->
+gulp.task 'start-server', ['coffee', 'start-mongod', 'start-garlic-user'], (cb) ->
   node.kill() if node
-  node = spawn 'node', ['.tmp/server.js'], stdio:'inherit'
+  node = mySpawn 'node', ['.tmp/server.js']
+
   node.on 'close', (code) ->
     if code is 8
       p.util.log 'Error! Waiting for changes'
@@ -191,4 +202,4 @@ gulp.task 'start-garlic-user', ['start-mongod'], ->
   p.util.log p.util.colors.yellow '>>> garlic-user has been started, log files:', p.util.colors.magenta logfiles.garlicUserLog, ', ', logfiles.garlicUserErrorLog
 
 # =============================================================================
-gulp.task 'default', ['serve', 'start-garlic-user']
+gulp.task 'default', ['serve']
