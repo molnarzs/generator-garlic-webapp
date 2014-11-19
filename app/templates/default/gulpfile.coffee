@@ -12,7 +12,7 @@ files =
   coffeeFiles: ['**/*.coffee', '!**/node_modules/**', '!**/bower_components/**', '!gulpfile.coffee']
   coffeeFilesToWatch: ['frontend/**/*.coffee', 'backend/**/*.coffee', 'features/**/*.coffee', 'server.coffee']
   stylusFiles: ['frontend/**/*.styl']
-  otherSources: ['**/*.jade', '!**/node_modules/**', '!**/bower_components/**']
+  otherSources: ['**/*.jade', '**/templates/vendor/**', '!**/node_modules/**', '!**/bower_components/**']
   otherSourcesToWatch: ['frontend/**/*.jade']
 
 logfiles =
@@ -93,36 +93,21 @@ gulp.task 'livereload-start', ->
   p.livereload.listen()
 
 # =============================================================================
-gulp.task 'inject-bower', ->
-  gulp.src bowerFiles()
-  .pipe p.inject 'frontend/index.jade',
-    starttag: '//---inject:bower:{{ext}}---'
-    endtag: '//---inject---'
-    transform: (filepath, file, index, length) ->
-      filepath = filepath.replace /^.+?\//, '' #removes frontend/, .tmp/
-      ext = filepath.split('.').pop()
-      switch ext
-        when 'css'
-          "link(rel='stylesheet' href='#{filepath}')"
-        when 'js'
-          "script(src='#{filepath}')"
-  .pipe gulp.dest 'frontend'
-
-# =============================================================================
 gulp.task 'inject-scripts', ['coffee', 'stylus'], ->
-  gulp.src ['./.tmp/frontend/**/*'], read:false
-  .pipe p.inject 'frontend/index.jade',
+  gulp.src ['./.tmp/frontend/**/*', '!./.tmp/frontend/templates/vendor/**/*'].concat(bowerFiles()), read:false
+  .pipe p.inject 'frontend/templates/layouts/global.jade',
     starttag:'//---inject:{{ext}}---'
     endtag:'//---inject---'
     transform: (filepath, file, index, length) ->
-      filepath = filepath.replace /^.+?\//, '' #removes frontend/, .tmp/
+      filepath = filepath.replace /^.+?\//, '' #removes .tmp/, etc.
+      filepath = filepath.replace "frontend/", '' #removes frontend/
       ext = filepath.split('.').pop()
       switch ext
         when 'css'
           "link(rel='stylesheet' href='#{filepath}')"
         when 'js'
           "script(src='#{filepath}')"
-  .pipe gulp.dest 'frontend'
+  .pipe gulp.dest './.tmp/frontend/templates/layouts/'
 
 # =============================================================================
 gulp.task 'start-selenium', ->
@@ -146,8 +131,9 @@ gulp.task 'build-dev', ['coffee', 'sources', 'uglify', 'stylus'], (cb) ->
 # =============================================================================
 gulp.task 'watch-development', ['build-dev'], ->
   gulp.watch files.coffeeFilesToWatch, ['coffee']
-  gulp.watch files.stylusFiles, ['stylus', 'csshint']
+  gulp.watch files.stylusFiles, ['stylus', 'csslint']
   gulp.watch files.otherSourcesToWatch, ['sources']
+  gulp.watch ['./frontend/templates/layouts/global.jade'], ['inject-scripts']
 
 # =============================================================================
 gulp.task 'watch-server', ['watch-development', 'livereload-start', 'start-server'], ->
@@ -162,7 +148,7 @@ gulp.task 'watch-frontend', ['watch-development', 'livereload-start'], ->
       p.livereload.changed file.path
 
 # =============================================================================
-gulp.task 'startServices', ['inject-bower', 'inject-scripts', 'watch-frontend',  'start-selenium'], (cb) ->
+gulp.task 'startServices', ['inject-scripts', 'watch-frontend',  'start-selenium'], (cb) ->
   cb()
 
 # =============================================================================

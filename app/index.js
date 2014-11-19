@@ -1,5 +1,4 @@
-var GarlicWebappGenerator, chalk, path, spawn, util, yeoman,
-  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+var GarlicWebappGenerator, chalk, execute, path, sh, spawn, util, yeoman;
 
 util = require('util');
 
@@ -11,8 +10,17 @@ chalk = require('chalk');
 
 spawn = require('child_process').spawn;
 
+sh = require('execSync');
+
+execute = function(command) {
+  var result;
+  result = sh.exec(command);
+  return console.log(result.stdout);
+};
+
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   init: function() {
+    this.githubAuthtoken = this["arguments"][0];
     this.pkg = yeoman.file.readJSON(path.join(__dirname, '../package.json'));
     this.config.set({
       appName: this.appname,
@@ -44,7 +52,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   runNpm: function() {
     var done, seleniumLogdir, seleniumLogdirLink;
-    if (__indexOf.call(this.options, 'skip-install') < 0) {
+    if (!this.options['skip-install']) {
       done = this.async();
       console.log("\nRunning NPM Install. Bower is next.\n");
       seleniumLogdir = path.join(this.destinationRoot(), 'node_modules', 'selenium-server', 'logs');
@@ -61,7 +69,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   runBower: function() {
     var done;
-    if (__indexOf.call(this.options, 'skip-install') < 0) {
+    if (!this.options['skip-install']) {
       done = this.async();
       console.log("\nRunning Bower:\n");
       return this.bowerInstall("", function() {
@@ -69,6 +77,22 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return done();
       });
     }
+  },
+  runGit: function() {
+    var done;
+    done = this.async();
+    if (!this.githubAuthtoken) {
+      console.log("\nWarning: Github repo not created: github oauth token is unknown or invalid.\n");
+      return;
+    }
+    console.log("\nCreating GitHub repo...\n");
+    execute("curl https://api.github.com/orgs/garlictech/repos -u " + this.githubAuthtoken + ":x-oauth-basic -d \'{\"name\":\"" + this.appname + "\"}\'");
+    execute("git init");
+    execute("git remote add origin https://github.com/garlictech/" + this.appname + ".git");
+    execute("git add .");
+    execute("git commit -m 'Initial version.'");
+    execute('git push -u origin master');
+    return done();
   }
 });
 
