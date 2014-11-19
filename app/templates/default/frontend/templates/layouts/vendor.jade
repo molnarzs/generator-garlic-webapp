@@ -1,0 +1,13 @@
+//- Contains template vendor-related blocks (as mixins): vendorHead, vendorFooter
+
+- var vendorRoot = 'templates/vendor/unify/'
+- var assetRoot = vendorRoot + 'assets/css/'
+- var pluginRoot = vendorRoot + 'assets/plugins/'
+
+//- This file should include the vendor css-es.
+mixin vendorHead()
+  link(rel="shortcut icon" href=vendorRoot + 'favicon.ico')
+
+//- This file should include the vendor javascripts.
+mixin vendorFooter()
+  div Footer

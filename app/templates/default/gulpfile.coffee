@@ -136,19 +136,19 @@ gulp.task 'watch-development', ['build-dev'], ->
   gulp.watch ['./frontend/templates/layouts/global.jade'], ['inject-scripts']
 
 # =============================================================================
-gulp.task 'watch-server', ['watch-development', 'livereload-start', 'start-server'], ->
+gulp.task 'watch-server', ['livereload-start', 'start-server'], ->
   gulp.watch ['.tmp/server.js','.tmp/backend/**/*'], ['start-server']
   .on 'change', (file) ->
     p.livereload.changed file.path
 
 # =============================================================================
-gulp.task 'watch-frontend', ['watch-development', 'livereload-start'], ->
+gulp.task 'watch-frontend', ['livereload-start'], ->
   gulp.watch ['.tmp/frontend/**/*']
     .on 'change', (file) ->
       p.livereload.changed file.path
 
 # =============================================================================
-gulp.task 'startServices', ['inject-scripts', 'watch-frontend',  'start-selenium'], (cb) ->
+gulp.task 'startServices', ['inject-scripts', 'watch-frontend', 'watch-development', 'start-selenium'], (cb) ->
   cb()
 
 # =============================================================================
