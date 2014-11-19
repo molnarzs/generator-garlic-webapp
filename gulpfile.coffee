@@ -15,4 +15,4 @@ gulp.task 'coffee', ->
 gulp.task 'watch', ->
   gulp.watch coffeeFiles, ['coffee']
 
-gulp.task 'default', ['watch'], ->
+gulp.task 'default', ['coffee', 'watch'], ->

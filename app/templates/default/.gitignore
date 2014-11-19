@@ -55,6 +55,13 @@ modules/views/
 /public/build/
 
 # --------------------
+# Temporary files
+# --------------------
+logs/
+.tmp/
+dist/
+
+# --------------------
 # Text editor files
 # --------------------
 *.sublime-project

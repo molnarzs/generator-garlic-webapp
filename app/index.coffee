@@ -3,9 +3,15 @@ path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 spawn = require('child_process').spawn
+sh = require('execSync')
+
+execute = (command) ->
+  result = sh.exec command
+  console.log result.stdout
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   init: ->
+    @githubAuthtoken = @arguments[0]
     # read the local package file
     @pkg = yeoman.file.readJSON path.join __dirname, '../package.json'
     @config.set
@@ -38,7 +44,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     @directory("./default", "./")
 
   runNpm: ->
-    if 'skip-install' not in @options
+    if not @options['skip-install']
       done = @async()
       console.log("\nRunning NPM Install. Bower is next.\n")
       seleniumLogdir = path.join(@destinationRoot(), 'node_modules', 'selenium-server', 'logs')
@@ -49,11 +55,27 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         done();
 
   runBower: ->
-    if 'skip-install' not in @options
+    if not @options['skip-install']
       done = @async()
       console.log("\nRunning Bower:\n")
       @bowerInstall "", ->
         console.log("\nAll set! Type: gulp serve\n")
         done()
+
+  runGit: ->
+    done = @async()
+
+    if not @githubAuthtoken
+      console.log "\nWarning: Github repo not created: github oauth token is unknown or invalid.\n"
+      return
+
+    console.log "\nCreating GitHub repo...\n"
+    execute "curl https://api.github.com/orgs/garlictech/repos -u #{@githubAuthtoken}:x-oauth-basic -d \'{\"name\":\"#{@appname}\"}\'"
+    execute "git init"
+    execute "git remote add origin https://github.com/garlictech/#{@appname}.git"
+    execute "git add ."
+    execute "git commit -m 'Initial version.'"
+    execute 'git push -u origin master'
+    done()
 
 module.exports = GarlicWebappGenerator
