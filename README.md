@@ -49,44 +49,4 @@ We have the following gulp tasks:
 ```bash
 gulp
 ```
-
-It starts the following services:
-
-* the server, available in http://localhost:9000. Gulp monitor server sources, on change, it restarts the server automatically.
-* selenium server for automated in-browser testing.
-* live reload service: if frontend files change, it reloads the actual browser page.
-* watches file changes: compiles coffee, less, sass files, uglifies js files, checks code with lint tools, etc.
-
-### test_chrome
-
-```bash
-gulp test_chrome
-```
-
-Execute Cucumber tests in Google Chrome browser.
-
-### test_phantomjs
-
-```bash
-gulp test_phantomjs
-```
-
-Execute Cucumber tests in PhantomJS headless browser.
-
-### test_firefox
-
-```bash
-gulp test_firefox
-```
-
-Execute Cucumber tests in Firefox browser.
-
-### build
-
-```bash
-gulp build
-```
-
-Builds the production web site in `dist` folder.
-
-
+It watches coffee files, and compiles them.
