@@ -1,40 +1,6 @@
-doctype html
-html
-  head
-    title A
-    base(href="/")
-    //---inject:bower:css---
-    link(rel='stylesheet' href='bootstrap/dist/css/bootstrap.css')
-    //---inject---
-    //---inject:css---
-    link(rel='stylesheet' href='frontend/styles/main.css')
-    //---inject---
-  body(ng-app="aApp")
-    div(ng-view) Server is running, cool.
-    //---inject:bower:js---
-    script(src='angular/angular.js')
-    script(src='angular-route/angular-route.js')
-    script(src='angular-sanitize/angular-sanitize.js')
-    script(src='angular-animate/angular-animate.js')
-    script(src='angular-cookies/angular-cookies.js')
-    script(src='angular-resource/angular-resource.js')
-    script(src='jquery/dist/jquery.js')
-    script(src='bootstrap/dist/js/bootstrap.js')
-    //---inject---
-    //---inject:js---
-    script(src='server.js')
-    script(src='backend/middleware.js')
-    script(src='backend/routes.js')
-    script(src='frontend/app.js')
-    script(src='backend/config/config.js')
-    script(src='backend/config/express.js')
-    script(src='backend/modules/index.js')
-    script(src='features/step_definitions/stepDefinitions.js')
-    script(src='features/support/after_hooks.js')
-    script(src='features/support/hooks.js')
-    script(src='features/support/world.js')
-    script(src='frontend/modules/main.js')
-    script(src='backend/config/env/all.js')
-    script(src='backend/config/env/development.js')
-    script(src='backend/config/env/production.js')
-    //---inject---
+extends templates/layouts/global
+
+block content
+  // === Header ===
+  // === End Header ===
+  div(ng-view) Server is running, cool.

@@ -31,8 +31,8 @@ module.exports = (app) ->
     collection: 'sessions'
 
   app
-  .use express.static path.join config.root, '.tmp'
   .use express.static path.join config.root, 'frontend'
+  .use express.static path.join config.root, '..', 'bower_components'
   .set 'views', "#{config.root}/frontend"
   .set 'view engine', 'jade'
   .use cookieParser()
