@@ -21,7 +21,7 @@ $ sudo npm install -g git://github.com/garlictech/generator-garlic-webapp.git
 
 You can give a github oauth token as an optional parameter. If you do so, and the token is valid, the generator will create a github repo out of the generated code, and commits it as initial version.
 
-(How to create token.)[https://help.github.com/articles/creating-an-access-token-for-command-line-use/]
+[How to create token.](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
 
 
 ### Start a project
