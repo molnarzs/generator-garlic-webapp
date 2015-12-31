@@ -1,0 +1,18 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.0.1",
+  "homepage": "https://github.com/garlictech/<%= appName %>",
+  "authors": [
+    "Zsolt Molnar <zsolt@zsoltmolnar.hu>"
+  ],
+  "license": "garlictech.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

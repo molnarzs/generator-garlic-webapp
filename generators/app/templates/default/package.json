@@ -1,0 +1,75 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.0.1",
+  "description": "<%= appName %> web site",
+  "main": "frontend/src/index.coffee",
+  "license": "GarlicTech",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garlictech/<%= appName %>.git"
+  },
+  "author": "contact@garlictech.com",
+  "keywords": [
+    "garlictech",
+    "<%= appName %>"
+  ],
+  "bugs": {
+    "url": "https://github.com/garlictech/<%= appName %>/issues"
+  },
+  "homepage": "https://github.com/garlictech/<%= appName %>#readme",
+  "devDependencies": {
+    "autoprefixer-loader": "^3.1.0",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "coffeelint": "^1.11.1",
+    "coffeelint-loader": "^0.1.1",
+    "css-loader": "0.23.x",
+    "exports-loader": "^0.6.2",
+    "expose-loader": "^0.7.0",
+    "extract-text-webpack-plugin": "0.9.x",
+    "file-loader": "^0.8.4",
+    "font-awesome-webpack": "0.0.x",
+    "html-loader": "0.4.x",
+    "html-webpack-plugin": "^1.4.0",
+    "image-webpack-loader": "^1.6.1",
+    "imports-loader": "^0.6.4",
+    "istanbul-instrumenter-loader": "^0.1.3",
+    "jade": "~1.11.0",
+    "jade-html-loader": "0.0.3",
+    "jshint-loader": "^0.8.3",
+    "jshint": "^2.8.0",
+    "karma": "^0.13.9",
+    "karma-chai-plugins": "^0.6.0",
+    "karma-chai-sinon": "^0.1.5",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.2",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.1.1",
+    "karma-sinon": "^1.0.4",
+    "karma-webpack": "^1.7.0",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "mocha": "^2.3.2",
+    "node-sass": "^3.2.0",
+    "sass-loader": "3.1.x",
+    "script-loader": "^0.6.1",
+    "sinon": "^1.16.1",
+    "sinon-chai": "^2.8.0",
+    "style-loader": "0.13.x",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.1",
+    "webpack-dev-server": "^1.8.2"
+  },
+  "dependencies": {
+    "angular-material": "^1.0.1",
+    "gt-complib": "git+https://github.com/garlictech/gt-complib.git"
+  },
+  "scripts": {
+    "start": "node node_modules/.bin/webpack-dev-server --hot --port 8081 --host 0.0.0.0",
+    "test": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
+    "system-test": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
+    "build": "node node_modules/webpack/bin/webpack.js",
+    "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
+    "protractor-test": "node_modules/protractor/bin/protractor ./src/test/protractor/config.coffee"
+  }
+}
