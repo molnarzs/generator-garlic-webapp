@@ -28,7 +28,7 @@
     "expose-loader": "^0.7.0",
     "extract-text-webpack-plugin": "0.9.x",
     "file-loader": "^0.8.4",
-    "font-awesome-webpack": "0.0.x",
+    "font-awesome-webpack": "0.0.4",
     "html-loader": "0.4.x",
     "html-webpack-plugin": "^1.4.0",
     "image-webpack-loader": "^1.6.1",
@@ -70,6 +70,6 @@
     "system-test": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",
     "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
-    "protractor-test": "node_modules/protractor/bin/protractor ./src/test/protractor/config.coffee"
+    "protractor-test": "node_modules/protractor/bin/protractor ./frontend/src/test/protractor/config.coffee"
   }
 }

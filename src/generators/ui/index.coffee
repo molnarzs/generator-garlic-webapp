@@ -1,84 +1,75 @@
 util = require('util')
 path = require('path')
-generators = require('yeoman-generator')
+yeoman = require('yeoman-generator')
 chalk = require('chalk')
 spawn = require('child_process').spawn
-# sh = require('execSync')
+_ = require 'lodash'
+fs = require 'fs'
+gulpFilter = require 'gulp-filter'
+gulpRename = require 'gulp-rename'
 
-execute = (command) ->
-  result = sh.exec command
-  console.log result.stdout
+GarlicWebappUiGenerator = yeoman.generators.Base.extend
+  initializing:
+    init: ->
+      @config.set
+        appName: @appname
+      console.log chalk.magenta 'You\'re using the GarlicTech webapp UI generator.'
 
-module.exports = generators.Base.extend
-  constructor: ->
-    generators.Base.apply @, arguments
-    @option "name"
+  prompting: ->
+    done = @async()
+    cb = (answers) =>
+      done()
+      @answers = answers
 
-  copyFiles: ->
-    # @githubAuthtoken = @arguments[0]
-    # # read the local package file
+    @prompt
+      type    : 'input'
+      name    : 'name'
+      message : 'Module name (like foo-component):'
+      required: true
+    , cb.bind @
 
-    # @pkg = yeoman.file.readJSON path.join __dirname, '../package.json'
-    # @config.set
-    #   appName: @appname
-    #   css: ['bootstrap'],
-    #   scaffolds:['']
-    # # have Yeoman greet the user
-    # console.log @yeoman
-    # replace it with a short and sweet description of your generator
-    console.log chalk.magenta 'You\'re using the GarlicTech webapp generator for Angular UI element.'
+  writing:
+    mainFiles: ->
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"),
+        moduleName: @answers.name
+        moduleNameCC: _.camelCase @answers.name
 
-  saveConfig: ->
-    @config.save()
+    "frontend/components.json" : ->
+      dest = @destinationPath "./frontend/src/components.json"
+      @moduleNamesObj = @fs.readJSON dest
+      @moduleNamesObj.uiModuleNames.push @answers.name
+      @fs.writeJSON dest, @moduleNamesObj
 
-  # scaffoldFolders: ->
-  #   @mkdir("./frontend")
-  #   @mkdir("./frontend/modules")
-  #   @mkdir("./frontend/resources")
-  #   @mkdir("./frontend/styles")
-  #   @mkdir("./backend/config")
-  #   @mkdir("./backend/config/env")
-  #   @mkdir("./backend/modules")
-  #   @mkdir("./features")
-  #   @mkdir("./features/step_definitions")
-  #   @mkdir("./features/support")
-  #   @mkdir("./logs")
+    "ui-modules.coffee": ->
+      dest = @destinationPath("./frontend/src/ui-modules.coffee")
+      content = """Module = angular.module "#{@config.appName}-ui", ["""
 
-  # copyMainFiles: ->
-  #   @config = @config.getAll()
-  #   @directory("./default", "./")
+      _.forEach @moduleNamesObj.uiModuleNames, (moduleName) ->
+        content += "\n  require './#{moduleName}'"
 
-  # runNpm: ->
-  #   if not @options['skip-install']
-  #     done = @async()
-  #     console.log("\nRunning NPM Install. Bower is next.\n")
-  #     seleniumLogdir = path.join(@destinationRoot(), 'node_modules', 'selenium-server', 'logs')
-  #     seleniumLogdirLink = path.join(@destinationRoot(), 'logs', 'selenium')
+      content += "\n]\n\nmodule.exports = Module.name"
+      @fs.write dest, content
 
-  #     @npmInstall "", ->
-  #       spawn 'ln', ['-sf', seleniumLogdir, seleniumLogdirLink], stdio:'inherit'
-  #       done()
+    "test-page-components.jade": ->
+      dest = @destinationPath("./frontend/src/views/test-page/test-page-components.jade")
+      content = ""
 
-  # runBower: ->
-  #   if not @options['skip-install']
-  #     done = @async()
-  #     console.log("\nRunning Bower:\n")
-  #     @bowerInstall "", ->
-  #       console.log("\nAll set! Type: gulp serve\n")
-  #       done()
+      _.forEach @moduleNamesObj.uiModuleNames, (moduleName) =>
+        content += "div(#{@config.appName}-#{moduleName})\n"
 
-  # runGit: ->
-  #   done = @async()
+      @fs.write dest, content
 
-  #   if not @githubAuthtoken
-  #     console.log "\nWarning: Github repo not created: github oauth token is unknown or invalid.\n"
-  #     return
+    protractor: ->
+      pagesFilter = gulpFilter ['**/page.coffee', '**/scenarios.coffee'], {restore: true}
+      @registerTransformStream pagesFilter
 
-  #   console.log "\nCreating GitHub repo...\n"
-  #   execute "curl https://api.github.com/orgs/garlictech/repos -u #{@githubAuthtoken}:x-oauth-basic -d \'{\"name\":\"#{@appname}\"}\'"
-  #   execute "git init"
-  #   execute "git remote add origin https://github.com/garlictech/#{@appname}.git"
-  #   execute "git add ."
-  #   execute "git commit -m 'Initial version.'"
-  #   execute 'git push -u origin master'
-  #   done()
+      @registerTransformStream gulpRename (path) =>
+        path.basename = "#{@answers.name}.#{path.basename}"
+
+      @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./frontend/src/test/protractor"),
+        pageName: @answers.name
+        pageNameCC: _.capitalize _.camelCase @answers.name
+
+      @registerTransformStream pagesFilter.restore
+
+module.exports = GarlicWebappUiGenerator

@@ -7,9 +7,12 @@ Module = angular.module config.MainModuleName, [
   require 'gt-complib'
   require 'gt-complib/src/localize'
   require './views'
-  require './ui'
+  require './footer'
+  require './main-header'
+  require './ui-modules'
+  require './service-modules'
+  require './factory-modules'
 ]
-
 .config ['$mdThemingProvider', ($mdThemingProvider) ->
   $mdThemingProvider.theme('<%= appName %>')
     .primaryPalette 'blue-grey',

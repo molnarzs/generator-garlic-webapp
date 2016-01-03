@@ -26,6 +26,8 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "coffee-script": "^1.7.1",
+    "gulp-filter": "^3.0.1",
+    "gulp-rename": "^1.2.2",
     "yeoman-generator": "^0.21.1",
     "yo": "^1.5.0",
     "yosay": "^1.1.0"

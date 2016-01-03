@@ -1,8 +1,16 @@
+GLOBAL.chai = require 'chai'
+GLOBAL.chaiAsPromised = require 'chai-as-promised'
+GLOBAL.chai.use chaiAsPromised
+GLOBAL.expect = chai.expect
+GLOBAL.should = chai.should()
+
+globalConfig =
+  baseUrl: 'http://localhost:8081'
+
 exports.config = 
   seleniumAddress: 'http://localhost:4444/wd/hub'
-  baseUrl: 'http://localhost:8081'
+  baseUrl: globalConfig.baseUrl
   specs: ['./scenarios/*.scenarios.coffee']
-  firebaseRef: 'https://gtrack.firebaseio.com/test'
 
   framework: 'mocha'
 
@@ -20,3 +28,4 @@ exports.config =
   onPrepare: ->
     global.EC = protractor.ExpectedConditions
     global.PTR = browser
+    global.config = globalConfig

@@ -3,7 +3,7 @@ path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 spawn = require('child_process').spawn
-# sh = require('execSync')
+_ = require 'lodash'
 
 execute = (command) ->
   result = sh.exec command
@@ -21,8 +21,53 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @config = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         appName: @config.appName
+        appNameCC: _.camelCase @config.appName
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./frontend/src/")
+
+
+    "frontend/components.json" : ->
+      dest = @destinationPath "./frontend/src/components.json"
+
+      if not @fs.exists dest
+        @fs.writeJSON dest,
+          uiModuleNames: []
+          factoryModuleNames: []
+          serviceModuleNames: []
+
+
+    "frontend/ui-modules.coffee" : ->
+      dest = @destinationPath "./frontend/src/ui-modules.coffee"
+
+      if not @fs.exists dest
+        @fs.write dest, """
+Module = angular.module "#{@config.appName}-ui", []
+module.exports = Module.name
+"""
+
+
+    "frontend/service-modules.coffee" : ->
+      dest = @destinationPath "./frontend/src/service-modules.coffee"
+
+      if not @fs.exists dest
+        @fs.write dest, """
+Module = angular.module "#{@config.appName}-services", []
+module.exports = Module.name
+"""
+
+
+    "frontend/factory-modules.coffee" : ->
+      dest = @destinationPath "./frontend/src/factory-modules.coffee"
+
+      if not @fs.exists dest
+        @fs.write dest, """
+Module = angular.module "#{@config.appName}-factories", []
+module.exports = Module.name
+"""
+
+    "frontend/views/test-page/test-page-components.jade" : ->
+      dest = @destinationPath "./frontend/src/views/test-page/test-page-components.jade"
+      if not @fs.exists dest then @fs.write dest, ""
 
   install:
     linkGtComplib: ->
@@ -33,13 +78,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     dependencies: ->
       if not @options['skip-install'] then @installDependencies()
 
-  # runBower: ->
-  #   if not @options['skip-install']
-  #     done = @async()
-  #     console.log("\nRunning Bower:\n")
-  #     @bowerInstall "", ->
-  #       console.log("\nAll set! Type: gulp serve\n")
-  #       done()
+    selenium: ->
+      if not @options['skip-install']
+        console.log "\Updating selenium...\n"
+        @spawnCommand "node_modules/protractor/bin/webdriver-manager", ["update", "--standalone"]
 
   # runGit: ->
   #   done = @async()
