@@ -1,7 +1,7 @@
 {
   "name": "<%= appName %>",
   "version": "0.0.1",
-  "description": "<%= appName %> web site",
+  "description": "<%= appNameAsIs %> web site",
   "main": "frontend/src/index.coffee",
   "license": "GarlicTech",
   "repository": {
@@ -49,16 +49,16 @@
     "karma-webpack": "^1.7.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
-    "mocha": "^2.3.2",
-    "node-sass": "^3.2.0",
+    "mocha": "^2.3.x",
+    "node-sass": "^3.2.x",
     "sass-loader": "3.1.x",
-    "script-loader": "^0.6.1",
-    "sinon": "^1.16.1",
-    "sinon-chai": "^2.8.0",
+    "script-loader": "^0.6.x",
+    "sinon": "^1.16.x",
+    "sinon-chai": "^2.8.x",
     "style-loader": "0.13.x",
-    "url-loader": "^0.5.6",
-    "webpack": "^1.12.1",
-    "webpack-dev-server": "^1.8.2"
+    "url-loader": "^0.5.x",
+    "webpack": "^1.12.x",
+    "webpack-dev-server": "^1.8.x"
   },
   "dependencies": {
     "angular-material": "^1.0.1",
@@ -69,7 +69,7 @@
     "test": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
     "system-test": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",
-    "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
-    "protractor-test": "node_modules/protractor/bin/protractor ./frontend/src/test/protractor/config.coffee"
+    "protractor-start": "node_modules/gt-complib/node_modules/protractor/bin/webdriver-manager start",
+    "protractor-test": "node_modules/gt-complib/node_modules/protractor/bin/protractor ./frontend/src/test/protractor/config.coffee"
   }
 }

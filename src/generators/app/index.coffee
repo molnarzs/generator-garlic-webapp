@@ -2,12 +2,7 @@ util = require('util')
 path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
-spawn = require('child_process').spawn
 _ = require 'lodash'
-
-execute = (command) ->
-  result = sh.exec command
-  console.log result.stdout
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   initializing:
@@ -18,10 +13,14 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
+      console.log  @config.appName
+      console.log _.camelCase @config.appName
+      console.log _.kebabCase @config.appName
       @config = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
-        appName: @config.appName
+        appName: _.kebabCase @config.appName
         appNameCC: _.camelCase @config.appName
+        appNameAsIs: @config.appName
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./frontend/src/")
 
@@ -70,18 +69,18 @@ module.exports = Module.name
       if not @fs.exists dest then @fs.write dest, ""
 
   install:
+    dependencies: ->
+      cb = @async()
+      if not @options['skip-install'] then @installDependencies()
+      cb()
+
+  end:
     linkGtComplib: ->
+      cb = @async()
       if not @options['skip-install']
         console.log "\nLinking gt-complib.\n"
         @spawnCommand 'npm', ['link', 'gt-complib']
-
-    dependencies: ->
-      if not @options['skip-install'] then @installDependencies()
-
-    selenium: ->
-      if not @options['skip-install']
-        console.log "\Updating selenium...\n"
-        @spawnCommand "node_modules/protractor/bin/webdriver-manager", ["update", "--standalone"]
+      cb()
 
   # runGit: ->
   #   done = @async()

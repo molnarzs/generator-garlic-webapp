@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, _, chalk, execute, path, spawn, util, yeoman;
+var GarlicWebappGenerator, _, chalk, path, util, yeoman;
 
 util = require('util');
 
@@ -8,15 +8,7 @@ yeoman = require('yeoman-generator');
 
 chalk = require('chalk');
 
-spawn = require('child_process').spawn;
-
 _ = require('lodash');
-
-execute = function(command) {
-  var result;
-  result = sh.exec(command);
-  return console.log(result.stdout);
-};
 
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: {
@@ -29,10 +21,14 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
+      console.log(this.config.appName);
+      console.log(_.camelCase(this.config.appName));
+      console.log(_.kebabCase(this.config.appName));
       this.config = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
-        appName: this.config.appName,
-        appNameCC: _.camelCase(this.config.appName)
+        appName: _.kebabCase(this.config.appName),
+        appNameCC: _.camelCase(this.config.appName),
+        appNameAsIs: this.config.appName
       });
       return this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./frontend/src/"));
     },
@@ -77,22 +73,24 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     }
   },
   install: {
+    dependencies: function() {
+      var cb;
+      cb = this.async();
+      if (!this.options['skip-install']) {
+        this.installDependencies();
+      }
+      return cb();
+    }
+  },
+  end: {
     linkGtComplib: function() {
+      var cb;
+      cb = this.async();
       if (!this.options['skip-install']) {
         console.log("\nLinking gt-complib.\n");
-        return this.spawnCommand('npm', ['link', 'gt-complib']);
+        this.spawnCommand('npm', ['link', 'gt-complib']);
       }
-    },
-    dependencies: function() {
-      if (!this.options['skip-install']) {
-        return this.installDependencies();
-      }
-    },
-    selenium: function() {
-      if (!this.options['skip-install']) {
-        console.log("\Updating selenium...\n");
-        return this.spawnCommand("node_modules/protractor/bin/webdriver-manager", ["update", "--standalone"]);
-      }
+      return cb();
     }
   }
 });
