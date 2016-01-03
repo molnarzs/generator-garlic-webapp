@@ -4,7 +4,6 @@ require './vendor'
 require './translations'
 
 Module = angular.module config.MainModuleName, [
-  require 'gt-complib'
   require 'gt-complib/src/localize'
   require './views'
   require './footer'

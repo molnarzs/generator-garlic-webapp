@@ -41,13 +41,14 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      var serviceName;
+      var appName, serviceName;
       this.config = this.config.getAll();
+      appName = _.capitalize(_.camelCase(this.config.appName));
       serviceName = _.capitalize(_.camelCase(this.answers.name));
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./frontend/src/" + this.answers.name), {
         moduleName: this.answers.name,
         serviceName: serviceName,
-        serviceNameFQ: "" + this.config.appName + serviceName
+        serviceNameFQ: "" + appName + serviceName
       });
     },
     "frontend/components.json": function() {

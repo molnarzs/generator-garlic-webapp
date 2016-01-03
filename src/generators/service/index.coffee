@@ -29,12 +29,13 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
   writing:
     mainFiles: ->
       @config = @config.getAll()
+      appName = _.capitalize _.camelCase @config.appName
       serviceName = _.capitalize _.camelCase @answers.name
       
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"),
         moduleName: @answers.name
         serviceName: serviceName
-        serviceNameFQ: "#{@config.appName}#{serviceName}"
+        serviceNameFQ: "#{appName}#{serviceName}"
 
     "frontend/components.json" : ->
       dest = @destinationPath "./frontend/src/components.json"

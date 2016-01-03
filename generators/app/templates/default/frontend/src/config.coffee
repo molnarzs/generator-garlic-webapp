@@ -1,3 +1,3 @@
 module.exports =
-  MainModuleName: '<%= appName %>'
+  MainModuleName: '<%= appNameCC %>'
   credentials: require './credentials'
