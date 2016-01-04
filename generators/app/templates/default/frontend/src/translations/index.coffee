@@ -1,2 +1,2 @@
-require "file?name=translations/[name].[ext]!./en_US.json"
-require "file?name=translations/[name].[ext]!./hu_HU.json"
+require "file?name=translations/[name].json!./en_US.hjson"
+require "file?name=translations/[name].json!./hu_HU.hjson"

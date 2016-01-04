@@ -29,6 +29,8 @@
     "extract-text-webpack-plugin": "0.9.x",
     "file-loader": "^0.8.4",
     "font-awesome-webpack": "0.0.4",
+    "hson": "0.0.2",
+    "hson-loader": "^1.0.0",
     "html-loader": "0.4.x",
     "html-webpack-plugin": "^1.4.0",
     "image-webpack-loader": "^1.6.1",
