@@ -37,7 +37,7 @@ config =
       {test: /\.jpg$/, loader: 'file-loader?mimetype=image/jpg&limit=10000'}
       {test: /\.gif$/, loader: 'file-loader?mimetype=image/gif&limit=10000'}
       {test: /\.png$/, loader: 'file-loader?mimetype=image/png&limit=10000'}
-      {test: /\.json$/, loader: 'json', exclude: /translations/}
+      {test: /\.json$/, loader: 'json'}
       {test: /imagesloaded/, loader: 'imports?define=>false'}
     ]
     postLoaders: [
