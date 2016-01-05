@@ -17,10 +17,10 @@ fs = require('fs');
 GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
-      this.config.set({
-        appName: this.appname
-      });
-      return console.log(chalk.magenta('You\'re using the GarlicTech webapp service generator.'));
+      this.conf = this.config.getAll();
+      console.log(chalk.magenta('You\'re using the GarlicTech webapp service generator.'));
+      this.moduleNames = this.conf.angularModules.services;
+      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
     }
   },
   prompting: function() {
@@ -29,7 +29,11 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     cb = (function(_this) {
       return function(answers) {
         done();
-        return _this.answers = answers;
+        _this.answers = answers;
+        _this.moduleNames.push(_this.answers.name);
+        _this.conf.serviceName = _.capitalize(_.camelCase(_this.answers.name));
+        _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.serviceName;
+        return _this.conf.serviceNameFQ = _this.conf.appNameCC + "-" + _this.conf.serviceName;
       };
     })(this);
     return this.prompt({
@@ -41,32 +45,22 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      var appName, serviceName;
-      this.config = this.config.getAll();
-      appName = _.capitalize(_.camelCase(this.config.appName));
-      serviceName = _.capitalize(_.camelCase(this.answers.name));
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./frontend/src/" + this.answers.name), {
-        moduleName: this.answers.name,
-        serviceName: serviceName,
-        serviceNameFQ: "" + appName + serviceName
+        c: this.conf
       });
-    },
-    "frontend/components.json": function() {
-      var dest;
-      dest = this.destinationPath("./frontend/src/components.json");
-      this.moduleNamesObj = this.fs.readJSON(dest);
-      this.moduleNamesObj.serviceModuleNames.push(this.answers.name);
-      return this.fs.writeJSON(dest, this.moduleNamesObj);
     },
     "service-modules.coffee": function() {
       var content, dest;
       dest = this.destinationPath("./frontend/src/service-modules.coffee");
-      content = "Module = angular.module \"" + this.config.appName + "-services\", [";
-      _.forEach(this.moduleNamesObj.serviceModuleNames, function(moduleName) {
+      content = "Module = angular.module \"" + this.conf.appNameCC + ".services\", [";
+      _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
       });
       content += "\n]\n\nmodule.exports = Module.name";
       return this.fs.write(dest, content);
+    },
+    saveConfig: function() {
+      return this.config.set('angularModules', this.conf.angularModules);
     }
   }
 });

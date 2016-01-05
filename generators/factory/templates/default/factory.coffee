@@ -1,6 +1,6 @@
 module.exports = ['$log', '$q', ($log, $q) ->
-  class <%= factoryName %>
+  class <%= c.factoryName %>
     constructor: ->
 
-  return <%= factoryName %>
+  return <%= c.factoryName %>
 ]

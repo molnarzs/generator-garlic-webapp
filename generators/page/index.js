@@ -78,6 +78,23 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       })(this));
       return this.fs.write(dest, content);
     },
+    protractor: function() {
+      var pagesFilter;
+      pagesFilter = gulpFilter(['**/page.coffee', '**/scenarios.coffee'], {
+        restore: true
+      });
+      this.registerTransformStream(pagesFilter);
+      this.registerTransformStream(gulpRename((function(_this) {
+        return function(path) {
+          return path.basename = _this.answers.name + "." + path.basename;
+        };
+      })(this)));
+      this.fs.copyTpl(this.templatePath('protractor/**/*'), this.destinationPath("./frontend/src/test/protractor"), {
+        pageName: this.answers.name,
+        pageNameCC: _.capitalize(_.camelCase(this.answers.name))
+      });
+      return this.registerTransformStream(pagesFilter.restore);
+    },
     saveConfig: function() {
       return this.config.set('angularModules', this.conf.angularModules);
     }

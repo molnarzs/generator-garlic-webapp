@@ -17,10 +17,10 @@ fs = require('fs');
 GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
-      this.config.set({
-        appName: this.appname
-      });
-      return console.log(chalk.magenta('You\'re using the GarlicTech webapp factory generator.'));
+      this.conf = this.config.getAll();
+      console.log(chalk.magenta('You\'re using the GarlicTech webapp factory generator.'));
+      this.moduleNames = this.conf.angularModules.factories;
+      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
     }
   },
   prompting: function() {
@@ -29,7 +29,11 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     cb = (function(_this) {
       return function(answers) {
         done();
-        return _this.answers = answers;
+        _this.answers = answers;
+        _this.moduleNames.push(_this.answers.name);
+        _this.conf.factoryName = _.capitalize(_.camelCase(_this.answers.name));
+        _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.factoryName;
+        return _this.conf.factoryNameFQ = _this.conf.appNameCC + "-" + _this.conf.factoryName;
       };
     })(this);
     return this.prompt({
@@ -41,31 +45,22 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      var factoryName;
-      this.config = this.config.getAll();
-      factoryName = _.capitalize(_.camelCase(this.answers.name));
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./frontend/src/" + this.answers.name), {
-        moduleName: this.answers.name,
-        factoryName: factoryName,
-        factoryNameFQ: "" + this.config.appName + factoryName
+        c: this.conf
       });
     },
-    "frontend/components.json": function() {
-      var dest;
-      dest = this.destinationPath("./frontend/src/components.json");
-      this.moduleNamesObj = this.fs.readJSON(dest);
-      this.moduleNamesObj.factoryModuleNames.push(this.answers.name);
-      return this.fs.writeJSON(dest, this.moduleNamesObj);
-    },
-    "service-modules.coffee": function() {
+    "factory-modules.coffee": function() {
       var content, dest;
       dest = this.destinationPath("./frontend/src/factory-modules.coffee");
-      content = "Module = angular.module \"" + this.config.appName + "-services\", [";
-      _.forEach(this.moduleNamesObj.factoryModuleNames, function(moduleName) {
+      content = "Module = angular.module \"" + this.conf.appNameCC + ".factories\", [";
+      _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
       });
       content += "\n]\n\nmodule.exports = Module.name";
       return this.fs.write(dest, content);
+    },
+    saveConfig: function() {
+      return this.config.set('angularModules', this.conf.angularModules);
     }
   }
 });

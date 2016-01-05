@@ -61,6 +61,19 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
       @fs.write dest, content
 
+    protractor: ->
+      pagesFilter = gulpFilter ['**/page.coffee', '**/scenarios.coffee'], {restore: true}
+      @registerTransformStream pagesFilter
+
+      @registerTransformStream gulpRename (path) =>
+        path.basename = "#{@answers.name}.#{path.basename}"
+
+      @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./frontend/src/test/protractor"),
+        pageName: @answers.name
+        pageNameCC: _.capitalize _.camelCase @answers.name
+
+      @registerTransformStream pagesFilter.restore
+
     saveConfig: ->
       @config.set 'angularModules', @conf.angularModules
 

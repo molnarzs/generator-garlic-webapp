@@ -1,6 +1,6 @@
-# Service name: <%= serviceNameFQ %>
+# Service name: <%= c.serviceNameFQ %>
 
-Module = angular.module "#{config.MainModuleName}.<%= serviceName %>", []
-.service "#{config.MainModuleName}<%= serviceName %>", require './service'
+Module = angular.module "<%= c.moduleName %>", []
+.service "<%= c.serviceNameFQ %>", require './service'
 
 module.exports = Module.name

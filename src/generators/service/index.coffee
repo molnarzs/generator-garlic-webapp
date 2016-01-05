@@ -9,15 +9,20 @@ fs = require 'fs'
 GarlicWebappUiGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
-      @config.set
-        appName: @appname
+      @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp service generator.'
+      @moduleNames = @conf.angularModules.services
+      @conf.appNameCC = _.capitalize _.camelCase @conf.appName
 
   prompting: ->
     done = @async()
     cb = (answers) =>
       done()
       @answers = answers
+      @moduleNames.push @answers.name
+      @conf.serviceName = _.capitalize _.camelCase @answers.name
+      @conf.moduleName = "#{@conf.appNameCC}.#{@conf.serviceName}"
+      @conf.serviceNameFQ = "#{@conf.appNameCC}-#{@conf.serviceName}"
 
     @prompt
       type    : 'input'
@@ -28,29 +33,19 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
-      @config = @config.getAll()
-      appName = _.capitalize _.camelCase @config.appName
-      serviceName = _.capitalize _.camelCase @answers.name
-      
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"),
-        moduleName: @answers.name
-        serviceName: serviceName
-        serviceNameFQ: "#{appName}#{serviceName}"
-
-    "frontend/components.json" : ->
-      dest = @destinationPath "./frontend/src/components.json"
-      @moduleNamesObj = @fs.readJSON dest
-      @moduleNamesObj.serviceModuleNames.push @answers.name
-      @fs.writeJSON dest, @moduleNamesObj
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"), {c: @conf}
 
     "service-modules.coffee": ->
       dest = @destinationPath("./frontend/src/service-modules.coffee")
-      content = """Module = angular.module "#{@config.appName}-services", ["""
+      content = """Module = angular.module "#{@conf.appNameCC}.services", ["""
 
-      _.forEach @moduleNamesObj.serviceModuleNames, (moduleName) ->
+      _.forEach @moduleNames, (moduleName) ->
         content += "\n  require './#{moduleName}'"
 
       content += "\n]\n\nmodule.exports = Module.name"
       @fs.write dest, content
+
+    saveConfig: ->
+      @config.set 'angularModules', @conf.angularModules
 
 module.exports = GarlicWebappUiGenerator

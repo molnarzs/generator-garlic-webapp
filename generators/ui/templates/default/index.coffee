@@ -1,4 +1,4 @@
-Module = angular.module "#{config.MainModuleName}.<%= moduleNameCC %>", []
-.directive _.camelCase("#{config.MainModuleName}-<%= moduleName %>"), require './directive'
+Module = angular.module "<%= moduleNameFQ %>", []
+.directive "<%= directiveNameCC %>", require './directive'
 
 module.exports = Module.name

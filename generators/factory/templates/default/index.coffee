@@ -1,6 +1,6 @@
-# Factory name: <%= factoryNameFQ %>
+# Factory name: <%= c.factoryNameFQ %>
 
-Module = angular.module "#{config.MainModuleName}.<%= factoryName %>", []
-.factory "#{config.MainModuleName}<%= factoryName %>", require './factory'
+Module = angular.module "<%= c.moduleName %>", []
+.factory "<%= c.serviceNameFQ %>", require './factory'
 
 module.exports = Module.name

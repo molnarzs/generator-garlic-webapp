@@ -1,6 +1,6 @@
 module.exports = ['$log', '$q', ($log, $q) ->
-  class <%= serviceName %>
+  class <%= c.serviceName %>
     constructor: ->
 
-  return new <%= serviceName %>()
+  return new <%= c.serviceName %>()
 ]

@@ -9,27 +9,21 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     init: ->
       @config.set
         appName: @appname
+        angularModules:
+          ui: []
+          services: []
+          factories: []
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
 
   writing:
     mainFiles: ->
-      @config = @config.getAll()
+      @conf = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
-        appName: _.kebabCase @config.appName
-        appNameCC: _.capitalize _.camelCase @config.appName
-        appNameAsIs: @config.appName
+        appName: _.kebabCase @conf.appName
+        appNameCC: _.capitalize _.camelCase @conf.appName
+        appNameAsIs: @conf.appName
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./frontend/src/")
-
-
-    "frontend/components.json" : ->
-      dest = @destinationPath "./frontend/src/components.json"
-
-      if not @fs.exists dest
-        @fs.writeJSON dest,
-          uiModuleNames: []
-          factoryModuleNames: []
-          serviceModuleNames: []
 
 
     "frontend/ui-modules.coffee" : ->
@@ -37,7 +31,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@config.appName}-ui", []
+Module = angular.module "#{@conf.appName}-ui", []
 module.exports = Module.name
 """
 
@@ -47,7 +41,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@config.appName}-services", []
+Module = angular.module "#{@conf.appName}-services", []
 module.exports = Module.name
 """
 
@@ -57,7 +51,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@config.appName}-factories", []
+Module = angular.module "#{@conf.appName}-factories", []
 module.exports = Module.name
 """
 
