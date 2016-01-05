@@ -11,22 +11,21 @@ gulpRename = require 'gulp-rename'
 GarlicWebappUiGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
+      if not @options.page
+        console.log chalk.magenta 'You\'re using the GarlicTech webapp UI generator.'
+      
       @conf = @config.getAll()
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp UI generator.'
-      @moduleNames = @conf.angularModules.ui
+      @moduleNames = if @options.page then @conf.angularModules.pages else @conf.angularModules.ui
       @conf.appNameKC = _.kebabCase @conf.appName
       @conf.appNameCC = _.capitalize _.camelCase @conf.appName
 
   prompting: ->
+    if @options.page then return
+
     done = @async()
     cb = (answers) =>
-      done()
       @answers = answers
-      @moduleNames.push @answers.name
-      @conf.moduleNameCC = _.capitalize _.camelCase @answers.name
-      @conf.moduleNameKC = _.kebabCase @answers.name
-      @conf.directiveNameCC = "#{@conf.appNameCC}#{@conf.moduleNameCC}"
-      @conf.directiveNameKC = "#{@conf.appNameKC}-#{@conf.moduleNameKC}"
+      done()
 
     @prompt
       type    : 'input'
@@ -36,13 +35,32 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
     , cb.bind @
 
   writing:
+    createConfig: ->
+      if @options.page then @answers = @options.answers
+
+      @moduleNames.push @answers.name
+      @conf.moduleNameCC = _.capitalize _.camelCase @answers.name
+      @conf.moduleNameKC = _.kebabCase @answers.name
+      @conf.directiveNameCC = "#{_.camelCase @conf.appName}#{@conf.moduleNameCC}"
+      @conf.directiveNameKC = "#{@conf.appNameKC}-#{@conf.moduleNameKC}"
+
+      if @options.page
+        @conf.directiveNameCC = "#{@conf.directiveNameCC}Page"
+        @conf.directiveNameKC = "#{@conf.directiveNameKC}-page"
+
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"),
-        moduleNameFQ: "#{@conf.appNameCC}.#{@conf.moduleNameCC}"
-        directiveNameCC: @conf.directiveNameCC
-        directiveNameKC: @conf.directiveNameKC
+      root = "#{@answers.name}"
+      @conf.moduleNameFQ = "#{@conf.appNameCC}.#{@conf.moduleNameCC}"
+  
+      if @options.page
+        root = "views/#{@answers.name}-page"
+        @conf.moduleNameFQ = "#{@conf.moduleNameFQ}.page"
+
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{root}"), {c: @conf}
 
     "ui-modules.coffee": ->
+      if @options.page then return
+
       dest = @destinationPath("./frontend/src/ui-modules.coffee")
       content = """Module = angular.module "#{@conf.appNameCC}.ui", ["""
 
@@ -53,6 +71,8 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @fs.write dest, content
 
     "test-page-components.jade": ->
+      if @options.page then return
+
       dest = @destinationPath("./frontend/src/views/test-page/test-page-components.jade")
       content = ""
 

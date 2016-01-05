@@ -7,60 +7,28 @@ _ = require 'lodash'
 fs = require 'fs'
 gulpFilter = require 'gulp-filter'
 gulpRename = require 'gulp-rename'
+gulpReplace = require 'gulp-replace'
 
 GarlicWebappUiGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
-      @conf = @config.getAll()
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp UI generator.'
-      @moduleNames = @conf.angularModules.ui
-      @conf.appNameKC = _.kebabCase @conf.appName
-      @conf.appNameCC = _.capitalize _.camelCase @conf.appName
+      console.log chalk.magenta 'You\'re using the GarlicTech webapp pages generator.'
 
   prompting: ->
     done = @async()
     cb = (answers) =>
-      done()
       @answers = answers
-      @moduleNames.push @answers.name
-      @conf.moduleNameCC = _.capitalize _.camelCase @answers.name
-      @conf.moduleNameKC = _.kebabCase @answers.name
-      @conf.directiveNameCC = "#{@conf.appNameCC}#{@conf.moduleNameCC}"
-      @conf.directiveNameKC = "#{@conf.appNameKC}-#{@conf.moduleNameKC}"
+      @composeWith 'garlic-webapp:ui', options: {page: true, answers: answers}
+      done()
 
     @prompt
       type    : 'input'
       name    : 'name'
-      message : 'Module name (like foo-component):'
+      message : 'Page name, without -page (like foo-bar):'
       required: true
     , cb.bind @
 
   writing:
-    mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"),
-        moduleNameFQ: "#{@conf.appNameCC}.#{@conf.moduleNameCC}"
-        directiveNameCC: @conf.directiveNameCC
-        directiveNameKC: @conf.directiveNameKC
-
-    "ui-modules.coffee": ->
-      dest = @destinationPath("./frontend/src/ui-modules.coffee")
-      content = """Module = angular.module "#{@conf.appNameCC}.ui", ["""
-
-      _.forEach @moduleNames, (moduleName) ->
-        content += "\n  require './#{moduleName}'"
-
-      content += "\n]\n\nmodule.exports = Module.name"
-      @fs.write dest, content
-
-    "test-page-components.jade": ->
-      dest = @destinationPath("./frontend/src/views/test-page/test-page-components.jade")
-      content = ""
-
-      _.forEach @moduleNames, (moduleName) =>
-        content += "div(#{@conf.appNameKC}-#{moduleName})\n"
-
-      @fs.write dest, content
-
     protractor: ->
       pagesFilter = gulpFilter ['**/page.coffee', '**/scenarios.coffee'], {restore: true}
       @registerTransformStream pagesFilter
@@ -70,11 +38,31 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
       @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./frontend/src/test/protractor"),
         pageName: @answers.name
-        pageNameCC: _.capitalize _.camelCase @answers.name
+        pageNameCC: "#{_.capitalize _.camelCase @answers.name}Page"
 
       @registerTransformStream pagesFilter.restore
 
-    saveConfig: ->
-      @config.set 'angularModules', @conf.angularModules
+    "views/index.coffee": ->
+      path = @destinationPath "./frontend/src/views/index.coffee"
+      content = fs.readFileSync path, 'utf8'
+      conf = @config.getAll()
+
+      replacedTextState = """
+  .state '#{@answers.name}',
+      url: '/#{@answers.name}'
+      views:
+        'main':
+          template: '<div #{conf.appName}-#{@answers.name}-page></div>'
+
+    #===== yeoman hook state =====#"""
+
+      content = content.replace '#===== yeoman hook state =====#', replacedTextState
+
+      replacedTextRequire = """
+  require './#{@answers.name}-page'
+    #===== yeoman hook require =====#"""
+
+      content = content.replace '#===== yeoman hook require =====#', replacedTextRequire
+      fs.writeFileSync path, content, 'utf8'
 
 module.exports = GarlicWebappUiGenerator

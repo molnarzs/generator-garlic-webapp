@@ -1,3 +1,3 @@
-describe.skip "<%= directiveNameCC %> directive unit tests", ->
+describe.skip "<%= c.directiveNameCC %> directive unit tests", ->
   it "should pass", ->
     expect(true).true
