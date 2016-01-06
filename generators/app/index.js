@@ -20,6 +20,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           services: [],
           factories: [],
           pages: []
+        },
+        backend: {
+          components: []
         }
       });
       return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
