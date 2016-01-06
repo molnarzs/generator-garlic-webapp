@@ -1,4 +1,4 @@
 {
   "footer.copyright": "All rights reserved",
-  "index.head.title": "<%= appName %>"
+  "index.head.title": "<%= appNameAsIs %>"
 }

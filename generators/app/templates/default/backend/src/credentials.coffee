@@ -1,1 +1,1 @@
-/Users/molnarzs/Dropbox/Projects/StarSchema/tableau-excel-extractor/credentials-backend.coffee
+{}
