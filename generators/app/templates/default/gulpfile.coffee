@@ -3,11 +3,11 @@ gutil = require 'gutil'
 p = require('gulp-load-plugins')() # loading gulp plugins lazily
 _ = require 'lodash'
 argv = require('yargs').argv
-nib = require 'nib'
 
 # -----------------------------------------------------------------------------
 # Create representation of file/directory structure
 backendRoot =  "backend/src"
+commonRoot =  "common/src"
 buildRoot =  "backend/bin"
 
 # -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ gulp.task 'setup', ['js', 'coffee']
 
 # -----------------------------------------------------------------------------
 gulp.task 'unittest', ->
-  gulp.src ["#{backendRoot}/test/unittest/index.coffee", "#{backendRoot}/**/*unit-tests.coffee"], {read: false}
+    gulp.src ["#{backendRoot}/test/unittest/index.coffee", "#{backendRoot}/**/*unit-tests.coffee", "#{commonRoot}/**/*unit-tests.coffee"], {read: false}
     .pipe p.coffee({bare: true}).on('error', gutil.log)
     .pipe p.mocha
       reporter: 'spec'
@@ -51,7 +51,7 @@ gulp.task 'unittest', ->
 
 # -----------------------------------------------------------------------------
 gulp.task 'systemtest', ['setup'], ->
-  gulp.src ["#{backendRoot}/test/systemtest/index.coffee", "#{backendRoot}/**/*system-tests.coffee"], {read: false}
+  gulp.src ["#{backendRoot}/test/systemtest/index.coffee", "#{backendRoot}/**/*system-tests.coffee", "#{commonRoot}/**/*system-tests.coffee"], {read: false}
     .pipe p.coffee({bare: true}).on('error', gutil.log)
     .pipe p.mocha
       reporter: 'spec'
