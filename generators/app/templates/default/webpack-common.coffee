@@ -1,7 +1,6 @@
 path = require 'path'
 webpack = require 'webpack'
-HtmlWebpackPlugin = require 'html-webpack-plugin'
-ExtractTextPlugin = require 'extract-text-webpack-plugin'
+plugins = require('webpack-load-plugins')()
 
 #related to this bug: https://github.com/jtangelder/sass-loader/issues/100
 process.env.UV_THREADPOOL_SIZE = 100
@@ -25,10 +24,10 @@ config =
     ]
     loaders: [
       {test: /\.js$/, loader: 'jshint', exclude: /node_modules|bower_components|gt-utils|gt-account-handling/}
-      {test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', "css?sourceMap!autoprefixer!sass?sourceMap&includePaths[]=#{path.resolve(__dirname, 'node_modules')}&includePaths[]=#{path.resolve(__dirname, 'src')}")}
-      {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css!autoprefixer")}
-      {test: /\.less$/, loader: 'style!css!autoprefixer|less'}
-      {test: /\.styl$/, loader: ExtractTextPlugin.extract("style-loader", "css!stylus")}
+      {test: /\.scss$/, loader: plugins.extractText.extract('style-loader', "css?sourceMap!postcss!sass?sourceMap&includePaths[]=#{path.resolve(__dirname, 'node_modules')}&includePaths[]=#{path.resolve(__dirname, 'src')}")}
+      {test: /\.css$/, loader: plugins.extractText.extract("style-loader", "css!postcss")}
+      {test: /\.less$/, loader: 'style!css!postcss|less'}
+      {test: /\.styl$/, loader: plugins.extractText.extract("style-loader", "css!stylus")}
       {test: /\.coffee$/, loader: 'coffee', exclude: 'node_modules'}
       {test: /\.jade$/, loader: "html!jade-html"}
       {test: /\.html$/, loader: 'html'}
@@ -45,6 +44,8 @@ config =
     ]
     noParse: []
 
+  postcss: -> [require('autoprefixer'), require('precss')]
+  
   plugins: [
     # new webpack.optimize.UglifyJsPlugin {minimize: true},
     # new webpack.optimize.DedupePlugin()
@@ -55,11 +56,11 @@ config =
       $: "jquery"
       "window.jQuery": "jquery"
 
-    new HtmlWebpackPlugin
+    new plugins.html
       inject: true
       template: path.join PATHS.src, 'index.html'
 
-    new ExtractTextPlugin "style.css",
+    new plugins.extractText "style.css",
       allChunks: true
   ]
 

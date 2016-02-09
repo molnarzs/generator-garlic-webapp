@@ -1,10 +1,13 @@
 require "file?name=[name].[ext]!./assets/icons/favicon.ico"
-require "expose?config!./config"
+require './globals'
 require './vendor'
 require './translations'
+require './style'
 
 Module = angular.module config.MainModuleName, [
   'ngMaterial'
+  'ngSanitize'
+  'ngAnimate'
   require 'gt-complib/frontend/src/localize'
   require './views'
   require './footer'

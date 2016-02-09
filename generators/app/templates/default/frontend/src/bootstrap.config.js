@@ -25,7 +25,7 @@ module.exports = {
   styles: {
     "mixins": false,
 
-    "normalize": false,
+    "normalize": true,
     "print": false,
 
     "scaffolding": false,

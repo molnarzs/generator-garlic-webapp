@@ -22,7 +22,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @moduleNames.push @answers.name
       @conf.factoryName = _.capitalize _.camelCase @answers.name
       @conf.moduleName = "#{@conf.appNameCC}.#{@conf.factoryName}"
-      @conf.factoryNameFQ = "#{@conf.appNameCC}-#{@conf.factoryName}"
+      @conf.factoryNameFQ = "#{@conf.appNameCC}.#{@conf.factoryName}"
 
     @prompt
       type    : 'input'

@@ -65,16 +65,16 @@ module.exports = Module.name
   install:
     dependencies: ->
       cb = @async()
+      console.log "\nLinking gt-complib.\n"
+      @spawnCommand 'npm', ['link', 'gt-complib']
       if not @options['skip-install'] then @installDependencies()
       cb()
 
-  end:
-    linkGtComplib: ->
-      cb = @async()
-      if not @options['skip-install']
-        console.log "\nLinking gt-complib.\n"
-        @spawnCommand 'npm', ['link', 'gt-complib']
-      cb()
+  # end:
+  #   linkGtComplib: ->
+  #     cb = @async()
+  #     if not @options['skip-install']
+  #     cb()
 
   # runGit: ->
   #   done = @async()

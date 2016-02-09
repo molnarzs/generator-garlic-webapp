@@ -9,8 +9,7 @@ PATHS = commonConfig.paths
 webpackConf = 
   context: PATHS.src
   entry:
-    #"#{moduleName}": './index.coffee'
-    "#{moduleName}": ['webpack/hot/dev-server', './index.coffee']
+    "#{moduleName}": './index.coffee'
   output:
     path: PATHS.dist
     filename: "[name].min.js"
@@ -23,5 +22,8 @@ webpackConf =
     content: "index.html"
     hot: true
     colors: true
+    port: 8081
+    host: '0.0.0.0'
+
 
 module.exports = _.assign commonConfig.config, webpackConf

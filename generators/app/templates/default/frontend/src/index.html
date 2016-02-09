@@ -6,7 +6,7 @@
   <meta name="description" content="<%= appNameAsIs %> web site">
   <meta name="author" content="contact@garlictech.com">
   <meta name="fragment" content="!">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title ng-bind='pageTitle'><%= appNameAsIs %></title>
   <base href="/">
 
@@ -40,9 +40,10 @@
   <div class='splash' ng-cloak>
     <div class='loading'>Loading...</div>
   </div>
-  <div ui-view="header"></div>
-  <div ui-view="main" ng-cloak></div>
-  <footer <%= appNameAsIs %>-footer></footer>
-  <script src="http://localhost:8081/webpack-dev-server.js"></script>
+  <div class="site">
+    <div ui-view="header"></div>
+    <div ui-view="main" ng-cloak></div>
+    <footer <%= appNameAsIs %>-footer></footer>
+  </div>
 </body>  
 </html>

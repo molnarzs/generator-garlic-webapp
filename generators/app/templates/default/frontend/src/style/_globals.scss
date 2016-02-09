@@ -1,12 +1,1 @@
-@import "~material-colors/dist/colors.scss";
-@import "./layout";
-
-@mixin gt-background-color($color, $alpha) {
-  background: $color;
-  background: rgba($color, $alpha);
-}
-
-@mixin gt-color($color, $alpha) {
-  color: $color;
-  color: rgba($color, $alpha);
-}
+// some globals in gt-complib/frontend/src/style

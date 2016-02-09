@@ -35,7 +35,7 @@ gulp.task 'js', ->
 # -----------------------------------------------------------------------------
 gulp.task 'watch', ['setup'], ->
   gulp.watch "#{backendRoot}/**/*.coffee", ['coffee', 'unittest']
-  gulp.watch "#{backendRoot}/**/*.js", ['js']
+  gulp.watch "#{backendRoot}/**/*.js", ['js', 'unittest']
 
 # -----------------------------------------------------------------------------
 gulp.task 'setup', ['js', 'coffee']
