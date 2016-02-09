@@ -16,6 +16,8 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
           pages: []
         backend:
           components: []
+        common:
+          components: []
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
 
   writing:
@@ -61,6 +63,10 @@ module.exports = Module.name
     "frontend/views/test-page/test-page-components.jade" : ->
       dest = @destinationPath "./frontend/src/views/test-page/test-page-components.jade"
       if not @fs.exists dest then @fs.write dest, ""
+
+
+    dotfiles: ->
+      @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
   install:
     dependencies: ->

@@ -33,7 +33,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         _this.moduleNames.push(_this.answers.name);
         _this.conf.serviceName = _.capitalize(_.camelCase(_this.answers.name));
         _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.serviceName;
-        return _this.conf.serviceNameFQ = "" + _this.conf.appNameCC + _this.conf.serviceName;
+        return _this.conf.serviceNameFQ = _this.conf.appNameCC + "." + _this.conf.serviceName;
       };
     })(this);
     return this.prompt({

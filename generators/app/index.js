@@ -23,6 +23,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         },
         backend: {
           components: []
+        },
+        common: {
+          components: []
         }
       });
       return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
@@ -65,25 +68,19 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "");
       }
+    },
+    dotfiles: function() {
+      return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
     }
   },
   install: {
     dependencies: function() {
       var cb;
       cb = this.async();
+      console.log("\nLinking gt-complib.\n");
+      this.spawnCommand('npm', ['link', 'gt-complib']);
       if (!this.options['skip-install']) {
         this.installDependencies();
-      }
-      return cb();
-    }
-  },
-  end: {
-    linkGtComplib: function() {
-      var cb;
-      cb = this.async();
-      if (!this.options['skip-install']) {
-        console.log("\nLinking gt-complib.\n");
-        this.spawnCommand('npm', ['link', 'gt-complib']);
       }
       return cb();
     }
