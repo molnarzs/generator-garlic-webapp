@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, _, chalk, path, util, yeoman;
+var GarlicWebappGenerator, _, chalk, execute, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -9,6 +9,10 @@ yeoman = require('yeoman-generator');
 chalk = require('chalk');
 
 _ = require('lodash');
+
+mkdirp = require('mkdirp');
+
+execute = require('child_process').execSync;
 
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: {
@@ -79,10 +83,32 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       cb = this.async();
       console.log("\nLinking gt-complib.\n");
       this.spawnCommand('npm', ['link', 'gt-complib']);
-      if (!this.options['skip-install']) {
-        this.installDependencies();
-      }
       return cb();
+    },
+    createLocalGitRepo: function() {
+      var done, pwd, repoName, repoRoot;
+      done = this.async();
+      repoRoot = process.env.GIT_REPOS_ROOT;
+      if (!repoRoot) {
+        return console.log("Git repo creation skipped (no GIT_REPOS_ROOT env. variable set)");
+      } else if (this.options['skip-install']) {
+        return console.log("Git repo creation skipped");
+      } else {
+        console.log("Creating local git repo to " + repoRoot);
+        pwd = process.cwd();
+        repoName = this.conf.appName + ".git";
+        process.chdir(repoRoot);
+        mkdirp.sync(repoName);
+        process.chdir(repoName);
+        execute("git init --bare");
+        process.chdir(pwd);
+        execute("git init");
+        execute("git remote add origin " + repoRoot + "/" + repoName);
+        execute("git add .");
+        execute("git commit -m 'Initial version.'");
+        execute('git push -u origin master');
+        return done();
+      }
     }
   }
 });
