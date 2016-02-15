@@ -59,6 +59,7 @@ modules/views/
 logs/
 builds/
 dist/
+bin/
 *.bak
 src/credentials.coffee
 

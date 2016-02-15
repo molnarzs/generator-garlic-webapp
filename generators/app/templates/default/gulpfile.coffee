@@ -8,7 +8,13 @@ argv = require('yargs').argv
 # Create representation of file/directory structure
 backendRoot =  "backend/src"
 commonRoot =  "common/src"
+coffeeFiles = ["#{backendRoot}/**/*.coffee", "#{commonRoot}/**/*.coffee"]
+jsFiles = ["#{backendRoot}/**/*.js", "#{commonRoot}/**/*.js", "#{backendRoot}/www"]
 buildRoot =  "backend/bin"
+
+handleError = (err) ->
+  console.log err.toString()
+  @emit 'end'
 
 # -----------------------------------------------------------------------------
 # Create a gulp task, and orchestrate it with default functions
@@ -21,7 +27,7 @@ GulpSrc = (srcFiles, taskName, srcOptions = {}) ->
 # -----------------------------------------------------------------------------
 # handle src coffeescript files: static compilation
 gulp.task 'coffee', ->
-  GulpSrc "#{backendRoot}/**/*.coffee", 'coffee', {base: backendRoot}
+  GulpSrc coffeeFiles, 'coffee', {base: './'}
   .pipe p.coffeelint()
   .pipe p.coffeelint.reporter()
   .pipe p.coffee(bare:true).on 'error', (err)->p.util.log err;@emit 'end'
@@ -29,20 +35,20 @@ gulp.task 'coffee', ->
 
 # -----------------------------------------------------------------------------
 gulp.task 'js', ->
-  GulpSrc ["#{backendRoot}/**/*.js", "#{backendRoot}/www"], 'js', {base: backendRoot}
+  GulpSrc jsFiles, 'js', {base: './'}
   .pipe gulp.dest buildRoot
 
 # -----------------------------------------------------------------------------
 gulp.task 'watch', ['setup'], ->
-  gulp.watch "#{backendRoot}/**/*.coffee", ['coffee', 'unittest']
-  gulp.watch "#{backendRoot}/**/*.js", ['js', 'unittest']
+  gulp.watch coffeeFiles, ['coffee', 'unittest']
+  gulp.watch jsFiles, ['js', 'unittest']
 
 # -----------------------------------------------------------------------------
 gulp.task 'setup', ['js', 'coffee']
 
 # -----------------------------------------------------------------------------
-gulp.task 'unittest', ->
-    gulp.src ["#{backendRoot}/test/unittest/index.coffee", "#{backendRoot}/**/*unit-tests.coffee", "#{commonRoot}/**/*unit-tests.coffee"], {read: false}
+gulp.task 'unittest', ['setup'], ->
+  gulp.src ["#{backendRoot}/test/unittest/index.coffee", "#{backendRoot}/**/*unit-tests.coffee", "#{commonRoot}/**/*unit-tests.coffee"], {read: false}
     .pipe p.coffee({bare: true}).on('error', gutil.log)
     .pipe p.mocha
       reporter: 'spec'
@@ -57,7 +63,7 @@ gulp.task 'systemtest', ['setup'], ->
       reporter: 'spec'
       ui: 'bdd'
       recursive: true
-    .once 'error', -> process.exit 1
+    .on 'error', handleError
     .once 'end', -> process.exit()
 
 # -----------------------------------------------------------------------------
