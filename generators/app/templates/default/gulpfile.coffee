@@ -3,6 +3,7 @@ gutil = require 'gutil'
 p = require('gulp-load-plugins')() # loading gulp plugins lazily
 _ = require 'lodash'
 argv = require('yargs').argv
+watch = require 'gulp-debounced-watch'
 
 # -----------------------------------------------------------------------------
 # Create representation of file/directory structure
@@ -40,8 +41,10 @@ gulp.task 'js', ->
 
 # -----------------------------------------------------------------------------
 gulp.task 'watch', ['setup'], ->
-  gulp.watch coffeeFiles, ['coffee', 'unittest']
-  gulp.watch jsFiles, ['js', 'unittest']
+  watch coffeeFiles, {debounceTimeout: 1000}, ->
+    gulp.start ['coffee', 'unittest']
+  watch jsFiles, {debounceTimeout: 1000}, ->
+    gulp.start ['js', 'unittest']
 
 # -----------------------------------------------------------------------------
 gulp.task 'setup', ['js', 'coffee']

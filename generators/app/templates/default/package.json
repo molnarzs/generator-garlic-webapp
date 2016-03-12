@@ -34,6 +34,7 @@
     "gulp-cached": "^1.1.0",
     "gulp-coffee": "^2.3.1",
     "gulp-coffeelint": "^0.6.0",
+    "gulp-debounced-watch": "^1.0.4",
     "gulp-load-plugins": "^1.2.0",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.6",
