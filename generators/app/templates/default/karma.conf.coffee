@@ -9,20 +9,20 @@ PATHS = commonConfig.paths
 module.exports = (config) ->
   "use strict"
 
-  webpackConf = _.assign {entry: "./frontend/src/test/#{process.env.KARMA_TEST}/test.coffee"}, commonConfig.config
+  webpackConf = _.assign {entry: "./client/test/#{process.env.KARMA_TEST}/test.coffee"}, commonConfig.config
 
   webpackConf.plugins.push new webpack.ProvidePlugin
     test: path.join PATHS.src, 'test', process.env.KARMA_TEST
 
   config.set
-    files: [{pattern: "frontend/src/test/#{process.env.KARMA_TEST}/test.coffee"}]
+    files: [{pattern: "client/test/#{process.env.KARMA_TEST}/test.coffee"}]
     watched: IsUnitTest
     included: true
     served: true
     singleRun: not IsUnitTest
 
     preprocessors:
-      "frontend/src/test/#{process.env.KARMA_TEST}/test.coffee": ['webpack']
+      "client/test/#{process.env.KARMA_TEST}/test.coffee": ['webpack']
     
     webpack: webpackConf
 

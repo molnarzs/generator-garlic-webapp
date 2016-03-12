@@ -19,7 +19,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     init: function() {
       this.conf = this.config.getAll();
       console.log(chalk.magenta('You\'re using the GarlicTech webapp background component service.'));
-      return this.backendComponents = this.conf.backend;
+      return this.serverComponents = this.conf.server;
     }
   },
   prompting: function() {
@@ -31,7 +31,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         _this.answers = answers;
         _this.conf.componentNameCC = _.capitalize(_.camelCase(_this.answers.name));
         _this.conf.componentName = _this.answers.name;
-        return _this.backendComponents.components.push(_this.conf.componentName);
+        return _this.serverComponents.components.push(_this.conf.componentName);
       };
     })(this);
     return this.prompt({
@@ -43,12 +43,12 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./backend/src/" + this.conf.componentName), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./server/src/" + this.conf.componentName), {
         c: this.conf
       });
     },
     saveConfig: function() {
-      return this.config.set('backend', this.backendComponents);
+      return this.config.set('server', this.serverComponents);
     }
   }
 });

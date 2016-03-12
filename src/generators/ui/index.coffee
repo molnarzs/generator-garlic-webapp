@@ -56,12 +56,12 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
         root = "views/#{@answers.name}-page"
         @conf.moduleNameFQ = "#{@conf.moduleNameFQ}.page"
 
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{root}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./client/#{root}"), {c: @conf}
 
     "ui-modules.coffee": ->
       if @options.page then return
 
-      dest = @destinationPath("./frontend/src/ui-modules.coffee")
+      dest = @destinationPath("./client/ui-modules.coffee")
       content = """Module = angular.module "#{@conf.appNameCC}.ui", ["""
 
       _.forEach @moduleNames, (moduleName) ->
@@ -73,7 +73,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
     "test-page-components.jade": ->
       if @options.page then return
 
-      dest = @destinationPath("./frontend/src/views/test-page/test-page-components.jade")
+      dest = @destinationPath("./client/views/test-page/test-page-components.jade")
       content = ""
 
       _.forEach @moduleNames, (moduleName) =>

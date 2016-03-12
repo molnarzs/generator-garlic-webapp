@@ -1,25 +1,23 @@
 {
-  "name": "<%= appName %>",
+  "name": "@garlictech/<%= appName %>",
   "version": "0.0.1",
   "description": "<%= appNameAsIs %> web site",
-  "main": "frontend/src/index.coffee",
-  "license": "GarlicTech",
+  "main": "client/index.coffee",
+  "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
     "url": "https://github.com/garlictech/<%= appName %>.git"
   },
   "author": "contact@garlictech.com",
   "keywords": [
-    "garlictech",
     "<%= appName %>"
   ],
   "bugs": {
     "url": "https://github.com/garlictech/<%= appName %>/issues"
   },
   "homepage": "https://github.com/garlictech/<%= appName %>#readme",
-  "devDependencies": {
+ "devDependencies": {
     "breakpoint-sass": "^2.6.1",
-    "bootstrap-webpack": "^0.0.5",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.11.1",
@@ -31,6 +29,7 @@
     "extract-text-webpack-plugin": "0.9.x",
     "file-loader": "^0.8.4",
     "font-awesome-webpack": "0.0.4",
+    "foundation-sites": "^6.2.0",
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
     "gulp-coffee": "^2.3.1",
@@ -75,25 +74,29 @@
     "sinon-chai": "^2.8.x",
     "style-loader": "0.13.x",
     "url-loader": "^0.5.x",
-    "webfontloader": "^1.6.20", 
+    "webfontloader": "^1.6.20",
     "webpack": "^1.12.x",
     "webpack-dev-server": "^1.8.x",
     "webpack-load-plugins": "^0.1.2"
   },
   "dependencies": {
+    "@garlictech/complib": "0.0.4",
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-aria": "^1.5.0",
+    "angular-material": "^1.0.6",
+    "angular-material-icons": "^0.6.0",
+    "angular-messages": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
     "chalk": "^1.1.1",
-    "connect-mongo": "^1.1.0",
-    "connect-mongostore": "^0.1.4",
     "cookie-parser": "^1.4.1",
     "cors": "^2.7.1",
     "cowsay": "^1.1.3",
-    "express-session": "^1.13.0",
-    "express-validator": "^2.19.0",
-    "gt-complib": "git+https://github.com/garlictech/gt-complib.git",
-    "helmet": "^1.1.0",
-    "mandrill-api": "^1.0.45",
-    "mongoose": "^4.4.0",
-    "morgan": "^1.6.1",
+    "font-awesome": "^4.5.0",
+    "helmet": "^1.3.0",
+    "lodash": "^4.6.1",
+    "morgan": "^1.7.0",
     "winston": "^2.1.1"
   },
   "scripts": {
@@ -101,7 +104,8 @@
     "test": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
     "system-test": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",
-    "protractor-start": "node_modules/gt-complib/node_modules/protractor/bin/webdriver-manager start",
-    "protractor-test": "node_modules/gt-complib/node_modules/protractor/bin/protractor ./frontend/src/test/protractor/config.coffee"
+    "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
+    "protractor-test": "node_modules/protractor/bin/protractor ./client/test/protractor/config.coffee",
+    "protractor-setup": "node_modules/protractor/bin/webdriver-manager update --standalone"
   }
 }

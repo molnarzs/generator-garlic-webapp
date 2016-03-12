@@ -45,13 +45,13 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./frontend/src/" + this.answers.name), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./client/" + this.answers.name), {
         c: this.conf
       });
     },
     "service-modules.coffee": function() {
       var content, dest;
-      dest = this.destinationPath("./frontend/src/service-modules.coffee");
+      dest = this.destinationPath("./client/service-modules.coffee");
       content = "Module = angular.module \"" + this.conf.appNameCC + ".services\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";

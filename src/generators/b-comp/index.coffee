@@ -11,7 +11,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
     init: ->
       @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp background component service.'
-      @backendComponents = @conf.backend
+      @serverComponents = @conf.server
 
   prompting: ->
     done = @async()
@@ -20,7 +20,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @answers = answers
       @conf.componentNameCC = _.capitalize _.camelCase @answers.name
       @conf.componentName = @answers.name
-      @backendComponents.components.push @conf.componentName
+      @serverComponents.components.push @conf.componentName
 
     @prompt
       type    : 'input'
@@ -31,9 +31,9 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./backend/src/#{@conf.componentName}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./server/src/#{@conf.componentName}"), {c: @conf}
 
     saveConfig: ->
-      @config.set 'backend', @backendComponents
+      @config.set 'server', @serverComponents
 
 module.exports = GarlicWebappUiGenerator

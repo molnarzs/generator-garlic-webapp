@@ -16,7 +16,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
           services: []
           factories: []
           pages: []
-        backend:
+        server:
           components: []
         common:
           components: []
@@ -30,11 +30,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         appNameCC: _.capitalize _.camelCase @conf.appName
         appNameAsIs: @conf.appName
       
-      @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./frontend/src/")
+      @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./client/")
 
 
-    "frontend/ui-modules.coffee" : ->
-      dest = @destinationPath "./frontend/src/ui-modules.coffee"
+    "client/ui-modules.coffee" : ->
+      dest = @destinationPath "./client/ui-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -43,8 +43,8 @@ module.exports = Module.name
 """
 
 
-    "frontend/service-modules.coffee" : ->
-      dest = @destinationPath "./frontend/src/service-modules.coffee"
+    "client/service-modules.coffee" : ->
+      dest = @destinationPath "./client/service-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -53,8 +53,8 @@ module.exports = Module.name
 """
 
 
-    "frontend/factory-modules.coffee" : ->
-      dest = @destinationPath "./frontend/src/factory-modules.coffee"
+    "client/factory-modules.coffee" : ->
+      dest = @destinationPath "./client/factory-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -62,8 +62,8 @@ Module = angular.module "#{@conf.appName}-factories", []
 module.exports = Module.name
 """
 
-    "frontend/views/test-page/test-page-components.jade" : ->
-      dest = @destinationPath "./frontend/src/views/test-page/test-page-components.jade"
+    "client/views/test-page/test-page-components.jade" : ->
+      dest = @destinationPath "./client/views/test-page/test-page-components.jade"
       if not @fs.exists dest then @fs.write dest, ""
 
 
@@ -73,33 +73,33 @@ module.exports = Module.name
   install:
     dependencies: ->
       cb = @async()
-      console.log "\nLinking gt-complib.\n"
-      @spawnCommand 'npm', ['link', 'gt-complib']
-      # if not @options['skip-install'] then @installDependencies()
+      # console.log "\nLinking gt-complib.\n"
+      # @spawnCommand 'npm', ['link', 'gt-complib']
+      if not @options['skip-install'] then @installDependencies()
       cb()
 
-    createLocalGitRepo: ->
-      done = @async()
-      repoRoot = process.env.GIT_REPOS_ROOT
-      if not repoRoot
-        console.log "Git repo creation skipped (no GIT_REPOS_ROOT env. variable set)"
-      else if @options['skip-install']
-        console.log "Git repo creation skipped"
-      else
-        console.log "Creating local git repo to #{repoRoot}"
-        pwd = process.cwd()
-        repoName = "#{@conf.appName}.git"
-        process.chdir repoRoot
-        mkdirp.sync repoName
-        process.chdir repoName
-        execute "git init --bare"
-        process.chdir pwd
-        execute "git init"
-        execute "git remote add origin #{repoRoot}/#{repoName}"
-        execute "git add ."
-        execute "git commit -m 'Initial version.'"
-        execute 'git push -u origin master'
-        done()
+    # createLocalGitRepo: ->
+    #   done = @async()
+    #   repoRoot = process.env.GIT_REPOS_ROOT
+    #   if not repoRoot
+    #     console.log "Git repo creation skipped (no GIT_REPOS_ROOT env. variable set)"
+    #   else if @options['skip-install']
+    #     console.log "Git repo creation skipped"
+    #   else
+    #     console.log "Creating local git repo to #{repoRoot}"
+    #     pwd = process.cwd()
+    #     repoName = "#{@conf.appName}.git"
+    #     process.chdir repoRoot
+    #     mkdirp.sync repoName
+    #     process.chdir repoName
+    #     execute "git init --bare"
+    #     process.chdir pwd
+    #     execute "git init"
+    #     execute "git remote add origin #{repoRoot}/#{repoName}"
+    #     execute "git add ."
+    #     execute "git commit -m 'Initial version.'"
+    #     execute 'git push -u origin master'
+    #     done()
 
   # runRemoteGit: ->
   #   done = @async()

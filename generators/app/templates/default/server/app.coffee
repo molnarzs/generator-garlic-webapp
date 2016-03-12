@@ -1,6 +1,6 @@
 cowsay = require "cowsay"
 chalk = require 'chalk'
-console.log chalk.blue cowsay.say {text: "<%= appNameAsIs %> backend server", e: "oO", T: 'U '}
+console.log chalk.blue cowsay.say {text: "<%= appNameAsIs %> server", e: "oO", T: 'U '}
 
 require './globals'
 

@@ -6,11 +6,11 @@ argv = require('yargs').argv
 
 # -----------------------------------------------------------------------------
 # Create representation of file/directory structure
-backendRoot =  "backend/src"
-commonRoot =  "common/src"
-coffeeFiles = ["#{backendRoot}/**/*.coffee", "#{commonRoot}/**/*.coffee"]
-jsFiles = ["#{backendRoot}/**/*.js", "#{commonRoot}/**/*.js", "#{backendRoot}/www"]
-buildRoot =  "backend/bin"
+serverRoot =  "server"
+commonRoot =  "common"
+coffeeFiles = ["#{serverRoot}/**/*.coffee", "#{commonRoot}/**/*.coffee"]
+jsFiles = ["#{serverRoot}/**/*.js", "#{commonRoot}/**/*.js", "#{serverRoot}/www"]
+buildRoot =  "dist"
 
 handleError = (err) ->
   console.log err.toString()
@@ -48,7 +48,7 @@ gulp.task 'setup', ['js', 'coffee']
 
 # -----------------------------------------------------------------------------
 gulp.task 'unittest', ['setup'], ->
-  gulp.src ["#{backendRoot}/test/unittest/index.coffee", "#{backendRoot}/**/*unit-tests.coffee", "#{commonRoot}/**/*unit-tests.coffee"], {read: false}
+  gulp.src ["#{serverRoot}/test/unittest/index.coffee", "#{serverRoot}/**/*unit-tests.coffee", "#{commonRoot}/**/*unit-tests.coffee"], {read: false}
     .pipe p.coffee({bare: true}).on('error', gutil.log)
     .pipe p.mocha
       reporter: 'spec'
@@ -57,7 +57,7 @@ gulp.task 'unittest', ['setup'], ->
 
 # -----------------------------------------------------------------------------
 gulp.task 'systemtest', ['setup'], ->
-  gulp.src ["#{backendRoot}/test/systemtest/index.coffee", "#{backendRoot}/**/*system-tests.coffee", "#{commonRoot}/**/*system-tests.coffee"], {read: false}
+  gulp.src ["#{serverRoot}/test/systemtest/index.coffee", "#{serverRoot}/**/*system-tests.coffee", "#{commonRoot}/**/*system-tests.coffee"], {read: false}
     .pipe p.coffee({bare: true}).on('error', gutil.log)
     .pipe p.mocha
       reporter: 'spec'
@@ -70,7 +70,7 @@ gulp.task 'systemtest', ['setup'], ->
 # Start the web server
 gulp.task 'webserver', ->
   p.nodemon
-    script: "#{backendRoot}/../bin/www"
+    script: "#{buildRoot}/server/www"
 
 # -----------------------------------------------------------------------------
 gulp.task 'default', ['setup', 'watch', 'webserver']

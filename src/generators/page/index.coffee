@@ -36,14 +36,14 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @registerTransformStream gulpRename (path) =>
         path.basename = "#{@answers.name}.#{path.basename}"
 
-      @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./frontend/src/test/protractor"),
+      @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./client/test/protractor"),
         pageName: @answers.name
         pageNameCC: "#{_.capitalize _.camelCase @answers.name}Page"
 
       @registerTransformStream pagesFilter.restore
 
     "views/index.coffee": ->
-      path = @destinationPath "./frontend/src/views/index.coffee"
+      path = @destinationPath "./client/views/index.coffee"
       content = fs.readFileSync path, 'utf8'
       conf = @config.getAll()
 

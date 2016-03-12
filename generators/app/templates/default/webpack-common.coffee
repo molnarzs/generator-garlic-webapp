@@ -6,13 +6,11 @@ plugins = require('webpack-load-plugins')()
 process.env.UV_THREADPOOL_SIZE = 100
 
 PATHS =
-  src: path.join __dirname, 'frontend', 'src'
-  dist: path.join __dirname, 'frontend', 'dist'
-  test: path.join __dirname, 'frontend', 'src', 'test', 'protractor'
+  src: path.join __dirname, 'client'
+  dist: path.join __dirname, 'dist', 'client'
+  test: path.join __dirname, 'client', 'test', 'protractor'
   node: path.join __dirname, 'node_modules'
   bower: path.join __dirname, 'bower_components'
-  complib_node: path.join __dirname, 'node_modules', 'gt-complib', 'node_modules'
-  complib_bower: path.join __dirname, 'node_modules', 'gt-complib', 'bower_components'
 
 config =
   context: __dirname
@@ -23,8 +21,8 @@ config =
       {test: /\.coffee$/, loader: 'coffeelint', exclude: 'node_modules'}
     ]
     loaders: [
-      {test: /\.js$/, loader: 'jshint', exclude: /node_modules|bower_components|gt-utils|gt-account-handling/}
-      {test: /\.scss$/, loader: plugins.extractText.extract('style-loader', "css?sourceMap!postcss!sass?sourceMap&includePaths[]=#{path.resolve(__dirname, 'node_modules')}&includePaths[]=#{path.resolve(__dirname, 'src')}")}
+      {test: /\.js$/, loader: 'jshint', exclude: /node_modules|bower_components/}
+      {test: /\.scss$/, loader: plugins.extractText.extract('style-loader', "css?sourceMap!postcss!sass?sourceMap")}
       {test: /\.css$/, loader: plugins.extractText.extract("style-loader", "css!postcss")}
       {test: /\.less$/, loader: 'style!css!postcss|less'}
       {test: /\.styl$/, loader: plugins.extractText.extract("style-loader", "css!stylus")}
@@ -44,7 +42,13 @@ config =
     ]
     noParse: []
 
-  postcss: -> [require('autoprefixer'), require('precss')]
+  postcss: -> [ require('precss'),
+    require('autoprefixer')({browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3']})
+  ]
+
+  sassLoader: {
+    includePaths: [ path.join(PATHS.node, 'normalize-scss', 'sass')]
+  },
   
   plugins: [
     # new webpack.optimize.UglifyJsPlugin {minimize: true},
@@ -69,14 +73,12 @@ config =
     
     root: [
       PATHS.node,
-      PATHS.bower,
-      PATHS.complib_node,
-      PATHS.complib_bower,
+      PATHS.bower
     ]
     
     modulesDirectories: [
-      'src'
-      'frontend/src',
+      'client',
+      'common',
       'node_modules',
       'bower_components'
     ]

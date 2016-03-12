@@ -33,10 +33,10 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./frontend/src/#{@answers.name}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./client/#{@answers.name}"), {c: @conf}
 
     "service-modules.coffee": ->
-      dest = @destinationPath("./frontend/src/service-modules.coffee")
+      dest = @destinationPath("./client/service-modules.coffee")
       content = """Module = angular.module "#{@conf.appNameCC}.services", ["""
 
       _.forEach @moduleNames, (moduleName) ->
