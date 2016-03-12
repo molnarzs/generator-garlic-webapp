@@ -1,5 +1,5 @@
 class <%= c.componentNameCC %>
-  { getter, setter } = require('gt-complib/common/src/gs') @
+  { getter, setter } = require('@garlictech/complib/common/src/gs') @
   
   constructor: ->
 

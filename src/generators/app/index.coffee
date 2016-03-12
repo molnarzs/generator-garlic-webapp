@@ -76,8 +76,8 @@ module.exports = Module.name
   install:
     dependencies: ->
       cb = @async()
-      # console.log "\nLinking gt-complib.\n"
-      # @spawnCommand 'npm', ['link', 'gt-complib']
+      # console.log "\nLinking @garlictech/complib.\n"
+      # @spawnCommand 'npm', ['link', '@garlictech/complib']
       if not @options['skip-install'] then @installDependencies()
       cb()
 
