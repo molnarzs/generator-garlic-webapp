@@ -8,6 +8,7 @@ execute = require('child_process').execSync
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   initializing:
+
     init: ->
       @config.set
         appName: @appname
@@ -24,6 +25,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
+      cb = @async()
       @conf = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         appName: _.kebabCase @conf.appName
@@ -31,6 +33,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         appNameAsIs: @conf.appName
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./client/")
+      cb()
 
 
     "client/ui-modules.coffee" : ->

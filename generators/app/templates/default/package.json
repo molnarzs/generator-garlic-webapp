@@ -64,6 +64,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "mocha": "^2.3.x",
+    "nsp": "^2.1.0",
     "node-sass": "^3.2.x",
     "postcss-loader": "^0.8.0",
     "postcss-safe-parser": "^1.0.4",
@@ -80,6 +81,12 @@
     "webpack-load-plugins": "^0.1.2"
   },
   "dependencies": {
+    "compression": "^1.0.3",
+    "loopback": "^2.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.4.0",
+    "loopback-datasource-juggler": "^2.39.0",
+    "serve-favicon": "^2.0.1",
     "@garlictech/complib": "0.0.4",
     "angular": "^1.5.0",
     "angular-animate": "^1.5.0",

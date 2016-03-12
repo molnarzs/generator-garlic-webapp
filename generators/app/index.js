@@ -37,13 +37,16 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
+      var cb;
+      cb = this.async();
       this.conf = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         appName: _.kebabCase(this.conf.appName),
         appNameCC: _.capitalize(_.camelCase(this.conf.appName)),
         appNameAsIs: this.conf.appName
       });
-      return this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./client/"));
+      this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./client/"));
+      return cb();
     },
     "client/ui-modules.coffee": function() {
       var dest;

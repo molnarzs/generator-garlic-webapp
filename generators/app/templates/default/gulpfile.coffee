@@ -9,7 +9,7 @@ argv = require('yargs').argv
 serverRoot =  "server"
 commonRoot =  "common"
 coffeeFiles = ["#{serverRoot}/**/*.coffee", "#{commonRoot}/**/*.coffee"]
-jsFiles = ["#{serverRoot}/**/*.js", "#{commonRoot}/**/*.js", "#{serverRoot}/www"]
+jsFiles = ["#{serverRoot}/**/*.js", "#{commonRoot}/**/*.js", "#{serverRoot}/**/*.json", "#{commonRoot}/**/*.json"]
 buildRoot =  "dist"
 
 handleError = (err) ->
@@ -70,7 +70,7 @@ gulp.task 'systemtest', ['setup'], ->
 # Start the web server
 gulp.task 'webserver', ->
   p.nodemon
-    script: "#{buildRoot}/server/www"
+    script: "#{buildRoot}/server/server.js"
 
 # -----------------------------------------------------------------------------
 gulp.task 'default', ['setup', 'watch', 'webserver']
