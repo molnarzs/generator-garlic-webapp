@@ -31,7 +31,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
   writing:
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./server/src/#{@conf.componentName}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./server/#{@conf.componentName}"), {c: @conf}
 
     saveConfig: ->
       @config.set 'server', @serverComponents

@@ -109,7 +109,7 @@
     "winston": "^2.1.1"
   },
   "scripts": {
-    "start": "node node_modules/.bin/webpack-dev-server --inline --hot",
+    "start": "node node_modules/.bin/webpack-dev-server --inline --hot --watch",
     "unittest": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
     "systemtest": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",

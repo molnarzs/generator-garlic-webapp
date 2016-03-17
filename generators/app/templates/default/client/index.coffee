@@ -1,7 +1,6 @@
 require "file?name=[name].[ext]!./assets/icons/favicon.ico"
 require './globals'
 require './vendor'
-require './translations'
 require './style'
 
 Module = angular.module config.MainModuleName, [
@@ -15,6 +14,7 @@ Module = angular.module config.MainModuleName, [
   require './ui-modules'
   require './service-modules'
   require './factory-modules'
+  require './translations'
 ]
 # .config ['$mdThemingProvider', ($mdThemingProvider) ->
 #   $mdThemingProvider.theme('<%= appName %>')

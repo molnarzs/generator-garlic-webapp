@@ -43,7 +43,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./server/src/" + this.conf.componentName), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./server/" + this.conf.componentName), {
         c: this.conf
       });
     },
