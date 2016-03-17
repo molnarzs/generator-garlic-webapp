@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/garlictech/<%= appName %>#readme",
  "devDependencies": {
+    "angular-mocks": "^1.5.0",
     "breakpoint-sass": "^2.6.1",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
@@ -109,8 +110,8 @@
   },
   "scripts": {
     "start": "node node_modules/.bin/webpack-dev-server --inline --hot",
-    "test": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
-    "system-test": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
+    "unittest": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
+    "systemtest": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",
     "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
     "protractor-test": "node_modules/protractor/bin/protractor ./client/test/protractor/config.coffee",

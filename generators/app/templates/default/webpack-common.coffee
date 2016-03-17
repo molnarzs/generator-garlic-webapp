@@ -59,6 +59,7 @@ config =
       jQuery: 'jquery'
       $: "jquery"
       "window.jQuery": "jquery"
+      "config": "config.coffee"
 
     new plugins.html
       inject: true
