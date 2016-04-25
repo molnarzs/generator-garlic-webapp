@@ -61,7 +61,8 @@ builds/
 dist/
 bin/
 *.bak
-src/credentials.coffee
+credentials.coffee
+config.json
 
 # --------------------
 # Text editor files

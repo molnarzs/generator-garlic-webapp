@@ -1,6 +1,6 @@
 {
   "name": "generator-garlic-webapp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generator for GarlicTech web applications.",
   "license": "GarlicTech",
   "main": "app/index.js",
