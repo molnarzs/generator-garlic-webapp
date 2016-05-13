@@ -32,12 +32,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         appNameCC: _.capitalize _.camelCase @conf.appName
         appNameAsIs: @conf.appName
       
-      @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./client/")
+      @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
       cb()
 
 
-    "client/ui-modules.coffee" : ->
-      dest = @destinationPath "./client/ui-modules.coffee"
+    "src/ui-modules.coffee" : ->
+      dest = @destinationPath "./src/ui-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -46,8 +46,8 @@ module.exports = Module.name
 """
 
 
-    "client/service-modules.coffee" : ->
-      dest = @destinationPath "./client/service-modules.coffee"
+    "src/service-modules.coffee" : ->
+      dest = @destinationPath "./src/service-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -56,8 +56,8 @@ module.exports = Module.name
 """
 
 
-    "client/factory-modules.coffee" : ->
-      dest = @destinationPath "./client/factory-modules.coffee"
+    "src/factory-modules.coffee" : ->
+      dest = @destinationPath "./src/factory-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
@@ -65,8 +65,8 @@ Module = angular.module "#{@conf.appName}-factories", []
 module.exports = Module.name
 """
 
-    "client/views/test-page/test-page-components.jade" : ->
-      dest = @destinationPath "./client/views/test-page/test-page-components.jade"
+    "src/views/test-page/test-page-components.jade" : ->
+      dest = @destinationPath "./src/views/test-page/test-page-components.jade"
       if not @fs.exists dest then @fs.write dest, ""
 
 

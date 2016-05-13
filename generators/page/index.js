@@ -60,7 +60,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
           return path.basename = _this.answers.name + "." + path.basename;
         };
       })(this)));
-      this.fs.copyTpl(this.templatePath('protractor/**/*'), this.destinationPath("./client/test/protractor"), {
+      this.fs.copyTpl(this.templatePath('protractor/**/*'), this.destinationPath("./src/test/protractor"), {
         pageName: this.answers.name,
         pageNameCC: (_.capitalize(_.camelCase(this.answers.name))) + "Page"
       });
@@ -68,7 +68,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     },
     "views/index.coffee": function() {
       var conf, content, replacedTextRequire, replacedTextState;
-      path = this.destinationPath("./client/views/index.coffee");
+      path = this.destinationPath("./src/views/index.coffee");
       content = fs.readFileSync(path, 'utf8');
       conf = this.config.getAll();
       replacedTextState = ".state '" + this.answers.name + "',\n    url: '/" + this.answers.name + "'\n    views:\n      'main':\n        template: '<div " + conf.appName + "-" + this.answers.name + "-page></div>'\n\n  #===== yeoman hook state =====#";

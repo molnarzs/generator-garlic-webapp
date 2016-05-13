@@ -72,7 +72,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         root = "views/" + this.answers.name + "-page";
         this.conf.moduleNameFQ = this.conf.moduleNameFQ + ".page";
       }
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./client/" + root), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + root), {
         c: this.conf
       });
     },
@@ -81,7 +81,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       if (this.options.page) {
         return;
       }
-      dest = this.destinationPath("./client/ui-modules.coffee");
+      dest = this.destinationPath("./src/ui-modules.coffee");
       content = "Module = angular.module \"" + this.conf.appNameCC + ".ui\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
@@ -94,7 +94,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       if (this.options.page) {
         return;
       }
-      dest = this.destinationPath("./client/views/test-page/test-page-components.jade");
+      dest = this.destinationPath("./src/views/test-page/test-page-components.jade");
       content = "";
       _.forEach(this.moduleNames, (function(_this) {
         return function(moduleName) {

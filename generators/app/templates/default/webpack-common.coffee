@@ -6,9 +6,9 @@ plugins = require('webpack-load-plugins')()
 process.env.UV_THREADPOOL_SIZE = 100
 
 PATHS =
-  src: path.join __dirname, 'client'
-  dist: path.join __dirname, 'dist', 'client'
-  test: path.join __dirname, 'client', 'test', 'protractor'
+  src: path.join __dirname, 'src'
+  dist: path.join __dirname, 'dist'
+  test: path.join __dirname, 'src', 'test', 'protractor'
   node: path.join __dirname, 'node_modules'
   bower: path.join __dirname, 'bower_components'
 
@@ -27,7 +27,7 @@ config =
       {test: /\.less$/, loader: 'style!css!postcss|less'}
       {test: /\.styl$/, loader: plugins.extractText.extract("style-loader", "css!stylus")}
       {test: /\.coffee$/, loader: 'coffee', exclude: 'node_modules'}
-      {test: /\.jade$/, loader: "html!jade-html"}
+      {test: /\.jade$|\.pug$/, loader: "html!pug-html"}
       {test: /\.html$/, loader: 'html'}
       {test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff"}
       {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}
@@ -70,7 +70,7 @@ config =
   ]
 
   resolve:
-    extensions: ["", ".webpack.js", ".web.js", ".js", ".coffee", ".styl", ".jade", ".scss", '.css']
+    extensions: ["", ".webpack.js", ".web.js", ".js", ".coffee", ".styl", ".jade", ".pug", ".scss", '.css']
     
     root: [
       PATHS.node,
@@ -78,8 +78,7 @@ config =
     ]
     
     modulesDirectories: [
-      'client',
-      'common',
+      'src',
       'node_modules',
       'bower_components'
     ]

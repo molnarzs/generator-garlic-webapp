@@ -2,7 +2,7 @@
   "name": "@garlictech/<%= appName %>",
   "version": "0.0.1",
   "description": "<%= appNameAsIs %> web site",
-  "main": "src/index.coffee",
+  "main": "client/index.coffee",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -113,7 +113,7 @@
     "systemtest": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
     "build": "node node_modules/webpack/bin/webpack.js",
     "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
-    "protractor-test": "node_modules/protractor/bin/protractor ./src/test/protractor/config.coffee",
+    "protractor-test": "node_modules/protractor/bin/protractor ./client/test/protractor/config.coffee",
     "protractor-setup": "node_modules/protractor/bin/webdriver-manager update --standalone"
   }
 }

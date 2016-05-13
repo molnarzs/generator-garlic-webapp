@@ -45,33 +45,33 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         appNameCC: _.capitalize(_.camelCase(this.conf.appName)),
         appNameAsIs: this.conf.appName
       });
-      this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./client/"));
+      this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
       return cb();
     },
-    "client/ui-modules.coffee": function() {
+    "src/ui-modules.coffee": function() {
       var dest;
-      dest = this.destinationPath("./client/ui-modules.coffee");
+      dest = this.destinationPath("./src/ui-modules.coffee");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-ui\", []\nmodule.exports = Module.name");
       }
     },
-    "client/service-modules.coffee": function() {
+    "src/service-modules.coffee": function() {
       var dest;
-      dest = this.destinationPath("./client/service-modules.coffee");
+      dest = this.destinationPath("./src/service-modules.coffee");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-services\", []\nmodule.exports = Module.name");
       }
     },
-    "client/factory-modules.coffee": function() {
+    "src/factory-modules.coffee": function() {
       var dest;
-      dest = this.destinationPath("./client/factory-modules.coffee");
+      dest = this.destinationPath("./src/factory-modules.coffee");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-factories\", []\nmodule.exports = Module.name");
       }
     },
-    "client/views/test-page/test-page-components.jade": function() {
+    "src/views/test-page/test-page-components.jade": function() {
       var dest;
-      dest = this.destinationPath("./client/views/test-page/test-page-components.jade");
+      dest = this.destinationPath("./src/views/test-page/test-page-components.jade");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "");
       }
