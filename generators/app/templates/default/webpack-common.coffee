@@ -27,7 +27,7 @@ config =
       {test: /\.less$/, loader: 'style!css!postcss|less'}
       {test: /\.styl$/, loader: plugins.extractText.extract("style-loader", "css!stylus")}
       {test: /\.coffee$/, loader: 'coffee', exclude: 'node_modules'}
-      {test: /\.jade$|\.pug$/, loader: "html!pug-html"}
+      {test: /\.jade$/, loader: "html!jade-html"}
       {test: /\.html$/, loader: 'html'}
       {test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff"}
       {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}

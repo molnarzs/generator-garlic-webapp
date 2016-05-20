@@ -1,9 +1,3 @@
-GLOBAL.chai = require 'chai'
-GLOBAL.chaiAsPromised = require 'chai-as-promised'
-GLOBAL.chai.use chaiAsPromised
-GLOBAL.expect = chai.expect
-GLOBAL.should = chai.should()
-
 globalConfig =
   baseUrl: 'http://localhost:8081'
 
@@ -29,3 +23,9 @@ exports.config =
     global.EC = protractor.ExpectedConditions
     global.PTR = browser
     global.config = globalConfig
+    chai = require 'chai'
+    chaiAsPromised = require 'chai-as-promised'
+    chai.use chaiAsPromised
+    global.chai = chai
+    global.expect = chai.expect
+    global.should = chai.should()
