@@ -17,6 +17,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
           services: []
           factories: []
           pages: []
+          providers: []
         server:
           components: []
         common:

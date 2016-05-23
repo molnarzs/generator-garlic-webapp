@@ -23,7 +23,8 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           ui: [],
           services: [],
           factories: [],
-          pages: []
+          pages: [],
+          providers: []
         },
         server: {
           components: []

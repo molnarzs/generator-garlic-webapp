@@ -14,16 +14,8 @@ Module = angular.module config.MainModuleName, [
   require './ui-modules'
   require './service-modules'
   require './factory-modules'
+  require './provider-modules'
   require './translations'
 ]
-# .config ['$mdThemingProvider', ($mdThemingProvider) ->
-#   $mdThemingProvider.theme('<%= appName %>')
-#     .primaryPalette 'blue-grey',
-#       'hue-1': '900'
-#     .accentPalette('purple')
-#     .warnPalette('deep-orange')
-
-#   $mdThemingProvider.setDefaultTheme '<%= appName %>'
-# ]
 
 module.exports = Module.name
