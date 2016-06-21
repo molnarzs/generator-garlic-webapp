@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+- '5'
+
+before_install:
+- echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+
+install:
+  - npm install
+
+script:
+  - npm run build && npm run unittest
+  # - npm run build && npm run unittest && npm run e2e-test
+
+# Uncomment it only if needed, not to waste time with unnecessary install.
+# env:
+#   - CXX=g++-4.8
+
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-4.8
+
+deploy:
+  provider: npm
+  email: contact@garlictech.com
+  on:
+    tags: true
+  api_key:
+    secure: bIjpHBpXiDcYCxw2Hx/wqkO9kqHL3jM+/IgrT7SttBf+NVjerkTrWmrAlUf9hqDyczflMGLynDFJOnTiD9u6mU1bDDpRqCVERQccY1SC3OUtiWCvauE+0LjyC4hgxaVsQSgMcz6Pn3Doqu4+aqC6ypoeR2/LtKtTEmW0YPIqr+tsDFN/RQJNcrJDC3B9KNVd2VqdSwn7POmoA1g3H/5UOSxq4iWc+RY97HPBLUJPoXi0xUEHUWINe9LlqBzzmMelgafTC7qwayq1VPq3II/IWL2VKHRjTckgjjNgSxKOIxEMtDTNBxNWdgU38dVcKdpaBivMgvxJZdqFA/B9l2E3tvuK/wNL95yG6M/5Bu2J4m7LP8FVG2e3wA4xVOyyBNkh37IkAhwkF8PtQnZ5yPQ3x6I8HRQkikTykl8m+i8JDG1c/m4V6OiCUHja52NYP2VogG+vVyhCRJrYM3fVngj5kciyn1Q6OLVCyvyKiK5lp0lm9KRzg7vdQFQVG9fV0HnH5+syVWRq5iDDJg3xtvnGPeyT269+bwVCNMzVf8OGjf3/9dfoXd5uOVCJyGtiKjhN1t/cRiF7c8GjfVBOBdcWKL1qhSK+hsI4podpY2k/3kzfY3mdXSsyiEfFaI6gbUOS3Druzwo3QulSDFuZaCNMAxRycUDHbriqVeK6gsCI9WA=

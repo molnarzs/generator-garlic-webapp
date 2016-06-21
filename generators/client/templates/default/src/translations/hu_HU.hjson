@@ -1,0 +1,5 @@
+{
+  "footer.copyright": "Minden jog fenntartva",
+  "index.head.title": "<%= appNameAsIs %>"
+}
+

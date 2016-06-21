@@ -50,11 +50,11 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
 
     mainFiles: ->
       root = "#{@answers.name}"
-      @conf.moduleNameFQ = "#{@conf.appNameCC}.#{@conf.moduleNameCC}"
+      @conf.moduleNameFQ = "#{@conf.appNameCC}_#{@conf.moduleNameCC}"
   
       if @options.page
         root = "views/#{@answers.name}-page"
-        @conf.moduleNameFQ = "#{@conf.moduleNameFQ}.page"
+        @conf.moduleNameFQ = "#{@conf.moduleNameFQ}_page"
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/#{root}"), {c: @conf}
 
@@ -62,7 +62,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       if @options.page then return
 
       dest = @destinationPath("./src/ui-modules.coffee")
-      content = """Module = angular.module "#{@conf.appNameCC}.ui", ["""
+      content = """Module = angular.module "#{@conf.appNameCC}_ui", ["""
 
       _.forEach @moduleNames, (moduleName) ->
         content += "\n  require './#{moduleName}'"

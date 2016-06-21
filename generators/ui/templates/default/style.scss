@@ -2,7 +2,7 @@
 
 [<%= c.directiveNameKC %>],
 <%= c.directiveNameKC %> {
-  .component-container {
+  .<%= c.directiveNameKC %>-container {
 
   }
 }

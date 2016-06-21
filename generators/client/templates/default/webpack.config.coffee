@@ -1,0 +1,1 @@
+module.exports = (require '@garlictech/workflows-client/webpack/config') __dirname

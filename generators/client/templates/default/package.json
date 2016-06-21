@@ -1,0 +1,39 @@
+{
+  "name": "@garlictech/<%= appName %>",
+  "version": "0.0.1",
+  "description": "<%= appNameAsIs %>",
+  "main": "src/index.coffee",
+  "license": "SEE LICENSE IN license.txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garlictech/<%= appName %>.git"
+  },
+  "author": "zsolt@zsoltmolnar.hu",
+  "keywords": [
+    "<%= appName %>"
+  ],
+  "bugs": {
+    "url": "https://github.com/garlictech/<%= appName %>/issues?status=new&status=open"
+  },
+  "homepage": "https://github.com/garlictech/<%= appName %>/",
+  "devdependencies": {
+    "@garlictech/workflows-client": "*",
+    "angular-mocks": "1.5.x",
+    "app-module-path": "1.x.x",
+    "coffee-script": "1.x.x"
+  },
+  },
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-ui-router": "0.x.x"
+  },
+  "scripts": {
+    "start": "scripts/start.sh",
+    "unittest": "scripts/unittest.sh",
+    "build": "scripts/build.sh",
+    "postinstall": "scripts/postinstall.sh",
+    "protractor-start": "scripts/protractor-start.sh",
+    "protractor-setup": "scripts/protractor-setup.sh",
+    "e2e-test": "scripts/e2e-test.sh"
+  }
+}

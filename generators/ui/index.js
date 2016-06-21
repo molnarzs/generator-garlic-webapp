@@ -67,10 +67,10 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     mainFiles: function() {
       var root;
       root = "" + this.answers.name;
-      this.conf.moduleNameFQ = this.conf.appNameCC + "." + this.conf.moduleNameCC;
+      this.conf.moduleNameFQ = this.conf.appNameCC + "_" + this.conf.moduleNameCC;
       if (this.options.page) {
         root = "views/" + this.answers.name + "-page";
-        this.conf.moduleNameFQ = this.conf.moduleNameFQ + ".page";
+        this.conf.moduleNameFQ = this.conf.moduleNameFQ + "_page";
       }
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + root), {
         c: this.conf
@@ -82,7 +82,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         return;
       }
       dest = this.destinationPath("./src/ui-modules.coffee");
-      content = "Module = angular.module \"" + this.conf.appNameCC + ".ui\", [";
+      content = "Module = angular.module \"" + this.conf.appNameCC + "_ui\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
       });

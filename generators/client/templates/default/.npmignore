@@ -1,0 +1,13 @@
+src
+.editorconfig
+.jshintrc
+.travis.yml
+.npmignore
+.gitattributes
+.dockerignore
+.env
+.yo-rc.json
+coffeelint.json
+gulpfile.coffee
+docker-*
+Dockerfile*
