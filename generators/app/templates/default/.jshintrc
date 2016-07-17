@@ -29,6 +29,9 @@
     "it": false,
     "jasmine": false,
     "spyOn": false,
-    "angular": false
+    "angular": false,
+    "GarlicTest": false,
+    "sinon": false,
+    "assert": false
   }
 }

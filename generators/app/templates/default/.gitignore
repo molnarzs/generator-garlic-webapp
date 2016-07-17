@@ -61,7 +61,7 @@ builds/
 dist/
 bin/
 *.bak
-credentials.coffee
+credentials.json
 config.json
 
 # --------------------

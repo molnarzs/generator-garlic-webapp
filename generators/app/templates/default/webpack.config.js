@@ -1,0 +1,1 @@
+module.exports = require('garlictech-workflows-client/dist/webpack/config')(__dirname);

@@ -1,4 +1,4 @@
-Module = angular.module "#{config.MainModuleName}.views.front-page", []
-.directive _.camelCase("#{config.MainModuleName}-front-page"), require './directive'
+Module = angular.module "<%= appNameCC %>.views.front-page", []
+.directive "<%= appNamecC %>FrontPage", require './directive'
 
 module.exports = Module.name

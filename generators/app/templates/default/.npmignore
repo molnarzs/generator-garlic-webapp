@@ -1,0 +1,11 @@
+.editorconfig
+.jshintrc
+.travis.yml
+.npmignore
+.gitattributes
+.env
+.yo-rc.json
+coffeelint.json
+gulpfile.coffee
+karma.conf.coffee
+webpack.conf.coffee

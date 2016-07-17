@@ -8,7 +8,14 @@
     "type": "git",
     "url": "https://molnarzs@bitbucket.org/gtrack/<%= appName %>.git"
   },
-  "author": "zsolt@zsoltmolnar.hu",
+  "author": {
+    "name": "Garlic Tech Ltd.",
+    "email": "contact@garlictech.com",
+    "url": "http://www.garlictech.com"
+  },
+  "contributors": [
+    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+  ],
   "keywords": [
     "<%= appName %>"
   ],
@@ -17,29 +24,31 @@
   },
   "homepage": "https://bitbucket.org/gtrack/<%= appName %>/wiki/Home",
   "devDependencies": {
-    "@garlictech/workflows-client": "*",
-    "angular-mocks": "1.5.x",
-    "coffee-script": "1.x.x",
-    "gulp": "^3.9.1"
+    "garlictech-workflows-client": "*"
   },
   "dependencies": {
     "angular": "1.5.x",
-    "lodash": "^4.x.x"
+    "angular-ui-router": "0.3.x"
   },
-  "files": ["dist"],
   "engines": {
     "npm" : ">=2.7.0"
   },
   "scripts": {
-    "start": "node node_modules/.bin/webpack-dev-server --inline --hot --watch",
-    "unittest": "KARMA_TEST=unit node node_modules/karma/bin/karma start karma.conf.coffee",
-    "systemtest": "KARMA_TEST=system node node_modules/karma/bin/karma start karma.conf.coffee",
-    "build": "node node_modules/webpack/bin/webpack.js",
-    "protractor-start": "node_modules/protractor/bin/webdriver-manager start",
-    "protractor-test": "node_modules/protractor/bin/protractor ./src/test/protractor/config.coffee",
-    "protractor-setup": "node_modules/protractor/bin/webdriver-manager update --standalone",
-        "start-watch": "webpack --watch --cache false",
-    "start-dev": "ionic emulate -l -c --address localhost ios",
+    "start": "scripts/start.sh",
+    "unittest": "scripts/unittest.sh",
+    "build": "scripts/build.sh",
+    "postinstall": "scripts/postinstall.sh",
+    "protractor-start": "scripts/protractor-start.sh",
+    "protractor-setup": "scripts/protractor-setup.sh",
+    "e2e-test": "scripts/e2e-test.sh",
+    "start-watch": "webpack --watch --cache false",
     "webpack-profile": "webpack --profile --json > webpack-stats.json"
+  },
+  "garlic": {
+    "type": "module",
+    "unittest": "./src/test/unit/test.coffee"
+  },
+  "config": {
+    "port": 8081
   }
 }

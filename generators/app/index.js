@@ -43,6 +43,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.conf = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         appName: _.kebabCase(this.conf.appName),
+        appNamecC: _.camelCase(this.conf.appName),
         appNameCC: _.capitalize(_.camelCase(this.conf.appName)),
         appNameAsIs: this.conf.appName
       });
@@ -68,6 +69,13 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       dest = this.destinationPath("./src/factory-modules.coffee");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-factories\", []\nmodule.exports = Module.name");
+      }
+    },
+    "src/provider-modules.coffee": function() {
+      var dest;
+      dest = this.destinationPath("./src/provider-modules.coffee");
+      if (!this.fs.exists(dest)) {
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-providers\", []\nmodule.exports = Module.name");
       }
     },
     "src/views/test-page/test-page-components.jade": function() {

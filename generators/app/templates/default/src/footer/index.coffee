@@ -1,4 +1,4 @@
 Module = angular.module "#{config.MainModuleName}.footer", []
-.directive _.camelCase("#{config.MainModuleName}-footer"), require './directive'
+.directive "<%= appNamecC %>Footer", require './directive'
 
 module.exports = Module.name

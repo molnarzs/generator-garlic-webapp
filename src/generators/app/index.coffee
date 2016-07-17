@@ -30,6 +30,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @conf = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         appName: _.kebabCase @conf.appName
+        appNamecC: _.camelCase @conf.appName
         appNameCC: _.capitalize _.camelCase @conf.appName
         appNameAsIs: @conf.appName
       
@@ -63,6 +64,15 @@ module.exports = Module.name
       if not @fs.exists dest
         @fs.write dest, """
 Module = angular.module "#{@conf.appName}-factories", []
+module.exports = Module.name
+"""
+
+    "src/provider-modules.coffee" : ->
+      dest = @destinationPath "./src/provider-modules.coffee"
+
+      if not @fs.exists dest
+        @fs.write dest, """
+Module = angular.module "#{@conf.appName}-providers", []
 module.exports = Module.name
 """
 

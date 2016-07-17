@@ -3,4 +3,4 @@ gulp = require 'gulp'
 config =
   base: __dirname
 
-gulp = require("./src/gulp")(gulp, config)
+gulp = require("garlictech-workflows-client/dist/gulp")(gulp, config)
