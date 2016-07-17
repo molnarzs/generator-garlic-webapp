@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '5'
+
+notifications:
+  slack: garlictech:hWAwcbpZceCN9v67hEn1ynIR
+
+install:
+  - npm install
+
+script:
+  - npm run build 
+
+deploy:
+  provider: npm
+  email: contact@garlictech.com
+  on:
+    tags: true

@@ -1,6 +1,16 @@
 gulp = require 'gulp'
-p = require('gulp-load-plugins')() # loading gulp plugins lazily
-gutil = require 'gulp-util'
+p = require('gulp-load-plugins')()
+
+gulpConfig = (_gulp, config) ->
+  GULP = require('gulp-help') _gulp
+  require('garlictech-workflows-common/dist/gulp')(GULP, config)
+  return GULP
+
+
+config =
+  base: __dirname
+
+gulp = gulpConfig gulp, config
 
 coffeeFiles = ['src/generators/**/index.coffee']
 
@@ -27,5 +37,9 @@ gulp.task 'coffee', ->
 # watch...
 gulp.task 'watch', ->
   gulp.watch coffeeFiles, ['coffee']
+
+# -----------------------------------------------------------------------------
+# build...
+gulp.task 'build', ['coffee'], ->
 
 gulp.task 'default', ['coffee', 'watch'], ->

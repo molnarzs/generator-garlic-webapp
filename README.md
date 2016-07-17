@@ -1,4 +1,6 @@
-> A [Yeoman](http://yeoman.io) generator to start a GarlicTech web app.
+# A [Yeoman](http://yeoman.io) generator to start a GarlicTech web app.
+
+[![Build Status](https://travis-ci.org/garlictech/generator-garlic-webapp.svg?branch=master)](https://travis-ci.org/garlictech/generator-garlic-webapp)
 
 ## Getting Started
 
@@ -14,8 +16,21 @@ $ sudo npm install -g yeoman
 To install generator-garlic-webapp, run:
 
 ```bash
-$ sudo npm install -g git://github.com/garlictech/generator-garlic-webapp.git
+$ sudo npm install -g generator-garlic-webapp
 ```
+
+## Generators
+
+### Start a project
+
+Create a project directory. Enter the directory, then:
+
+```bash
+$ yo garlic-webapp [--skip-install]
+```
+
+It scaffolds webapp. If you do not specify `--skip-install`, then the generator will install npm and bower and bower dependencies as well.
+
 
 ### Github authentication
 
@@ -24,29 +39,10 @@ You can give a github oauth token as an optional parameter. If you do so, and th
 [How to create token.](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
 
 
-### Start a project
+## Development
 
-Create a project directory. Project directory name must be the github project name as well. Enter the directory, then:
+Get the available gulp tasks with
 
-```bash
-$ yo garlic-webapp [<github token>] [--skip-install]
 ```
-
-It scaffolds webapp. Installed components will be:
-
-* gulp, with various tasks
-* drywall-based user management system 
-* coffee, less, sass support
-
-If you do not specify `--skip-install`, then the generator will install npm and bower dependencies as well.
-
-## Usage
-
-We have the following gulp tasks:
-
-### default
-
-```bash
-gulp
+gulp help
 ```
-It watches coffee files, and compiles them.
