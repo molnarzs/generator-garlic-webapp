@@ -1,18 +1,17 @@
 language: node_js
 node_js:
 - '5'
-
 notifications:
   slack: garlictech:hWAwcbpZceCN9v67hEn1ynIR
-
 install:
-  - npm install
-
+- npm install
 script:
-  - npm run build 
-
+- npm run build
 deploy:
   provider: npm
-  email: contact@garlictech.com
+  email: zsolt@zsoltmolnar.hu
+  api_key:
+    secure: mHD+55byW+vVJ/c3GtiQAFzCacAv5WMZoEwd61Yp8MF7HH8WoxO7SAU6lx76/K8WajBqfkDUT4NQhQAKaUgnMhW48lywIux7PdTitetPBgglYqjLAN9A+oIf9CYNeyWnb77BV5P5pnwJxXu4QY3M/XrCoFBWtMm9EnXwAiczQ0BGpTS0ACee2A6UOHuOw/w5zfYYOPJEsIBlY/AdQTj/OcDVJ3QPxAULX1eJMrdALo9qitOrZy4ktfk4J/6Bg2caIXiJLGGATPKlf88vM6wXu5qp7bIwTainhBa5oBLPQN0GVblVf16RrvNluINJfbZIG9luk50hWmILuJe19OZeKZ7YW8Pl1qQJxD8u4mY4S7LCr2//h/O0un46CrRuwFlLv+pvZhg6bCMkN7LTJuSqi2/pZU8y0ZzKRjBwfYhhA0OyOrGH0/1axidVXqeMA/0nTxlMJ4WsJ/RFXWdNyLqk3aN5BVOjAD6JlcI/f2E297cgFYvqd/dHgCFoiCsZOt6QD0SXxAXmzovNLK7kO0hoP2kQAFcxd78M+8HwMR1p2uG+366YkFuAxRhsLAbPGbxWejgay+jjAVQX1oyCfnmdUVhpG8rJirTrrGUGpiLhuyYn4+vwoWki/RkvkQv99C5rSx9qjk8+DGA/U1gbA0Axoq+82c2R/zXMRUjS8akJf+A=
   on:
     tags: true
+    repo: garlictech/generator-garlic-webapp
