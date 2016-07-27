@@ -18,6 +18,8 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @moduleNames = if @options.page then @conf.angularModules.pages else @conf.angularModules.ui
       @conf.appNameKC = _.kebabCase @conf.appName
       @conf.appNameCC = _.capitalize _.camelCase @conf.appName
+      @conf.folder = "./src/#{@conf.folder}"
+
 
   prompting: ->
     if @options.page then return
@@ -27,11 +29,17 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @answers = answers
       done()
 
-    @prompt
+    @prompt [{
       type    : 'input'
       name    : 'name'
       message : 'Module name (like foo-component):'
       required: true
+    }, {
+      type    : 'input'
+      name    : 'folder'
+      message : 'Folder or subcomponent name (like subfolder/sub-subfolder):'
+      required: true
+    }]
     , cb.bind @
 
   writing:
@@ -56,12 +64,12 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
         root = "views/#{@answers.name}-page"
         @conf.moduleNameFQ = "#{@conf.moduleNameFQ}_page"
 
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/#{root}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("#{@conf.folder}/#{root}"), {c: @conf}
 
     "ui-modules.coffee": ->
       if @options.page then return
 
-      dest = @destinationPath("./src/ui-modules.coffee")
+      dest = @destinationPath("#{@conf.folder}/ui-modules.coffee")
       content = """Module = angular.module "#{@conf.appNameCC}_ui", ["""
 
       _.forEach @moduleNames, (moduleName) ->
@@ -73,7 +81,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
     "test-page-components.jade": ->
       if @options.page then return
 
-      dest = @destinationPath("./src/views/test-page/test-page-components.jade")
+      dest = @destinationPath("#{@conf.folder}/views/test-page/test-page-components.jade")
       content = ""
 
       _.forEach @moduleNames, (moduleName) =>

@@ -16,11 +16,11 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
   prompting: ->
     done = @async()
     cb = (answers) =>
-      done()
       @answers = answers
       @conf.componentNameCC = _.capitalize _.camelCase @answers.name
       @conf.componentName = @answers.name
       @serverComponents.components.push @conf.componentName
+      done()
 
     @prompt
       type    : 'input'

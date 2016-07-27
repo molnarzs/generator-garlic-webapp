@@ -1,16 +1,16 @@
 {
   "name": "<%= appName %>",
   "version": "0.0.1",
-  "homepage": "https://github.com/garlictech/<%= appName %>",
+  "homepage": "https://github.com/<%= scope %>/<%= appName %>",
   "author": {
-    "name": "Garlic Tech Ltd.",
-    "email": "contact@garlictech.com",
-    "url": "http://www.garlictech.com"
+    "name": "<%= scope %> Ltd.",
+    "email": "contact@<%= scope %>.com",
+    "url": "http://www.<%= scope %>.com"
   },
   "contributors": [
     "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
   ],
-  "license": "garlictech.com",
+  "license": "<%= scope %>.com",
   "ignore": [
     "**/.*",
     "node_modules",

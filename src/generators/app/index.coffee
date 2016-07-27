@@ -24,15 +24,36 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
           components: []
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
 
+  prompting: ->
+    done = @async()
+    cb = (answers) =>
+      @answers = answers
+      @appname = @answers.name
+      @config.set
+        scope: @answers.scope
+      done()
+
+    @prompt [{
+      type    : 'input',
+      name    : 'scope',
+      default : 'garlictech',
+      message : 'Project scope'
+    }]
+    , cb.bind @
+ 
   writing:
     mainFiles: ->
       cb = @async()
       @conf = @config.getAll()
+      appNameFQ = "#{@conf.scope}-#{@conf.appName}"
+
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
-        appName: _.kebabCase @conf.appName
-        appNamecC: _.camelCase @conf.appName
-        appNameCC: _.capitalize _.camelCase @conf.appName
+        scopeCC: _.capitalize @conf.scope
+        appName: _.kebabCase appNameFQ
+        appNamecC: _.camelCase appNameFQ
+        appNameCC: _.capitalize _.camelCase appNameFQ
         appNameAsIs: @conf.appName
+        scope: @conf.scope
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
       cb()

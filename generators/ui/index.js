@@ -27,7 +27,8 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       this.conf = this.config.getAll();
       this.moduleNames = this.options.page ? this.conf.angularModules.pages : this.conf.angularModules.ui;
       this.conf.appNameKC = _.kebabCase(this.conf.appName);
-      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
+      this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
+      return this.conf.folder = "./src/" + this.conf.folder;
     }
   },
   prompting: function() {
@@ -42,12 +43,19 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         return done();
       };
     })(this);
-    return this.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Module name (like foo-component):',
-      required: true
-    }, cb.bind(this));
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Module name (like foo-component):',
+        required: true
+      }, {
+        type: 'input',
+        name: 'folder',
+        message: 'Folder or subcomponent name (like subfolder/sub-subfolder):',
+        required: true
+      }
+    ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
@@ -72,7 +80,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
         root = "views/" + this.answers.name + "-page";
         this.conf.moduleNameFQ = this.conf.moduleNameFQ + "_page";
       }
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + root), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(this.conf.folder + "/" + root), {
         c: this.conf
       });
     },
@@ -81,7 +89,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       if (this.options.page) {
         return;
       }
-      dest = this.destinationPath("./src/ui-modules.coffee");
+      dest = this.destinationPath(this.conf.folder + "/ui-modules.coffee");
       content = "Module = angular.module \"" + this.conf.appNameCC + "_ui\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
@@ -94,7 +102,7 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
       if (this.options.page) {
         return;
       }
-      dest = this.destinationPath("./src/views/test-page/test-page-components.jade");
+      dest = this.destinationPath(this.conf.folder + "/views/test-page/test-page-components.jade");
       content = "";
       _.forEach(this.moduleNames, (function(_this) {
         return function(moduleName) {

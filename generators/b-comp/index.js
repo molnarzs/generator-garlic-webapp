@@ -27,11 +27,11 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
-        done();
         _this.answers = answers;
         _this.conf.componentNameCC = _.capitalize(_.camelCase(_this.answers.name));
         _this.conf.componentName = _this.answers.name;
-        return _this.serverComponents.components.push(_this.conf.componentName);
+        _this.serverComponents.components.push(_this.conf.componentName);
+        return done();
       };
     })(this);
     return this.prompt({

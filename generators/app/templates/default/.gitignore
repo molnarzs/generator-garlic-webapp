@@ -63,6 +63,7 @@ bin/
 *.bak
 credentials.json
 config.json
+.env
 
 # --------------------
 # Text editor files

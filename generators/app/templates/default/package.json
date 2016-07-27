@@ -1,5 +1,5 @@
 {
-  "name": "@garlictech/<%= appName %>",
+  "name": "@<%= scope %>/<%= appName %>",
   "version": "0.0.1",
   "description": "<%= appNameAsIs %>",
   "main": "src/index.coffee",
@@ -9,9 +9,9 @@
     "url": "https://github.com/garlictech/<%= appName %>.git"
   },
   "author": {
-    "name": "Garlic Tech Ltd.",
-    "email": "contact@garlictech.com",
-    "url": "http://www.garlictech.com"
+    "name": "<%= scopeCC %> Ltd.",
+    "email": "contact@g<%= appName %>.com",
+    "url": "http://www.<%= appName %>.com"
   },
   "contributors": [
     "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
@@ -20,9 +20,9 @@
     "<%= appName %>"
   ],
   "bugs": {
-    "url": "https://github.com/garlictech/<%= appName %>/issues"
+    "url": "https://github.com/<%= scope %>/<%= appName %>/issues"
   },
-  "homepage": "https://github.com/garlictech/<%= appName %>/wiki/Home",
+  "homepage": "https://github.com/<%= scope %>/<%= appName %>/wiki/Home",
   "devDependencies": {
     "garlictech-workflows-client": "*"
   },
@@ -31,13 +31,14 @@
     "angular-ui-router": "0.3.x"
   },
   "engines": {
-    "npm" : ">=2.7.0"
+    "npm" : ">=3.0.0",
+    "node": ">=5.0.0"
   },
   "scripts": {
     "start": "scripts/start.sh",
     "unittest": "scripts/unittest.sh",
     "build": "scripts/build.sh",
-    "postinstall": "scripts/postinstall.sh",
+    "setup-dev": "scripts/setup-dev.sh",
     "protractor-start": "scripts/protractor-start.sh",
     "protractor-setup": "scripts/protractor-setup.sh",
     "e2e-test": "scripts/e2e-test.sh",

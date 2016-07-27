@@ -36,16 +36,41 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
     }
   },
+  prompting: function() {
+    var cb, done;
+    done = this.async();
+    cb = (function(_this) {
+      return function(answers) {
+        _this.answers = answers;
+        _this.appname = _this.answers.name;
+        _this.config.set({
+          scope: _this.answers.scope
+        });
+        return done();
+      };
+    })(this);
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'scope',
+        "default": 'garlictech',
+        message: 'Project scope'
+      }
+    ], cb.bind(this));
+  },
   writing: {
     mainFiles: function() {
-      var cb;
+      var appNameFQ, cb;
       cb = this.async();
       this.conf = this.config.getAll();
+      appNameFQ = this.conf.scope + "-" + this.conf.appName;
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
-        appName: _.kebabCase(this.conf.appName),
-        appNamecC: _.camelCase(this.conf.appName),
-        appNameCC: _.capitalize(_.camelCase(this.conf.appName)),
-        appNameAsIs: this.conf.appName
+        scopeCC: _.capitalize(this.conf.scope),
+        appName: _.kebabCase(appNameFQ),
+        appNamecC: _.camelCase(appNameFQ),
+        appNameCC: _.capitalize(_.camelCase(appNameFQ)),
+        appNameAsIs: this.conf.appName,
+        scope: this.conf.scope
       });
       this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
       return cb();

@@ -1,3 +1,3 @@
-describe.skip "Front page unit tests", ->
+describe "Front page unit tests", ->
   it "should pass", ->
     expect(true).true
