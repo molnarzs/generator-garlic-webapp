@@ -1,16 +1,11 @@
 {
-  "name": "<%= appName %>",
+  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "version": "0.0.1",
-  "homepage": "https://github.com/<%= scope %>/<%= appName %>",
-  "author": {
-    "name": "<%= scope %> Ltd.",
-    "email": "contact@<%= scope %>.com",
-    "url": "http://www.<%= scope %>.com"
-  },
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>",
   "contributors": [
     "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
   ],
-  "license": "<%= scope %>.com",
+  "license": "SEE LICENSE IN license.txt",
   "ignore": [
     "**/.*",
     "node_modules",

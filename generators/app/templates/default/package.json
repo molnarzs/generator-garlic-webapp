@@ -1,28 +1,30 @@
 {
-  "name": "@<%= scope %>/<%= appName %>",
+  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "version": "0.0.1",
-  "description": "<%= appNameAsIs %>",
+  "description": "<%= conf.appNameAsIs %>",
   "main": "src/index.coffee",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
-    "url": "https://github.com/garlictech/<%= appName %>.git"
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>.git"
   },
   "author": {
-    "name": "<%= scopeCC %> Ltd.",
-    "email": "contact@g<%= appName %>.com",
-    "url": "http://www.<%= appName %>.com"
+    "name": "<%= conf.scopeCC %>",
+    "email": "contact@<%= conf.scope %>.com",
+    "url": "http://www.<%= conf.scope %>.com"
   },
   "contributors": [
     "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
   ],
   "keywords": [
-    "<%= appName %>"
+    "<%= conf.appName %>",
+    "<%= conf.appNameKC %>",
+    "<%= conf.scope %>"
   ],
   "bugs": {
-    "url": "https://github.com/<%= scope %>/<%= appName %>/issues"
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
   },
-  "homepage": "https://github.com/<%= scope %>/<%= appName %>/wiki/Home",
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
   "devDependencies": {
     "garlictech-workflows-client": "*"
   },
@@ -47,7 +49,7 @@
   },
   "garlic": {
     "type": "module",
-    "unittest": "./src/test/unit/test.coffee"
+    "unittest": "./src/test/unit/index.js"
   },
   "config": {
     "port": 8081

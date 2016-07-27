@@ -18,9 +18,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.config.set({
-        appName: this.appname,
+        appname: this.appname,
         angularModules: {
-          ui: [],
+          directives: [],
           services: [],
           factories: [],
           pages: [],
@@ -33,7 +33,8 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           components: []
         }
       });
-      return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+      console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+      return this.conf = this.config.getAll();
     }
   },
   prompting: function() {
@@ -42,10 +43,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     cb = (function(_this) {
       return function(answers) {
         _this.answers = answers;
-        _this.appname = _this.answers.name;
-        _this.config.set({
-          scope: _this.answers.scope
-        });
         return done();
       };
     })(this);
@@ -54,53 +51,73 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         type: 'input',
         name: 'scope',
         "default": 'garlictech',
-        message: 'Project scope'
+        message: 'Project scope (company github team):'
       }
     ], cb.bind(this));
   },
   writing: {
+    createConfig: function() {
+      var angularModuleName, appNameAsIs, appNameFQ, appNameFQcC, appNameKC, scopeCC;
+      scopeCC = _.capitalize(_.camelCase(this.answers.scope));
+      appNameAsIs = scopeCC + " " + this.appname;
+      appNameKC = _.kebabCase(this.appname);
+      appNameFQ = _.kebabCase(appNameAsIs);
+      appNameFQcC = _.camelCase(appNameFQ);
+      angularModuleName = scopeCC + "/" + (_.capitalize(_.camelCase(this.appname)));
+      console.log("EN", process.env["NPM_TOKEN_" + scopeCC], "NPM_TOKEN_" + scopeCC);
+      return this.config.set({
+        scope: this.answers.scope,
+        scopeCC: scopeCC,
+        appNameKC: appNameKC,
+        appNameAsIs: appNameAsIs,
+        appNameFQ: appNameFQ,
+        appNameFQcC: appNameFQcC,
+        appNameFQCC: _.capitalize(appNameFQcC),
+        angularModuleName: angularModuleName,
+        npmToken: process.env["NPM_TOKEN_" + scopeCC],
+        slackToken: process.env["SLACK_TOKEN_" + scopeCC]
+      });
+    },
     mainFiles: function() {
-      var appNameFQ, cb;
+      var cb;
       cb = this.async();
       this.conf = this.config.getAll();
-      appNameFQ = this.conf.scope + "-" + this.conf.appName;
+      console.log('C2', this.conf);
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
-        scopeCC: _.capitalize(this.conf.scope),
-        appName: _.kebabCase(appNameFQ),
-        appNamecC: _.camelCase(appNameFQ),
-        appNameCC: _.capitalize(_.camelCase(appNameFQ)),
-        appNameAsIs: this.conf.appName,
-        scope: this.conf.scope
+        conf: this.conf
+      });
+      this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
+        conf: this.conf
       });
       this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
       return cb();
     },
-    "src/ui-modules.coffee": function() {
+    "src/directive-modules.coffee": function() {
       var dest;
-      dest = this.destinationPath("./src/ui-modules.coffee");
+      dest = this.destinationPath("./src/directive-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-ui\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Directives\", []\nmodule.exports = Module.name");
       }
     },
     "src/service-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/service-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-services\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Services\", []\nmodule.exports = Module.name");
       }
     },
     "src/factory-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/factory-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-factories\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Factories\", []\nmodule.exports = Module.name");
       }
     },
     "src/provider-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/provider-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.appName + "-providers\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Providers\", []\nmodule.exports = Module.name");
       }
     },
     "src/views/test-page/test-page-components.jade": function() {

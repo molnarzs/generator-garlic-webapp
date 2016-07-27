@@ -1,6 +1,6 @@
 require './style'
 
-module.exports = [ ->
+module.exports = ->
   restrict: 'AE'
   template: require './ui.jade'
-]
+  controller: '<%= conf.angularModuleName %>/Views/FrontPage/Controller'

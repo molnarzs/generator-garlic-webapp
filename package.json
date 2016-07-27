@@ -2,7 +2,7 @@
   "name": "generator-garlic-webapp",
   "version": "0.0.5",
   "description": "Generator for GarlicTech web applications.",
-  "license": "GarlicTech",
+  "license": "see LICENSE",
   "repository": "https://github.com/garlictech/generator-garlic-webapp.git",
   "author": {
     "name": "Zsolt Molnar",

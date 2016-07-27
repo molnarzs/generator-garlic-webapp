@@ -1,6 +1,6 @@
 require './style'
 
-module.exports = [ ->
+module.exports = ->
   restrict: 'EA'
   template: require './ui'
-]
+  controller: '<%= conf.angularModuleName %>/MainHeader/Controller'

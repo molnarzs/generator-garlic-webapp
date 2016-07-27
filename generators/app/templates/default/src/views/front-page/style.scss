@@ -1,6 +1,6 @@
 @import "~style/globals";
 
-[<%= appName %>-front-page],
-<%= appName %>-front-page {
+[<%= conf.appNameFQ %>-front-page],
+<%= conf.appNameFQ %>-front-page {
   
 }

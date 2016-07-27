@@ -11,9 +11,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
     init: ->
       @config.set
-        appName: @appname
+        appname: @appname
         angularModules:
-          ui: []
+          directives: []
           services: []
           factories: []
           pages: []
@@ -23,48 +23,66 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         common:
           components: []
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
+      @conf = @config.getAll()
 
   prompting: ->
     done = @async()
     cb = (answers) =>
       @answers = answers
-      @appname = @answers.name
-      @config.set
-        scope: @answers.scope
       done()
 
     @prompt [{
       type    : 'input',
       name    : 'scope',
       default : 'garlictech',
-      message : 'Project scope'
+      message : 'Project scope (company github team):'
     }]
     , cb.bind @
  
   writing:
+    createConfig: ->
+      scopeCC = _.capitalize _.camelCase @answers.scope
+      appNameAsIs = "#{scopeCC} #{@appname}"
+      appNameKC = _.kebabCase @appname
+      appNameFQ = _.kebabCase appNameAsIs
+      appNameFQcC = _.camelCase appNameFQ
+      angularModuleName = "#{scopeCC}/#{_.capitalize _.camelCase @appname}"
+
+      console.log "EN", process.env["NPM_TOKEN_#{scopeCC}"], "NPM_TOKEN_#{scopeCC}"
+      @config.set
+        scope: @answers.scope
+        scopeCC: scopeCC
+        appNameKC: appNameKC
+        appNameAsIs: appNameAsIs
+        appNameFQ: appNameFQ
+        appNameFQcC: appNameFQcC
+        appNameFQCC: _.capitalize appNameFQcC
+        angularModuleName: angularModuleName
+        npmToken: process.env["NPM_TOKEN_#{scopeCC}"]
+        slackToken: process.env["SLACK_TOKEN_#{scopeCC}"]
+
+  
     mainFiles: ->
       cb = @async()
       @conf = @config.getAll()
-      appNameFQ = "#{@conf.scope}-#{@conf.appName}"
+      console.log 'C2', @conf
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
-        scopeCC: _.capitalize @conf.scope
-        appName: _.kebabCase appNameFQ
-        appNamecC: _.camelCase appNameFQ
-        appNameCC: _.capitalize _.camelCase appNameFQ
-        appNameAsIs: @conf.appName
-        scope: @conf.scope
+        conf: @conf
+
+      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"),
+        conf: @conf
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
       cb()
 
 
-    "src/ui-modules.coffee" : ->
-      dest = @destinationPath "./src/ui-modules.coffee"
+    "src/directive-modules.coffee" : ->
+      dest = @destinationPath "./src/directive-modules.coffee"
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.appName}-ui", []
+Module = angular.module "#{@conf.angularModuleName}/Directives", []
 module.exports = Module.name
 """
 
@@ -74,7 +92,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.appName}-services", []
+Module = angular.module "#{@conf.angularModuleName}/Services", []
 module.exports = Module.name
 """
 
@@ -84,7 +102,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.appName}-factories", []
+Module = angular.module "#{@conf.angularModuleName}/Factories", []
 module.exports = Module.name
 """
 
@@ -93,7 +111,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.appName}-providers", []
+Module = angular.module "#{@conf.angularModuleName}/Providers", []
 module.exports = Module.name
 """
 
@@ -108,8 +126,6 @@ module.exports = Module.name
   install:
     dependencies: ->
       cb = @async()
-      # console.log "\nLinking @garlictech/complib.\n"
-      # @spawnCommand 'npm', ['link', '@garlictech/complib']
       if not @options['skip-install'] then @installDependencies()
       cb()
 

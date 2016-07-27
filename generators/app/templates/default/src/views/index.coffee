@@ -1,6 +1,6 @@
 config = require '../config'
 
-Module = angular.module "#{config.MainModuleName}.views", [
+Module = angular.module "<%= conf.angularModuleName %>/views", [
   require 'angular-ui-router'
   require './front-page'
   require './test-page'
@@ -17,15 +17,15 @@ Module = angular.module "#{config.MainModuleName}.views", [
     url: '/'
     views:
       'header':
-        template: '<div <%= appName %>-main-header></div>'
+        template: '<div <%= conf.appNameFQ %>-main-header></div>'
       'main':
-        template: '<div <%= appName %>-front-page></div>'
+        template: '<div <%= conf.appNameFQ %>-front-page></div>'
 
   .state 'test',
     url: '/test'
     views:
       'main':
-        template: '<div <%= appName %>-test-page></div>'
+        template: '<div <%= conf.appNameFQ %>-test-page></div>'
 
   #===== yeoman hook state =====#
   # NB! The above line is required for garlic yeoman generator and should not be changed. Otherwise, you are cursed.

@@ -1,4 +1,4 @@
-# <%= appName %>
+# <%= conf.appNameAsIs %>
 
 [![Build Status](get travis link here)
 

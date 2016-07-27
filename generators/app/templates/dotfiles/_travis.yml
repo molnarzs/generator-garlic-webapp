@@ -3,7 +3,8 @@ node_js:
 - '5'
 
 notifications:
-  slack: <add slack notifiction key>
+  slack: <%= conf.scope %>:<%= conf.slackToken %>
+  email: false
 
 before_install:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
@@ -27,11 +28,11 @@ script:
 
 deploy:
   provider: npm
-  email: contact@garlictech.com
+  email: "contact@<%= conf.scope %>.com"
   on:
     tags: true
-  api_key: <add npm token>
+  api_key: <%= conf.npmToken %>
    
 env:  
   global:
-    - NPM_TOKEN=<add npm token>
+    - NPM_TOKEN=<%= conf.npmToken %>

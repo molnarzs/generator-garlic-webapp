@@ -1,6 +1,6 @@
 @import "~style/globals";
 
-[gt-test-page],
-gt-test-page {
+[<%= conf.appNameFQ %>-test-page],
+<%= conf.appNameFQ %>-test-page {
   
 }

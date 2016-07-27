@@ -3,6 +3,7 @@ node_js:
 - '5'
 notifications:
   slack: garlictech:hWAwcbpZceCN9v67hEn1ynIR
+  email: false
 install:
 - npm install
 script:

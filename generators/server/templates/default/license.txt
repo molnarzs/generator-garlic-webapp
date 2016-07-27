@@ -1,1 +1,1 @@
-All rights reserved.
+© <%= scopeCC %> 2016. All rights reserved.

@@ -1,5 +1,6 @@
 @import "~style/globals";
 
-[gt-main-header] {
+[<%= conf.appNameFQ %>-main-header],
+<%= conf.appNameFQ %>-main-header {
   
 }
