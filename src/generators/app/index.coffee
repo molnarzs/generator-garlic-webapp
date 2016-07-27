@@ -48,7 +48,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       appNameFQcC = _.camelCase appNameFQ
       angularModuleName = "#{scopeCC}/#{_.capitalize _.camelCase @appname}"
 
-      console.log "EN", process.env["NPM_TOKEN_#{scopeCC}"], "NPM_TOKEN_#{scopeCC}"
       @config.set
         scope: @answers.scope
         scopeCC: scopeCC
@@ -65,7 +64,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @conf = @config.getAll()
-      console.log 'C2', @conf
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         conf: @conf
@@ -128,44 +126,5 @@ module.exports = Module.name
       cb = @async()
       if not @options['skip-install'] then @installDependencies()
       cb()
-
-    # createLocalGitRepo: ->
-    #   done = @async()
-    #   repoRoot = process.env.GIT_REPOS_ROOT
-    #   if not repoRoot
-    #     console.log "Git repo creation skipped (no GIT_REPOS_ROOT env. variable set)"
-    #   else if @options['skip-install']
-    #     console.log "Git repo creation skipped"
-    #   else
-    #     console.log "Creating local git repo to #{repoRoot}"
-    #     pwd = process.cwd()
-    #     repoName = "#{@conf.appName}.git"
-    #     process.chdir repoRoot
-    #     mkdirp.sync repoName
-    #     process.chdir repoName
-    #     execute "git init --bare"
-    #     process.chdir pwd
-    #     execute "git init"
-    #     execute "git remote add origin #{repoRoot}/#{repoName}"
-    #     execute "git add ."
-    #     execute "git commit -m 'Initial version.'"
-    #     execute 'git push -u origin master'
-    #     done()
-
-  # runRemoteGit: ->
-  #   done = @async()
-
-  #   if not @githubAuthtoken
-  #     console.log "\nWarning: Github repo not created: github oauth token is unknown or invalid.\n"
-  #     return
-
-  #   console.log "\nCreating GitHub repo...\n"
-  #   execute "curl https://api.github.com/orgs/garlictech/repos -u #{@githubAuthtoken}:x-oauth-basic -d \'{\"name\":\"#{@appname}\"}\'"
-  #   execute "git init"
-  #   execute "git remote add origin https://github.com/garlictech/#{@appname}.git"
-  #   execute "git add ."
-  #   execute "git commit -m 'Initial version.'"
-  #   execute 'git push -u origin master'
-  #   done()
 
 module.exports = GarlicWebappGenerator

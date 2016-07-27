@@ -64,7 +64,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       appNameFQ = _.kebabCase(appNameAsIs);
       appNameFQcC = _.camelCase(appNameFQ);
       angularModuleName = scopeCC + "/" + (_.capitalize(_.camelCase(this.appname)));
-      console.log("EN", process.env["NPM_TOKEN_" + scopeCC], "NPM_TOKEN_" + scopeCC);
       return this.config.set({
         scope: this.answers.scope,
         scopeCC: scopeCC,
@@ -82,7 +81,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       var cb;
       cb = this.async();
       this.conf = this.config.getAll();
-      console.log('C2', this.conf);
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         conf: this.conf
       });
