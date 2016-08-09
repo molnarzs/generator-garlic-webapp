@@ -1,4 +1,4 @@
-var GarlicWebappUiGenerator, _, chalk, fs, gulpFilter, gulpRename, gulpReplace, path, spawn, util, yeoman;
+var GarlicWebappPageGenerator, _, chalk, fs, gulpFilter, gulpRename, gulpReplace, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -20,7 +20,7 @@ gulpRename = require('gulp-rename');
 
 gulpReplace = require('gulp-replace');
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend({
+GarlicWebappPageGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       return console.log(chalk.magenta('You\'re using the GarlicTech webapp pages generator.'));
@@ -80,4 +80,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappUiGenerator;
+module.exports = GarlicWebappPageGenerator;

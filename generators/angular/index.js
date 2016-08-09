@@ -1,10 +1,10 @@
-var GarlicWebappUiGenerator, chalk, yeoman;
+var GarlicWebappAngularGenerator, chalk, yeoman;
 
 yeoman = require('yeoman-generator');
 
 chalk = require('chalk');
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend({
+GarlicWebappAngularGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
@@ -23,4 +23,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappUiGenerator;
+module.exports = GarlicWebappAngularGenerator;

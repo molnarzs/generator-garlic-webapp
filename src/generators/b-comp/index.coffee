@@ -6,7 +6,7 @@ spawn = require('child_process').spawn
 _ = require 'lodash'
 fs = require 'fs'
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend
+GarlicWebappBCompGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()
@@ -36,4 +36,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
     saveConfig: ->
       @config.set 'server', @serverComponents
 
-module.exports = GarlicWebappUiGenerator
+module.exports = GarlicWebappBCompGenerator

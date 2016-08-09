@@ -4,7 +4,7 @@ yeoman = require('yeoman-generator')
 chalk = require('chalk')
 execute = require('child_process').execSync
 
-GarlicWebappGenerator = yeoman.generators.Base.extend
+GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   initializing:
 
     init: ->
@@ -52,4 +52,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       execute 'git push -u origin master'
       done()
 
-module.exports = GarlicWebappGenerator
+module.exports = GarlicWebappGithubGenerator

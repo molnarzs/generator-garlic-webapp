@@ -6,7 +6,7 @@ _ = require 'lodash'
 mkdirp = require 'mkdirp'
 execute = require('child_process').execSync
 
-GarlicWebappGenerator = yeoman.generators.Base.extend
+GarlicWebappClientGenerator = yeoman.generators.Base.extend
   initializing:
 
     init: ->
@@ -121,4 +121,4 @@ module.exports = Module.name
   #   execute 'git push -u origin master'
   #   done()
 
-module.exports = GarlicWebappGenerator
+module.exports = GarlicWebappClientGenerator

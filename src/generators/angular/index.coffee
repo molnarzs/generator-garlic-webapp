@@ -1,7 +1,7 @@
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend
+GarlicWebappAngularGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()
@@ -14,4 +14,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       @npmInstall 'angular-mocks', { 'saveDev': true }
 
 
-module.exports = GarlicWebappUiGenerator
+module.exports = GarlicWebappAngularGenerator

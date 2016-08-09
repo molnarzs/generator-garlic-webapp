@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, chalk, execute, path, util, yeoman;
+var GarlicWebappGithubGenerator, chalk, execute, path, util, yeoman;
 
 util = require('util');
 
@@ -10,7 +10,7 @@ chalk = require('chalk');
 
 execute = require('child_process').execSync;
 
-GarlicWebappGenerator = yeoman.generators.Base.extend({
+GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
@@ -64,4 +64,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappGenerator;
+module.exports = GarlicWebappGithubGenerator;

@@ -105,6 +105,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   install: {
     dependencies: function() {
+      this.npmInstall(['angular', 'angular-ui-router'], {
+        'save': true
+      });
+      this.npmInstall(['garlictech-workflows-client'], {
+        'saveDev': true
+      });
       return generatorLib.dependencies.bind(this)();
     }
   }

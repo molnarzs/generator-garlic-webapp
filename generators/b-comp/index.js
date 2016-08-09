@@ -1,4 +1,4 @@
-var GarlicWebappUiGenerator, _, chalk, fs, path, spawn, util, yeoman;
+var GarlicWebappBCompGenerator, _, chalk, fs, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -14,7 +14,7 @@ _ = require('lodash');
 
 fs = require('fs');
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend({
+GarlicWebappBCompGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
@@ -53,4 +53,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappUiGenerator;
+module.exports = GarlicWebappBCompGenerator;

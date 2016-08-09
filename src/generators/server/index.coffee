@@ -7,7 +7,7 @@ execute = require('child_process').execSync
 jsonfile = require 'jsonfile'
 generatorLib = require '../lib'
 
-GarlicWebappGenerator = yeoman.generators.Base.extend
+GarlicWebappServerGenerator = yeoman.generators.Base.extend
   initializing: ->
     console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
     @composeWith 'loopback', {options: {"skip-install": true}}
@@ -106,4 +106,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     dependencies: ->
       generatorLib.dependencies.bind(@)()
 
-module.exports = GarlicWebappGenerator
+module.exports = GarlicWebappServerGenerator

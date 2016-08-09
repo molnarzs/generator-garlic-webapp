@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, _, chalk, execute, mkdirp, path, util, yeoman;
+var GarlicWebappClientGenerator, _, chalk, execute, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -14,7 +14,7 @@ mkdirp = require('mkdirp');
 
 execute = require('child_process').execSync;
 
-GarlicWebappGenerator = yeoman.generators.Base.extend({
+GarlicWebappClientGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.config.set({
@@ -93,4 +93,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappGenerator;
+module.exports = GarlicWebappClientGenerator;

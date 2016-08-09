@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, chalk, execute, generatorLib, jsonfile, mkdirp, path, util, yeoman;
+var GarlicWebappServerGenerator, chalk, execute, generatorLib, jsonfile, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -16,7 +16,7 @@ jsonfile = require('jsonfile');
 
 generatorLib = require('../lib');
 
-GarlicWebappGenerator = yeoman.generators.Base.extend({
+GarlicWebappServerGenerator = yeoman.generators.Base.extend({
   initializing: function() {
     console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
     return this.composeWith('loopback', {
@@ -109,4 +109,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = GarlicWebappGenerator;
+module.exports = GarlicWebappServerGenerator;

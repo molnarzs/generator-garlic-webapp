@@ -9,7 +9,7 @@ gulpFilter = require 'gulp-filter'
 gulpRename = require 'gulp-rename'
 gulpReplace = require 'gulp-replace'
 
-GarlicWebappUiGenerator = yeoman.generators.Base.extend
+GarlicWebappPageGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       console.log chalk.magenta 'You\'re using the GarlicTech webapp pages generator.'
@@ -65,4 +65,4 @@ GarlicWebappUiGenerator = yeoman.generators.Base.extend
       content = content.replace '#===== yeoman hook require =====#', replacedTextRequire
       fs.writeFileSync path, content, 'utf8'
 
-module.exports = GarlicWebappUiGenerator
+module.exports = GarlicWebappPageGenerator
