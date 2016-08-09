@@ -1,5 +1,5 @@
 {
-  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+  "name": "<%= conf.appNameKC %>",
   "version": "0.0.1",
   "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>",
   "contributors": [

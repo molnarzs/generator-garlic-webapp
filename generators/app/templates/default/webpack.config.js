@@ -1,1 +1,3 @@
-module.exports = require('garlictech-workflows-client/dist/webpack/config')(__dirname);
+config = require('garlictech-workflows-client/dist/webpack/config')(__dirname);
+require('./webpack.common.config')(config);
+module.exports = config;

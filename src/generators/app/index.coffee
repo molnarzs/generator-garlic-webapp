@@ -102,7 +102,7 @@ module.exports = Module.name
   install:
     dependencies: ->
       @npmInstall ['angular', 'angular-ui-router'], { 'save': true }
-      @npmInstall ['garlictech-workflows-client'], { 'saveDev': true }
+      @npmInstall ['garlictech-workflows-client', 'normalize-scss'], { 'saveDev': true }
       generatorLib.dependencies.bind(@)()
 
 module.exports = GarlicWebappGenerator
