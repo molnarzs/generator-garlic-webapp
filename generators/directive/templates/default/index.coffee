@@ -1,7 +1,7 @@
 # Directive: <%= c.directiveNameKC %>
 
-Module = angular.module "<%= c.moduleNameFQ %>", []
+Module = angular.module "<%= c.moduleName %>", []
 .directive "<%= c.directiveNameCC %>", require './directive'
-.controller "<%= c.moduleNameFQ %>_Controller", require './controller'
+.controller "<%= c.moduleName %>.Controller", require './controller'
 
 module.exports = Module.name

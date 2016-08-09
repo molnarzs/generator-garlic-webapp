@@ -1,0 +1,41 @@
+language: node_js
+node_js:
+- '5'
+
+notifications:
+  slack: <%= conf.scope %>:<%= conf.slackToken %>
+  email: false
+
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  - npm install -g nsp
+
+install:
+  - npm install
+
+script:
+  - npm run build
+  - npm run test
+
+# Uncomment it only if needed, not to waste time with unnecessary install.
+# env:
+#   - CXX=g++-4.8
+
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-4.8
+
+deploy:
+  provider: npm
+  email: "contact@<%= conf.scope %>.com"
+  on:
+    tags: true
+    branch: master
+  api_key: <%= conf.npmToken %>
+   
+env:  
+  global:
+    - NPM_TOKEN=<%= conf.npmToken %>

@@ -1,0 +1,1 @@
+require("garlictech-workflows-server/dist/test/system")(require '../../config')

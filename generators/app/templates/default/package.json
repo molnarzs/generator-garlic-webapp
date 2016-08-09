@@ -2,7 +2,7 @@
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "version": "0.0.1",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "src/index.coffee",
+  "main": "dist/server.js",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -26,26 +26,46 @@
   },
   "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
   "devDependencies": {
-    "garlictech-workflows-client": "*"
+    "garlictech-workflows-server": "^0.1.0"
+    "should": "^10.0.0",
+    "supertest": "^2.0.0"
   },
   "dependencies": {
-    "angular": "1.5.x",
-    "angular-ui-router": "0.3.x"
+    "garlictech-common-server": "^0.0.5"
+    "body-parser": "^1.15.0",
+    "compression": "^1.0.3",
+    "cookie-parser": "^1.4.1",
+    "cors": "^2.7.1",
+    "cowsay": "^1.1.8",
+    "debug": "^2.2.0",
+    "express": "^4.13.4",
+    "helmet": "^1.3.0",
+    "lodash": "^4.13.1",
+    "loopback": "^2.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.4.0",
+    "loopback-datasource-juggler": "^2.39.0",
+    "passport": "^0.3.2",
+    "request": "^2.72.0",
+    "serve-favicon": "^2.0.1"
   },
+  "peerDependencies": {
+    "strongloop": "*"
+  }
   "engines": {
     "npm" : ">=3.0.0",
     "node": ">=5.0.0"
   },
   "scripts": {
-    "start": "scripts/start.sh",
+    "build": "gulp build",
+    "start": "node dist/server.js",
+    "start-dev": "gulp",
+    "debug": "node --debug-brk dist/server.js",
     "unittest": "scripts/unittest.sh",
-    "build": "scripts/build.sh",
+    "systemtest": "gulp systemtest",
     "setup-dev": "scripts/setup-dev.sh",
-    "protractor-start": "scripts/protractor-start.sh",
-    "protractor-setup": "scripts/protractor-setup.sh",
-    "e2e-test": "scripts/e2e-test.sh",
-    "start-watch": "webpack --watch --cache false",
-    "webpack-profile": "webpack --profile --json > webpack-stats.json"
+    "test": "npm run unittest && npm run systemtest",
+    "prepare-travis": "coffee src/scripts/prepare-travis.coffee"
   },
   "garlic": {
     "type": "module",

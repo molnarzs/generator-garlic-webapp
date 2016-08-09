@@ -5,6 +5,7 @@ chalk = require('chalk')
 _ = require 'lodash'
 mkdirp = require 'mkdirp'
 execute = require('child_process').execSync
+generatorLib = require '../lib'
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   initializing:
@@ -23,47 +24,24 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         common:
           components: []
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
-      @conf = @config.getAll()
 
   prompting: ->
-    done = @async()
-    cb = (answers) =>
-      @answers = answers
-      done()
+    generatorLib.prompting.bind(@)()
 
-    @prompt [{
-      type    : 'input',
-      name    : 'scope',
-      default : 'garlictech',
-      message : 'Project scope (company github team):'
-    }]
-    , cb.bind @
  
   writing:
     createConfig: ->
-      scopeCC = _.capitalize _.camelCase @answers.scope
-      appNameAsIs = "#{scopeCC} #{@appname}"
-      appNameKC = _.kebabCase @appname
-      appNameFQ = _.kebabCase appNameAsIs
-      appNameFQcC = _.camelCase appNameFQ
-      angularModuleName = "#{scopeCC}/#{_.capitalize _.camelCase @appname}"
+      @conf = generatorLib.createConfig.bind(@)()
+      angularModuleName = "#{@conf.scopeCC}.#{_.capitalize _.camelCase @appname}"
+      @conf.angularModuleName = angularModuleName
 
       @config.set
-        scope: @answers.scope
-        scopeCC: scopeCC
-        appNameKC: appNameKC
-        appNameAsIs: appNameAsIs
-        appNameFQ: appNameFQ
-        appNameFQcC: appNameFQcC
-        appNameFQCC: _.capitalize appNameFQcC
         angularModuleName: angularModuleName
-        npmToken: process.env["NPM_TOKEN_#{scopeCC}"]
-        slackToken: process.env["SLACK_TOKEN_#{scopeCC}"]
+        scope: @answers.scope
 
   
     mainFiles: ->
       cb = @async()
-      @conf = @config.getAll()
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         conf: @conf
@@ -123,8 +101,6 @@ module.exports = Module.name
 
   install:
     dependencies: ->
-      cb = @async()
-      if not @options['skip-install'] then @installDependencies()
-      cb()
+      generatorLib.dependencies.bind(@)()
 
 module.exports = GarlicWebappGenerator

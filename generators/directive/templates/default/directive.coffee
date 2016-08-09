@@ -8,5 +8,5 @@ module.exports = ->
   replace: false
   transclude: false
   template: require './ui'
-  controller: "<%= c.moduleNameFQ %>_Controller"
+  controller: "<%= c.moduleName %>.Controller"
   controllerAs: "ctrl"

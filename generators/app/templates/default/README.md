@@ -4,5 +4,5 @@
 
 ## Development
 
-We use [GarlicTech workflow manager](https://github.com/garlictech/workflows) to control development, build, deployment. 
+We use [GarlicTech workflow manager](https://github.com/garlictech/garlictech-workflows-client) to control development, build, deployment. 
 See the appropriate sections there, It is * important *. For the description of `npm run` commands, etc.

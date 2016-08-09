@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, _, chalk, execute, mkdirp, path, util, yeoman;
+var GarlicWebappGenerator, _, chalk, execute, generatorLib, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -13,6 +13,8 @@ _ = require('lodash');
 mkdirp = require('mkdirp');
 
 execute = require('child_process').execSync;
+
+generatorLib = require('../lib');
 
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: {
@@ -33,54 +35,26 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           components: []
         }
       });
-      console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
-      return this.conf = this.config.getAll();
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
     }
   },
   prompting: function() {
-    var cb, done;
-    done = this.async();
-    cb = (function(_this) {
-      return function(answers) {
-        _this.answers = answers;
-        return done();
-      };
-    })(this);
-    return this.prompt([
-      {
-        type: 'input',
-        name: 'scope',
-        "default": 'garlictech',
-        message: 'Project scope (company github team):'
-      }
-    ], cb.bind(this));
+    return generatorLib.prompting.bind(this)();
   },
   writing: {
     createConfig: function() {
-      var angularModuleName, appNameAsIs, appNameFQ, appNameFQcC, appNameKC, scopeCC;
-      scopeCC = _.capitalize(_.camelCase(this.answers.scope));
-      appNameAsIs = scopeCC + " " + this.appname;
-      appNameKC = _.kebabCase(this.appname);
-      appNameFQ = _.kebabCase(appNameAsIs);
-      appNameFQcC = _.camelCase(appNameFQ);
-      angularModuleName = scopeCC + "/" + (_.capitalize(_.camelCase(this.appname)));
+      var angularModuleName;
+      this.conf = generatorLib.createConfig.bind(this)();
+      angularModuleName = this.conf.scopeCC + "." + (_.capitalize(_.camelCase(this.appname)));
+      this.conf.angularModuleName = angularModuleName;
       return this.config.set({
-        scope: this.answers.scope,
-        scopeCC: scopeCC,
-        appNameKC: appNameKC,
-        appNameAsIs: appNameAsIs,
-        appNameFQ: appNameFQ,
-        appNameFQcC: appNameFQcC,
-        appNameFQCC: _.capitalize(appNameFQcC),
         angularModuleName: angularModuleName,
-        npmToken: process.env["NPM_TOKEN_" + scopeCC],
-        slackToken: process.env["SLACK_TOKEN_" + scopeCC]
+        scope: this.answers.scope
       });
     },
     mainFiles: function() {
       var cb;
       cb = this.async();
-      this.conf = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         conf: this.conf
       });
@@ -131,12 +105,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   install: {
     dependencies: function() {
-      var cb;
-      cb = this.async();
-      if (!this.options['skip-install']) {
-        this.installDependencies();
-      }
-      return cb();
+      return generatorLib.dependencies.bind(this)();
     }
   }
 });

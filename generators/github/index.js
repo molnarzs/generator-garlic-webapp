@@ -48,7 +48,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     runRemoteGit: function() {
       var done;
       done = this.async();
-      console.log('X', this.conf);
       if (this.answers.githubToken == null) {
         console.log("\nWarning: Github repo not created: github oauth token is unknown or invalid.\n");
         return;

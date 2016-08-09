@@ -1,1 +1,1 @@
-© <%= scopeCC %> 2016. All rights reserved.
+2016 Garlic Tech Ltd. All rights reserved.

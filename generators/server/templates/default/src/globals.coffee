@@ -1,7 +1,0 @@
-require 'colors'
-GLOBAL.Promise = require 'bluebird'
-GLOBAL.fs = require 'fs'
-GLOBAL.winston = require 'winston'
-GLOBAL._ = require 'lodash'
-winston.level = 'debug'
-GLOBAL.config = require './config'
