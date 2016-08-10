@@ -1,4 +1,4 @@
-var GarlicWebappServiceGenerator, _, chalk, fs, path, spawn, util, yeoman;
+var GarlicWebappServiceGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -14,13 +14,13 @@ _ = require('lodash');
 
 fs = require('fs');
 
+generatorLib = require('../lib');
+
 GarlicWebappServiceGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
-      console.log(chalk.magenta('You\'re using the GarlicTech webapp service generator.'));
-      this.moduleNames = this.conf.angularModules.services;
-      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp service generator.'));
     }
   },
   prompting: function() {
@@ -28,12 +28,8 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
-        done();
         _this.answers = answers;
-        _this.moduleNames.push(_this.answers.name);
-        _this.conf.serviceName = _.capitalize(_.camelCase(_this.answers.name));
-        _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.serviceName;
-        return _this.conf.serviceNameFQ = _this.conf.appNameCC + "." + _this.conf.serviceName;
+        return done();
       };
     })(this);
     return this.prompt({
@@ -44,6 +40,14 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend({
     }, cb.bind(this));
   },
   writing: {
+    createConfig: function() {
+      this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
+      this.moduleNames = this.conf.angularModules.services;
+      this.moduleNames.push(this.answers.name);
+      this.conf.serviceName = _.capitalize(_.camelCase(this.answers.name));
+      this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.serviceName;
+      return this.conf.serviceNameFQ = this.conf.moduleName;
+    },
     mainFiles: function() {
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + this.answers.name), {
         c: this.conf
@@ -52,7 +56,7 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend({
     "service-modules.coffee": function() {
       var content, dest;
       dest = this.destinationPath("./src/service-modules.coffee");
-      content = "Module = angular.module \"" + this.conf.appNameCC + ".services\", [";
+      content = "Module = angular.module \"" + this.conf.angularModuleName + ".Services\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
       });

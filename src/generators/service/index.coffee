@@ -5,24 +5,20 @@ chalk = require('chalk')
 spawn = require('child_process').spawn
 _ = require 'lodash'
 fs = require 'fs'
+generatorLib = require '../lib'
 
 GarlicWebappServiceGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp service generator.'
-      @moduleNames = @conf.angularModules.services
-      @conf.appNameCC = _.capitalize _.camelCase @conf.appName
+
 
   prompting: ->
     done = @async()
     cb = (answers) =>
-      done()
       @answers = answers
-      @moduleNames.push @answers.name
-      @conf.serviceName = _.capitalize _.camelCase @answers.name
-      @conf.moduleName = "#{@conf.appNameCC}.#{@conf.serviceName}"
-      @conf.serviceNameFQ = "#{@conf.appNameCC}.#{@conf.serviceName}"
+      done()
 
     @prompt
       type    : 'input'
@@ -31,13 +27,23 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend
       required: true
     , cb.bind @
 
+
   writing:
+    createConfig: ->
+      @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
+      @moduleNames = @conf.angularModules.services
+      @moduleNames.push @answers.name
+      @conf.serviceName = _.capitalize _.camelCase @answers.name
+      @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.serviceName}"
+      @conf.serviceNameFQ = @conf.moduleName
+
+
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/#{@answers.name}"), {c: @conf}
 
     "service-modules.coffee": ->
       dest = @destinationPath("./src/service-modules.coffee")
-      content = """Module = angular.module "#{@conf.appNameCC}.services", ["""
+      content = """Module = angular.module "#{@conf.angularModuleName}.Services", ["""
 
       _.forEach @moduleNames, (moduleName) ->
         content += "\n  require './#{moduleName}'"
