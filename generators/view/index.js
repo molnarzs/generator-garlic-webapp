@@ -1,4 +1,4 @@
-var GarlicWebappPageGenerator, _, chalk, fs, gulpFilter, gulpRename, gulpReplace, path, spawn, util, yeoman;
+var GarlicWebappPageGenerator, _, chalk, fs, generatorLib, gulpFilter, gulpRename, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -18,12 +18,12 @@ gulpFilter = require('gulp-filter');
 
 gulpRename = require('gulp-rename');
 
-gulpReplace = require('gulp-replace');
+generatorLib = require('../lib');
 
 GarlicWebappPageGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
-      return console.log(chalk.magenta('You\'re using the GarlicTech webapp pages generator.'));
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp view generator.'));
     }
   },
   prompting: function() {
@@ -32,9 +32,9 @@ GarlicWebappPageGenerator = yeoman.generators.Base.extend({
     cb = (function(_this) {
       return function(answers) {
         _this.answers = answers;
-        _this.composeWith('garlic-webapp:ui', {
+        _this.composeWith('garlic-webapp:directive', {
           options: {
-            page: true,
+            view: true,
             answers: answers
           }
         });
@@ -44,14 +44,17 @@ GarlicWebappPageGenerator = yeoman.generators.Base.extend({
     return this.prompt({
       type: 'input',
       name: 'name',
-      message: 'Page name, without -page (like foo-bar):',
+      message: 'view name, without -view (like foo-bar):',
       required: true
     }, cb.bind(this));
   },
   writing: {
+    createConfig: function() {
+      return generatorLib.createDirectiveConfig.bind(this)();
+    },
     protractor: function() {
       var pagesFilter;
-      pagesFilter = gulpFilter(['**/page.coffee', '**/scenarios.coffee'], {
+      pagesFilter = gulpFilter(['**/view.coffee', '**/scenarios.coffee'], {
         restore: true
       });
       this.registerTransformStream(pagesFilter);
@@ -60,20 +63,19 @@ GarlicWebappPageGenerator = yeoman.generators.Base.extend({
           return path.basename = _this.answers.name + "." + path.basename;
         };
       })(this)));
-      this.fs.copyTpl(this.templatePath('protractor/**/*'), this.destinationPath("./src/test/protractor"), {
-        pageName: this.answers.name,
-        pageNameCC: (_.capitalize(_.camelCase(this.answers.name))) + "Page"
+      this.fs.copyTpl(this.templatePath('e2e/**/*'), this.destinationPath("./e2e"), {
+        c: this.conf
       });
       return this.registerTransformStream(pagesFilter.restore);
     },
     "views/index.coffee": function() {
-      var conf, content, replacedTextRequire, replacedTextState;
+      var content, headerDirectiveName, replacedTextRequire, replacedTextState;
       path = this.destinationPath("./src/views/index.coffee");
       content = fs.readFileSync(path, 'utf8');
-      conf = this.config.getAll();
-      replacedTextState = ".state '" + this.answers.name + "',\n    url: '/" + this.answers.name + "'\n    views:\n      'main':\n        template: '<div " + conf.appName + "-" + this.answers.name + "-page></div>'\n\n  #===== yeoman hook state =====#";
+      headerDirectiveName = (_.kebabCase(this.conf.angularModuleName)) + "-main-header";
+      replacedTextState = ".state '" + this.answers.name + "',\n    url: '/" + this.answers.name + "'\n    views:\n      'header':\n        template: '<" + headerDirectiveName + "></" + headerDirectiveName + ">'\n      'main':\n        template: '<" + this.conf.directiveNameKC + "></" + this.conf.directiveNameKC + ">'\n\n  #===== yeoman hook state =====#";
       content = content.replace('#===== yeoman hook state =====#', replacedTextState);
-      replacedTextRequire = "require './" + this.answers.name + "-page'\n  #===== yeoman hook require =====#";
+      replacedTextRequire = "require './" + this.answers.name + "-view'\n  #===== yeoman hook require =====#";
       content = content.replace('#===== yeoman hook require =====#', replacedTextRequire);
       return fs.writeFileSync(path, content, 'utf8');
     }

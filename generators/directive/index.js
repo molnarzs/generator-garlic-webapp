@@ -23,16 +23,15 @@ generatorLib = require('../lib');
 GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
-      this.conf = this.config.getAll();
-      if (!this.options.page) {
+      if (!this.options.view) {
         console.log(chalk.magenta('You\'re using the GarlicTech webapp directive generator.'));
       }
-      return this.conf.folder = "./src";
+      return this.folder = "./src";
     }
   },
   prompting: function() {
     var cb, done;
-    if (this.options.page) {
+    if (this.options.view) {
       return;
     }
     done = this.async();
@@ -53,37 +52,24 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     createConfig: function() {
-      var directiveNameCC;
-      this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
-      this.moduleNames = this.options.page ? this.conf.angularModules.pages : this.conf.angularModules.directives;
-      directiveNameCC = _.capitalize(_.camelCase(this.answers.name));
-      this.conf.moduleName = this.conf.angularModuleName + "." + directiveNameCC;
-      this.moduleNames.push(this.answers.name);
-      if (this.options.page) {
-        this.conf.moduleName = this.conf.angularModuleName + "." + moduleName + ".View";
-        this.conf.directiveNameCC = this.conf.directiveNameCC + "View";
-        return this.conf.directiveNameKC = this.conf.directiveNameKC + "-view";
-      } else {
-        this.conf.directiveNameCC = "" + this.conf.appNameFQcC + directiveNameCC;
-        return this.conf.directiveNameKC = this.conf.appNameFQ + "-" + this.answers.name;
-      }
+      return generatorLib.createDirectiveConfig.bind(this)();
     },
     mainFiles: function() {
       var root;
       root = "" + this.answers.name;
-      if (this.options.page) {
+      if (this.options.view) {
         root = "views/" + this.answers.name + "-view";
       }
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(this.conf.folder + "/" + root), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(this.folder + "/" + root), {
         c: this.conf
       });
     },
     "directive-modules.coffee": function() {
       var content, dest;
-      if (this.options.page) {
+      if (this.options.view) {
         return;
       }
-      dest = this.destinationPath(this.conf.folder + "/directive-modules.coffee");
+      dest = this.destinationPath(this.folder + "/directive-modules.coffee");
       content = "Module = angular.module \"" + this.conf.angularModuleName + ".Directives\", [";
       _.forEach(this.moduleNames, function(moduleName) {
         return content += "\n  require './" + moduleName + "'";
@@ -91,12 +77,12 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
       content += "\n]\n\nmodule.exports = Module.name";
       return this.fs.write(dest, content);
     },
-    "test-page-components.jade": function() {
+    "test-view-components.jade": function() {
       var content, dest;
-      if (this.options.page) {
+      if (this.options.view) {
         return;
       }
-      dest = this.destinationPath(this.conf.folder + "/views/test-page/test-page-components.jade");
+      dest = this.destinationPath(this.folder + "/views/test-view/test-view-components.jade");
       content = "";
       _.forEach(this.moduleNames, (function(_this) {
         return function(moduleName) {

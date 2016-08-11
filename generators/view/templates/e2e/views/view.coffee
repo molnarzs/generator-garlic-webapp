@@ -1,4 +1,4 @@
-class <%= pageNameCC %>
+class <%= c.componentNameCC %>
   constructor: ->
     @url = '/#/'
 
@@ -8,4 +8,4 @@ class <%= pageNameCC %>
   getUrl: ->
     "#{config.baseUrl}#{@url}"
 
-module.exports = <%= pageNameCC %>
+module.exports = <%= c.componentNameCC %>

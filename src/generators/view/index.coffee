@@ -7,59 +7,63 @@ _ = require 'lodash'
 fs = require 'fs'
 gulpFilter = require 'gulp-filter'
 gulpRename = require 'gulp-rename'
-gulpReplace = require 'gulp-replace'
+generatorLib = require '../lib'
 
 GarlicWebappPageGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp pages generator.'
+      console.log chalk.magenta 'You\'re using the GarlicTech webapp view generator.'
 
   prompting: ->
     done = @async()
     cb = (answers) =>
       @answers = answers
-      @composeWith 'garlic-webapp:ui', options: {page: true, answers: answers}
+      @composeWith 'garlic-webapp:directive', options: {view: true, answers: answers}
       done()
 
     @prompt
       type    : 'input'
       name    : 'name'
-      message : 'Page name, without -page (like foo-bar):'
+      message : 'view name, without -view (like foo-bar):'
       required: true
     , cb.bind @
 
   writing:
+    createConfig: ->
+      generatorLib.createDirectiveConfig.bind(@)()
+
+
     protractor: ->
-      pagesFilter = gulpFilter ['**/page.coffee', '**/scenarios.coffee'], {restore: true}
+      pagesFilter = gulpFilter ['**/view.coffee', '**/scenarios.coffee'], {restore: true}
       @registerTransformStream pagesFilter
 
       @registerTransformStream gulpRename (path) =>
         path.basename = "#{@answers.name}.#{path.basename}"
 
-      @fs.copyTpl @templatePath('protractor/**/*'), @destinationPath("./src/test/protractor"),
-        pageName: @answers.name
-        pageNameCC: "#{_.capitalize _.camelCase @answers.name}Page"
+      @fs.copyTpl @templatePath('e2e/**/*'), @destinationPath("./e2e"), {c: @conf}
 
       @registerTransformStream pagesFilter.restore
 
     "views/index.coffee": ->
       path = @destinationPath "./src/views/index.coffee"
       content = fs.readFileSync path, 'utf8'
-      conf = @config.getAll()
+      headerDirectiveName = "#{_.kebabCase @conf.angularModuleName}-main-header"
 
       replacedTextState = """
   .state '#{@answers.name}',
       url: '/#{@answers.name}'
       views:
+        'header':
+          template: '<#{headerDirectiveName}></#{headerDirectiveName}>'
         'main':
-          template: '<div #{conf.appName}-#{@answers.name}-page></div>'
+          template: '<#{@conf.directiveNameKC}></#{@conf.directiveNameKC}>'
 
     #===== yeoman hook state =====#"""
 
       content = content.replace '#===== yeoman hook state =====#', replacedTextState
 
       replacedTextRequire = """
-  require './#{@answers.name}-page'
+  require './#{@answers.name}-view'
     #===== yeoman hook require =====#"""
 
       content = content.replace '#===== yeoman hook require =====#', replacedTextRequire

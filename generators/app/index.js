@@ -25,7 +25,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           directives: [],
           services: [],
           factories: [],
-          pages: [],
+          views: [],
           providers: []
         },
         server: {
@@ -44,7 +44,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   writing: {
     createConfig: function() {
       var angularModuleName;
-      this.conf = generatorLib.createConfig.bind(this)();
+      generatorLib.createConfig.bind(this)();
       angularModuleName = this.conf.scopeCC + "." + (_.capitalize(_.camelCase(this.appname)));
       this.conf.angularModuleName = angularModuleName;
       return this.config.set({
