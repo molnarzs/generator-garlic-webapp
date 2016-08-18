@@ -86,7 +86,7 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
       content = "";
       _.forEach(this.moduleNames, (function(_this) {
         return function(moduleName) {
-          return content += "div(" + _this.conf.appNameFQ + "-" + _this.answers.name + ")\n";
+          return content += _this.conf.appNameFQ + "-" + _this.answers.name + "\n";
         };
       })(this));
       return this.fs.write(dest, content);

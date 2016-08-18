@@ -91,8 +91,8 @@ Module = angular.module "#{@conf.angularModuleName}/Providers", []
 module.exports = Module.name
 """
 
-    "src/views/test-page/test-page-components.jade" : ->
-      dest = @destinationPath "./src/views/test-page/test-page-components.jade"
+    "src/views/test-page/test-view-components.jade" : ->
+      dest = @destinationPath "./src/views/test-view/test-view-components.jade"
       if not @fs.exists dest then @fs.write dest, ""
 
 
@@ -101,8 +101,6 @@ module.exports = Module.name
 
   install:
     dependencies: ->
-      @npmInstall ['angular', 'angular-ui-router'], { 'save': true }
-      @npmInstall ['garlictech-workflows-client', 'normalize-scss'], { 'saveDev': true }
       generatorLib.dependencies.bind(@)()
 
 module.exports = GarlicWebappGenerator

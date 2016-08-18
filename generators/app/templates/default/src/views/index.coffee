@@ -1,6 +1,6 @@
 config = require '../config'
 
-Module = angular.module "<%= conf.angularModuleName %>/views", [
+Module = angular.module "<%= conf.angularModuleName %>.Views", [
   require 'angular-ui-router'
   require './front-view'
   require './test-view'

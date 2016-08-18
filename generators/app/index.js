@@ -92,9 +92,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Providers\", []\nmodule.exports = Module.name");
       }
     },
-    "src/views/test-page/test-page-components.jade": function() {
+    "src/views/test-page/test-view-components.jade": function() {
       var dest;
-      dest = this.destinationPath("./src/views/test-page/test-page-components.jade");
+      dest = this.destinationPath("./src/views/test-view/test-view-components.jade");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "");
       }
@@ -105,12 +105,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   install: {
     dependencies: function() {
-      this.npmInstall(['angular', 'angular-ui-router'], {
-        'save': true
-      });
-      this.npmInstall(['garlictech-workflows-client', 'normalize-scss'], {
-        'saveDev': true
-      });
       return generatorLib.dependencies.bind(this)();
     }
   }

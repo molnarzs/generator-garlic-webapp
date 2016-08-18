@@ -1,4 +1,4 @@
-Module = angular.module "<%= conf.angularModuleName %>/TestApp", [
+Module = angular.module "<%= conf.angularModuleName %>.TestApp", [
   '<%= conf.angularModuleName %>'
 ]
 

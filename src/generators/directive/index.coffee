@@ -66,7 +66,7 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
       content = ""
 
       _.forEach @moduleNames, (moduleName) =>
-        content += "div(#{@conf.appNameFQ}-#{@answers.name})\n"
+        content += "#{@conf.appNameFQ}-#{@answers.name}\n"
 
       @fs.write dest, content
 

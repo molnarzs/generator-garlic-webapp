@@ -2,7 +2,7 @@
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "version": "0.0.1",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "dist/server.js",
+  "main": "src/index",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -30,15 +30,23 @@
     "node": ">=5.0.0"
   },
   "scripts": {
-    "build": "gulp build",
-    "start": "node dist/server.js",
-    "start-dev": "gulp",
-    "debug": "node --debug-brk dist/server.js",
+    "start": "scripts/start.sh",
     "unittest": "scripts/unittest.sh",
-    "systemtest": "gulp systemtest",
+    "build": "scripts/build.sh",
     "setup-dev": "scripts/setup-dev.sh",
-    "test": "npm run unittest && npm run systemtest",
-    "prepare-travis": "coffee src/scripts/prepare-travis.coffee"
+    "protractor-start": "scripts/protractor-start.sh",
+    "protractor-setup": "scripts/protractor-setup.sh",
+    "e2e-test": "scripts/e2e-test.sh",
+    "start-watch": "webpack --watch --cache false",
+    "webpack-profile": "webpack --profile --json > webpack-stats.json"
+  },
+  "dependencies": {
+    "angular": "^1.5",
+    "angular-ui-router": "^0.3"
+  },
+  "devDependencies": {
+    "garlictech-workflows-client": "^0.1",
+    "normalize-scss": "^5.0"
   },
   "garlic": {
     "type": "module",
