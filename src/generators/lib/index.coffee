@@ -1,4 +1,6 @@
 _ = require 'lodash'
+execute = require('child_process').execSync
+
 
 Methods =
   createConfig: ->
@@ -60,5 +62,10 @@ Methods =
     cb = @async()
     if not @options['skip-install'] then @installDependencies()
     cb()
+
+
+  execute: (command) ->
+    execute command, {stdio:[0,1,2]}
+
 
 module.exports = Methods

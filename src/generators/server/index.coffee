@@ -3,12 +3,14 @@ path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 mkdirp = require 'mkdirp'
-execute = require('child_process').execSync
 jsonfile = require 'jsonfile'
 generatorLib = require '../lib'
 
 GarlicWebappServerGenerator = yeoman.generators.Base.extend
   initializing: ->
+    @config.set
+      appname: @appname
+
     console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
     @composeWith 'loopback', {options: {"skip-install": true}}
 
@@ -24,7 +26,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
   
     mainFiles: ->
       cb = @async()
-      @conf = @config.getAll()
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         conf: @conf
@@ -37,7 +38,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
     "package.json": ->
       cb = @async()
-      @conf = @config.getAll()
       pjson = jsonfile.readFileSync @destinationPath("./package.json")
       pjson.name = "@#{@conf.scope}/#{@conf.appNameKC}"
       pjson.version = "0.0.1"
@@ -103,7 +103,11 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
   install:
-    dependencies: ->
-      generatorLib.dependencies.bind(@)()
+    setupEnvironment: ->
+      cb = @async()
+      generatorLib.execute "npm install"
+      generatorLib.execute "npm run setup-dev"
+      generatorLib.execute "npm run build"
+      cb()
 
 module.exports = GarlicWebappServerGenerator

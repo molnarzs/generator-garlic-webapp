@@ -8,8 +8,7 @@ execute = require('child_process').execSync
 generatorLib = require '../lib'
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
-  initializing:
-
+  initializing: ->
     init: ->
       @config.set
         appname: @appname
@@ -19,10 +18,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
           factories: []
           views: []
           providers: []
-        server:
-          components: []
-        common:
-          components: []
+
       console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
 
   prompting: ->

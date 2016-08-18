@@ -1,4 +1,4 @@
-var GarlicWebappServerGenerator, chalk, execute, generatorLib, jsonfile, mkdirp, path, util, yeoman;
+var GarlicWebappServerGenerator, chalk, generatorLib, jsonfile, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -10,14 +10,15 @@ chalk = require('chalk');
 
 mkdirp = require('mkdirp');
 
-execute = require('child_process').execSync;
-
 jsonfile = require('jsonfile');
 
 generatorLib = require('../lib');
 
 GarlicWebappServerGenerator = yeoman.generators.Base.extend({
   initializing: function() {
+    this.config.set({
+      appname: this.appname
+    });
     console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
     return this.composeWith('loopback', {
       options: {
@@ -35,7 +36,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     mainFiles: function() {
       var cb;
       cb = this.async();
-      this.conf = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         conf: this.conf
       });
@@ -47,7 +47,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     "package.json": function() {
       var cb, pjson;
       cb = this.async();
-      this.conf = this.config.getAll();
       pjson = jsonfile.readFileSync(this.destinationPath("./package.json"));
       pjson.name = "@" + this.conf.scope + "/" + this.conf.appNameKC;
       pjson.version = "0.0.1";
@@ -103,8 +102,13 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     }
   },
   install: {
-    dependencies: function() {
-      return generatorLib.dependencies.bind(this)();
+    setupEnvironment: function() {
+      var cb;
+      cb = this.async();
+      generatorLib.execute("npm install");
+      generatorLib.execute("npm run setup-dev");
+      generatorLib.execute("npm run build");
+      return cb();
     }
   }
 });

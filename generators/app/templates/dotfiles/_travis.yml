@@ -32,7 +32,3 @@ deploy:
   on:
     tags: true
   api_key: <%= conf.npmToken %>
-   
-env:  
-  global:
-    - NPM_TOKEN=<%= conf.npmToken %>

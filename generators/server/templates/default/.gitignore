@@ -62,7 +62,7 @@ dist/
 bin/
 *.bak
 credentials.coffee
-config.json
+.env
 
 # --------------------
 # Text editor files

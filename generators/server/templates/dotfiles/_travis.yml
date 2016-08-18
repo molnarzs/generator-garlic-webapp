@@ -3,7 +3,6 @@ node_js:
 - '5'
 
 notifications:
-  slack: <%= conf.scope %>:<%= conf.slackToken %>
   email: false
 
 before_install:
@@ -12,6 +11,9 @@ before_install:
 
 install:
   - npm install
+
+before_script:
+  - npm run setup-dev
 
 script:
   - npm run build
@@ -34,8 +36,3 @@ deploy:
   on:
     tags: true
     branch: master
-  api_key: <%= conf.npmToken %>
-   
-env:  
-  global:
-    - NPM_TOKEN=<%= conf.npmToken %>

@@ -1,6 +1,8 @@
-var Methods, _;
+var Methods, _, execute;
 
 _ = require('lodash');
+
+execute = require('child_process').execSync;
 
 Methods = {
   createConfig: function() {
@@ -70,6 +72,11 @@ Methods = {
       this.installDependencies();
     }
     return cb();
+  },
+  execute: function(command) {
+    return execute(command, {
+      stdio: [0, 1, 2]
+    });
   }
 };
 
