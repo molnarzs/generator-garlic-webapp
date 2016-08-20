@@ -22,6 +22,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     npmToken = process.env["NPM_TOKEN_#{@conf.scopeCC}"]
     slackToken = process.env["SLACK_TOKEN_#{@conf.scopeCC}"]
     slackWebhookUrl = process.env["SLACK_WEBHOOK_URL_#{@conf.scopeCC}"]
+    devTeamId = process.env["DEV_TEAM_ID_#{@conf.scopeCC}"]
 
     @prompt [{
         type    : 'input'
@@ -47,6 +48,12 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         default : slackWebhookUrl
         message : "Slack webhook url: (we take the default from the environment variable SLACK_WEBHOOK_URL_#{@conf.scopeCC}):"
         store   : true
+      } , {
+        type    : 'input'
+        name    : 'devTeam'
+        default : devTeamId
+        message : "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_#{@conf.scopeCC}):"
+        store   : true
       }
     ], cb.bind @
  
@@ -63,7 +70,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       console.log chalk.blue "\nCreating GitHub repo...\n"
      
-      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": true, \"team_id\": 857539}\'"
+      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": true, \"team_id\": #{@answers.devTeam}}\'"
       generatorLib.execute repoCreateCmd
       generatorLib.execute "git init"
       generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"

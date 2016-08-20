@@ -6,20 +6,21 @@
 
 ### Prerequistes
 
-[Yeoman](http://yeoman.io) generator must be installed:
+The [Yeoman](http://yeoman.io) generator must be installed:
 
 ```bash
 $ sudo npm install -g yeoman
 ```
 
 ### Setup
-To install generator-garlic-webapp, run:
+To install the generator-garlic-webapp, run:
 
 ```bash
 $ sudo npm install -g generator-garlic-webapp
 ```
 
-The generator has some peer dependencies. If they are missing (for instance, the [loopback.io generator](https://github.com/strongloop/generator-loopback)), you must also install them globally.
+The generator has some peer dependencies. If they are missing (for instance, the [loopback.io generator](https://github.com/strongloop/generator-loopback)), you must also install them globally. The above install
+command will fail and list the missing software in this case.
 
 # The Generators
 

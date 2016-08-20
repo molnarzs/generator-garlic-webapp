@@ -18,7 +18,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     }
   },
   prompting: function() {
-    var cb, done, githubToken, npmToken, slackToken, slackWebhookUrl;
+    var cb, devTeamId, done, githubToken, npmToken, slackToken, slackWebhookUrl;
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
@@ -30,6 +30,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     npmToken = process.env["NPM_TOKEN_" + this.conf.scopeCC];
     slackToken = process.env["SLACK_TOKEN_" + this.conf.scopeCC];
     slackWebhookUrl = process.env["SLACK_WEBHOOK_URL_" + this.conf.scopeCC];
+    devTeamId = process.env["DEV_TEAM_ID_" + this.conf.scopeCC];
     return this.prompt([
       {
         type: 'input',
@@ -55,6 +56,12 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         "default": slackWebhookUrl,
         message: "Slack webhook url: (we take the default from the environment variable SLACK_WEBHOOK_URL_" + this.conf.scopeCC + "):",
         store: true
+      }, {
+        type: 'input',
+        name: 'devTeam',
+        "default": devTeamId,
+        message: "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_" + this.conf.scopeCC + "):",
+        store: true
       }
     ], cb.bind(this));
   },
@@ -72,7 +79,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         };
       })(this);
       console.log(chalk.blue("\nCreating GitHub repo...\n"));
-      repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": true, \"team_id\": 857539}\'";
+      repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": true, \"team_id\": " + this.answers.devTeam + "}\'";
       generatorLib.execute(repoCreateCmd);
       generatorLib.execute("git init");
       generatorLib.execute("git remote add origin https://github.com/" + this.conf.scope + "/" + this.conf.appNameKC + ".git");
