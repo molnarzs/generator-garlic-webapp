@@ -3,7 +3,6 @@ node_js:
 - '5'
 
 notifications:
-  slack: <%= conf.scope %>:<%= conf.slackToken %>
   email: false
 
 before_install:
@@ -13,6 +12,7 @@ install:
   - npm install
 
 script:
+  - npm run setup-dev
   - npm run build && npm run unittest
 
 # Uncomment it only if needed, not to waste time with unnecessary install.
@@ -31,4 +31,4 @@ deploy:
   email: "contact@<%= conf.scope %>.com"
   on:
     tags: true
-  api_key: <%= conf.npmToken %>
+    branch: master
