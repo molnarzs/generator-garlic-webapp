@@ -18,21 +18,17 @@ generatorLib = require('../lib');
 
 GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: function() {
-    return {
-      init: function() {
-        this.config.set({
-          appname: this.appname,
-          angularModules: {
-            directives: [],
-            services: [],
-            factories: [],
-            views: [],
-            providers: []
-          }
-        });
-        return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+    this.config.set({
+      appname: this.appname,
+      angularModules: {
+        directives: [],
+        services: [],
+        factories: [],
+        views: [],
+        providers: []
       }
-    };
+    });
+    return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
   },
   prompting: function() {
     return generatorLib.prompting.bind(this)();

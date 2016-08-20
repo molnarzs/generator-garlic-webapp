@@ -9,17 +9,16 @@ generatorLib = require '../lib'
 
 GarlicWebappGenerator = yeoman.generators.Base.extend
   initializing: ->
-    init: ->
-      @config.set
-        appname: @appname
-        angularModules:
-          directives: []
-          services: []
-          factories: []
-          views: []
-          providers: []
+    @config.set
+      appname: @appname
+      angularModules:
+        directives: []
+        services: []
+        factories: []
+        views: []
+        providers: []
 
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
+    console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
 
   prompting: ->
     generatorLib.prompting.bind(@)()
