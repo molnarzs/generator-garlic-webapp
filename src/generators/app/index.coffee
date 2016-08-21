@@ -44,6 +44,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"),
         conf: @conf
       
+      @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"),
+        conf: @conf
+
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
       cb()
 

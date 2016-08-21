@@ -8,7 +8,7 @@ gulpConfig = (_gulp, config) ->
 
 
 config =
-  base: __dirname
+  root: __dirname
 
 gulp = gulpConfig gulp, config
 

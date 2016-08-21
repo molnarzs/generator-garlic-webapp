@@ -7,5 +7,6 @@
 .yo-rc.json
 coffeelint.json
 gulpfile.coffee
-karma.conf.coffee
-webpack.conf.coffee
+karma.conf.js
+webpack.config.js
+webpack.common.config.js

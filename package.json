@@ -17,15 +17,12 @@
   ],
   "dependencies": {
     "chalk": "^1.1.1",
-    "execSync": "^1.0.2",
     "jsonfile": "^2.3.1",
     "mkdirp": "^0.5.1",
-    "yeoman-generator": "^0.21.1",
-    "yo": "^1.5.0",
-    "yosay": "^1.1.0"
+    "yeoman-generator": "^0.24"
   },
   "devDependencies": {
-    "garlictech-workflows-common": "0.0.4",
+    "garlictech-workflows-common": "^0.1",
     "gulp-cached": "^1.1.0",
     "gulp-coffee": "^2.3.2",
     "gulp-coffeelint": "^0.6.0",

@@ -6,6 +6,8 @@ notifications:
     rooms:
       secure: H/GJtf/yYzYTfbS1jwUtco8gAmxDTpsPN6PXAMNdK6gKVcS2j9qt0gpuDxxXlI2mH8CdmFOpPAzHxQNXjF7Fghg+Iqlmdpc8+w1Zlp6+mtJsR2Hn+KPk+MyHhAlhETnNYTJ1U+mjc22tMBZt9uaVThyoPl2PiGPz1+IOKTJvLulDG4BCbO9km6T24kNnBSnRNrvGDGvckqRZYoL0DbGy35sw01bM1+Z0AQYhYUK6++2It9lB9dPQFtcUVoJeyWmEUWWVpy5D9/PVdC+lOT2L7ZNKQD2oClePVZ3RdOSltCWbcdOLU+jzEWBx2EdhU0JVLCjXGmjDpOL5Sb0PIfZ0aouuLflLeRoLnhbuISv00qMbFRvWj9RR9IgSlHo/Z1ie9uwCVDpTobo5/sC+y+naKdtElL+g4ZKT4KDejDxSfoMSOIOfFmv7JKvDX+3R4TEfabl0mZstdLV4TMypMO5o6Blm0RgOTTWw0iGuIlxUGWMRLQyW+kCGvPEnbIAk1nkvBSDz5qSfpLHQFD5u27gu5h3yAoIJO1xDV05YRYCUru1arGUAh6VVOHi+2gCCYnYceZ1LBbAPD4uXgEnBG4VVQl4q6TMFrRkuZCu2ZkJqwXMsBUToc55+uVywHI9DLNRB51uv2IQDnH7/tYiLgBrOvaBbO6sG8o1dQGNqf1pwsaE=
   email: false
+before_install:
+- npm install -g yo generator-loopback
 install:
 - npm install
 script:
