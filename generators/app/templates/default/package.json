@@ -46,7 +46,10 @@
   },
   "devDependencies": {
     "garlictech-workflows-client": "^0.1",
-    "normalize-scss": "^5.0"
+    "normalize-scss": "^5.0",
+    "compass-mixins": "^0.12",
+    "material-colors": "^1.0",
+    "webfontloader": "^1.6."
   },
   "garlic": {
     "type": "module",
