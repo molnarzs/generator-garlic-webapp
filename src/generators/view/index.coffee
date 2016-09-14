@@ -56,7 +56,7 @@ GarlicWebappPageGenerator = yeoman.generators.Base.extend
         'header':
           template: '<#{headerDirectiveName}></#{headerDirectiveName}>'
         'main':
-          template: '<#{@conf.directiveNameKC}></#{@conf.directiveNameKC}>'
+          template: '<#{@conf.directiveNameKC}-view></#{@conf.directiveNameKC}-view>'
 
     #===== yeoman hook state =====#"""
 

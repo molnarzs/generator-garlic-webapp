@@ -3,6 +3,7 @@ require './style'
 module.exports = ->
   restrict: 'EA'
   scope: true
+  bindToController: true
   #require: ['^ngModel']
   priority: 0
   replace: false

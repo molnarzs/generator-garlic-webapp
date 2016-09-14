@@ -73,7 +73,7 @@ GarlicWebappPageGenerator = yeoman.generators.Base.extend({
       path = this.destinationPath("./src/views/index.coffee");
       content = fs.readFileSync(path, 'utf8');
       headerDirectiveName = (_.kebabCase(this.conf.angularModuleName)) + "-main-header";
-      replacedTextState = ".state '" + this.answers.name + "',\n    url: '/" + this.answers.name + "'\n    views:\n      'header':\n        template: '<" + headerDirectiveName + "></" + headerDirectiveName + ">'\n      'main':\n        template: '<" + this.conf.directiveNameKC + "></" + this.conf.directiveNameKC + ">'\n\n  #===== yeoman hook state =====#";
+      replacedTextState = ".state '" + this.answers.name + "',\n    url: '/" + this.answers.name + "'\n    views:\n      'header':\n        template: '<" + headerDirectiveName + "></" + headerDirectiveName + ">'\n      'main':\n        template: '<" + this.conf.directiveNameKC + "-view></" + this.conf.directiveNameKC + "-view>'\n\n  #===== yeoman hook state =====#";
       content = content.replace('#===== yeoman hook state =====#', replacedTextState);
       replacedTextRequire = "require './" + this.answers.name + "-view'\n  #===== yeoman hook require =====#";
       content = content.replace('#===== yeoman hook require =====#', replacedTextRequire);

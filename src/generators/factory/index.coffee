@@ -11,18 +11,13 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend
     init: ->
       @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp factory generator.'
-      @moduleNames = @conf.angularModules.factories
-      @conf.appNameCC = _.capitalize _.camelCase @conf.appName
+
 
   prompting: ->
     done = @async()
     cb = (answers) =>
       done()
       @answers = answers
-      @moduleNames.push @answers.name
-      @conf.factoryName = _.capitalize _.camelCase @answers.name
-      @conf.moduleName = "#{@conf.appNameCC}.#{@conf.factoryName}"
-      @conf.factoryNameFQ = "#{@conf.appNameCC}.#{@conf.factoryName}"
 
     @prompt
       type    : 'input'
@@ -31,7 +26,16 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend
       required: true
     , cb.bind @
 
+
   writing:
+    createConfig: ->
+      @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
+      @moduleNames = @conf.angularModules.factories
+      @moduleNames.push @answers.name
+      @conf.factoryName = _.capitalize _.camelCase @answers.name
+      @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.factoryName}"
+      @conf.factoryNameFQ = @conf.moduleName
+
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/#{@answers.name}"), {c: @conf}
 
