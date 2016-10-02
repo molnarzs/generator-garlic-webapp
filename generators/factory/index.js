@@ -18,9 +18,7 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
-      console.log(chalk.magenta('You\'re using the GarlicTech webapp factory generator.'));
-      this.moduleNames = this.conf.angularModules.factories;
-      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp factory generator.'));
     }
   },
   prompting: function() {
@@ -29,11 +27,7 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend({
     cb = (function(_this) {
       return function(answers) {
         done();
-        _this.answers = answers;
-        _this.moduleNames.push(_this.answers.name);
-        _this.conf.factoryName = _.capitalize(_.camelCase(_this.answers.name));
-        _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.factoryName;
-        return _this.conf.factoryNameFQ = _this.conf.appNameCC + "." + _this.conf.factoryName;
+        return _this.answers = answers;
       };
     })(this);
     return this.prompt({
@@ -44,6 +38,14 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend({
     }, cb.bind(this));
   },
   writing: {
+    createConfig: function() {
+      this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
+      this.moduleNames = this.conf.angularModules.factories;
+      this.moduleNames.push(this.answers.name);
+      this.conf.factoryName = _.capitalize(_.camelCase(this.answers.name));
+      this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.factoryName;
+      return this.conf.factoryNameFQ = this.conf.moduleName;
+    },
     mainFiles: function() {
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + this.answers.name), {
         c: this.conf
