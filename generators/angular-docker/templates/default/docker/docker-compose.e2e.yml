@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  e2e-tester:
+    build: ../e2e
+    volumes:
+      - "../e2e/src:/protractor"
+      - "/dev/shm:/dev/shm"
+    environment:
+      - WEBSERVER_IP=webpack_server
+    privileged: true

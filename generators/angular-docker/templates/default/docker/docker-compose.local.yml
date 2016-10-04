@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  webpack_server:
+    build: ..
+    volumes:
+      - "../src:/app/src"
+      - "../dev-site:/app/dev-site"
+      - "../hooks:/app/hooks"
+    env_file: ../.env

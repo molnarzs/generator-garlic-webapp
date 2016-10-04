@@ -2,7 +2,7 @@
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "version": "0.0.1",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "src/index",
+  "main": "src/index.coffee",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -30,32 +30,22 @@
     "node": ">=5.0.0"
   },
   "scripts": {
-    "start": "scripts/start.sh",
-    "unittest": "scripts/unittest.sh",
-    "build": "scripts/build.sh",
+    "start": "docker/start.sh",
+    "stop": "docker/stop.sh",
+    "unittest": "docker/unittest.sh",
+    "build": "docker/build.sh",
+    "e2e-test": "docker/e2e-test.sh",
+    "bash": "docker/bash.sh",
+    "gulp": "docker/gulp.sh",
     "setup-dev": "scripts/setup-dev.sh",
-    "protractor-start": "scripts/protractor-start.sh",
-    "protractor-setup": "scripts/protractor-setup.sh",
-    "e2e-test": "scripts/e2e-test.sh",
-    "start-watch": "webpack --watch --cache false",
-    "webpack-profile": "webpack --profile --json > webpack-stats.json"
+    "start:docker": "scripts/start.sh",
+    "unittest:docker": "scripts/unittest.sh"
   },
   "dependencies": {
     "angular": "^1.5",
     "angular-ui-router": "^0.3"
   },
-  "devDependencies": {
-    "garlictech-workflows-client": "^0.2",
-    "normalize-scss": "^5.0",
-    "compass-mixins": "^0.12",
-    "material-colors": "^1.0",
-    "webfontloader": "^1.6."
-  },
   "garlic": {
-    "type": "module",
-    "unittest": "./src/test/unit/index.js"
-  },
-  "config": {
-    "port": 8081
+    "type": "module"
   }
 }
