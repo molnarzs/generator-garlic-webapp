@@ -65,6 +65,7 @@ credentials.json
 .env
 e2e/src/.pki
 e2e/src/supervisord.log
+.npmrc
 
 # --------------------
 # Text editor files
