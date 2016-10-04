@@ -22,12 +22,31 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     @composeWith 'garlic-webapp:angular-docker', {options: {"skip-install": true}}
 
   prompting: ->
-    generatorLib.prompting.bind(@)()
+    done = @async()
+    cb = (answers) =>
+      @answers = answers
+      @config.set {scope: @answers.scope}
+      @config.set {projectType: @answers.projectType}
+      done()
 
- 
+    @prompt [{
+        type    : 'input',
+        name    : 'scope',
+        default : 'garlictech',
+        message : 'Project scope (company github team):'
+      }, {
+        type    : 'list'
+        name    : 'projectType'
+        default : 'module'
+        choices : ['module', 'site']
+        message : 'Project type:'
+      }
+    ], cb.bind @
+
   writing:
     createConfig: ->
       generatorLib.createConfig.bind(@)()
+      console.log @conf
       angularModuleName = "#{@conf.scopeCC}.#{_.capitalize _.camelCase @appname}"
       @conf.angularModuleName = angularModuleName
 

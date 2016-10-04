@@ -36,12 +36,40 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     });
   },
   prompting: function() {
-    return generatorLib.prompting.bind(this)();
+    var cb, done;
+    done = this.async();
+    cb = (function(_this) {
+      return function(answers) {
+        _this.answers = answers;
+        _this.config.set({
+          scope: _this.answers.scope
+        });
+        _this.config.set({
+          projectType: _this.answers.projectType
+        });
+        return done();
+      };
+    })(this);
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'scope',
+        "default": 'garlictech',
+        message: 'Project scope (company github team):'
+      }, {
+        type: 'list',
+        name: 'projectType',
+        "default": 'module',
+        choices: ['module', 'site'],
+        message: 'Project type:'
+      }
+    ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
       var angularModuleName;
       generatorLib.createConfig.bind(this)();
+      console.log(this.conf);
       angularModuleName = this.conf.scopeCC + "." + (_.capitalize(_.camelCase(this.appname)));
       this.conf.angularModuleName = angularModuleName;
       return this.config.set({
