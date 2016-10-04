@@ -9,7 +9,6 @@ services:
 
 before_install:
   - hooks/travis/before_install.sh
-  - docker/login.sh
 
 install:
   - npm run build
