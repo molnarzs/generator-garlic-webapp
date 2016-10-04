@@ -46,7 +46,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
   writing:
     createConfig: ->
       generatorLib.createConfig.bind(@)()
-      console.log @conf
       angularModuleName = "#{@conf.scopeCC}.#{_.capitalize _.camelCase @appname}"
       @conf.angularModuleName = angularModuleName
 
@@ -114,11 +113,15 @@ module.exports = Module.name
       if not @fs.exists dest then @fs.write dest, ""
 
 
+    projectTypeFiles: ->
+      if @conf.projectType is 'module'
+        @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
+      else
+        @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
+
+
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
-  # install:
-  #   dependencies: ->
-  #     generatorLib.dependencies.bind(@)()
 
 module.exports = GarlicWebappGenerator

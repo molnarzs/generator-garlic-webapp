@@ -69,7 +69,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     createConfig: function() {
       var angularModuleName;
       generatorLib.createConfig.bind(this)();
-      console.log(this.conf);
       angularModuleName = this.conf.scopeCC + "." + (_.capitalize(_.camelCase(this.appname)));
       this.conf.angularModuleName = angularModuleName;
       return this.config.set({
@@ -125,6 +124,17 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       dest = this.destinationPath("./src/views/test-view/test-view-components.jade");
       if (!this.fs.exists(dest)) {
         return this.fs.write(dest, "");
+      }
+    },
+    projectTypeFiles: function() {
+      if (this.conf.projectType === 'module') {
+        return this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
+      } else {
+        return this.fs.copyTpl(this.templatePath('site/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
       }
     },
     dotfiles: function() {
