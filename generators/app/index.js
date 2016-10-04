@@ -28,7 +28,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         providers: []
       }
     });
-    return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+    console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+    return this.composeWith('garlic-webapp:angular-docker', {
+      options: {
+        "skip-install": true
+      }
+    });
   },
   prompting: function() {
     return generatorLib.prompting.bind(this)();

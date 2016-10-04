@@ -9,32 +9,14 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   initializing:
 
     init: ->
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp / docker image generator.'
+      console.log chalk.magenta 'You\'re using the GarlicTech webapp / angular docker files generator.'
       generatorLib.createConfig.bind(@)()
 
-
-  prompting: ->
-    done = @async()
-    cb = (answers) =>
-      @answers = answers
-      done()
-
-    @prompt
-      type    : 'input'
-      name    : 'name'
-      message : 'Docker image name (like foo-image): '
-      required: true
-    , cb.bind @
- 
   writing:
-    createConfig: ->
-      @conf.imageName = @answers.name
-
     mainFiles: ->
-      dest = "./docker-images/#{@answers.name}"
+      dest = "./"
 
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath(dest), {c: @conf}
-      
       @fs.copyTpl @templatePath('dotfiles/_dockerignore'), @destinationPath("#{dest}/.dockerignore"), {c: @conf}
 
 module.exports = GarlicWebappGithubGenerator
