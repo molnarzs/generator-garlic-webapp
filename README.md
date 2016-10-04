@@ -28,14 +28,15 @@ When you use private Github and NPM repos, you have to specify some tokens to gr
 
 * Your personal github access token must be in the ```GITHUB_TOKEN``` environment variable.
 * Your NPM token must be in environment variables like: ```NPM_TOKEN_Garlictech```:
-** Prefix: ```NPM_TOKEN```
-** Suffix: your scope in CamelCase.
+
+ * Prefix: ```NPM_TOKEN```
+ * Suffix: your scope in CamelCase.
 
 # The Generators
 
 ## General remarks
 
-* Some of the generators ask for scope. The scope must be the organization id in github (so, for garlictech projects, it must be garlictech. You can see this ID in the URL of the github repos).
+* Some of the generators ask for scope. The scope must be the organization id in github (so, for garlictech projects, it must be garlictech). You can see this ID in the URL of the github repos.
 * Some of the generator questions provide default values. They are either calculated (for example, based on the current directory), or the generator records the last value you selected, and offers that.
 * Selecting a default: simply press return.
 
@@ -54,11 +55,12 @@ npm start
 # 
 ```
 
-[Your web site](http://localhost:8081) in http://localhost:8081.
+[Your web site](http://localhost:8081) is: http://localhost:8081.
 
-All the client projects are based on Angular JS, plus some dockerized software (webpack, karma, protractor).
 
 ### Start a client project
+
+All the client projects are based on Angular JS, plus some dockerized software (webpack, karma, protractor).
 
 * Create a project directory. The directory naming must be in kebabcase (for example: _My Project_ should be in directory _my-project_) Enter the directory, then:
 
@@ -67,8 +69,8 @@ $ yo garlic-webapp
 ```
 * Type a scope or press return to select the default. The scope must be the organization id in github (so, for garlictech projects, it must be garlictech. You can see this ID in the URL of the github repos).
 * Select project type.
-** ```module```: the project is an AngularJS module. There is no ```index.html```, therefore the generator creates a "site" for you that you can use during the development as some kind of sandbox. ```npm start``` will use this site.
-** ```site```: A regular, AngularJS based site. In this case, ```index.html``` will be generated in the ```src``` folder, as the entry point of your site.
+ * ```module```: the project is an AngularJS module. There is no ```index.html```, therefore the generator creates a "site" for you that you can use during the development as some kind of sandbox. ```npm start``` will use this site.
+ * ```site```: A regular, AngularJS based site. In this case, ```index.html``` will be generated in the ```src``` folder, as the entry point of your site.
 * Confirm if you want to create a Github repo for the project. If you reply yes, the github/travis generator starts.
 
 After that, it scaffolds the webapp.
