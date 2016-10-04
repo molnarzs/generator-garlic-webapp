@@ -34,12 +34,20 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         name    : 'scope',
         default : 'garlictech',
         message : 'Project scope (company github team):'
+        store   : true
       }, {
         type    : 'list'
         name    : 'projectType'
         default : 'module'
         choices : ['module', 'site']
         message : 'Project type:'
+        store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isRepo'
+        default : true
+        message : 'Create github repo?'
+        store   : true
       }
     ], cb.bind @
 
@@ -123,5 +131,9 @@ module.exports = Module.name
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
+
+    repo: ->
+      if @answers.isRepo
+        @composeWith 'garlic-webapp:github'
 
 module.exports = GarlicWebappGenerator

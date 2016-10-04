@@ -60,6 +60,7 @@ $ yo garlic-webapp
 * Select project type.
 ** ```module```: the project is an AngularJS module. There is no ```index.html```, therefore the generator creates a "site" for you that you can use during the development as some kind of sandbox. ```npm start``` will use this site.
 ** ```site```: A regular, AngularJS based site. In this case, ```index.html``` will be generated in the ```src``` folder, as the entry point of your site.
+* Confirm if you want to create a Github repo for the project. If you reply yes, the github/travis generator starts.
 
 After that, it scaffolds the webapp.
 

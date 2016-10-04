@@ -55,13 +55,21 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         type: 'input',
         name: 'scope',
         "default": 'garlictech',
-        message: 'Project scope (company github team):'
+        message: 'Project scope (company github team):',
+        store: true
       }, {
         type: 'list',
         name: 'projectType',
         "default": 'module',
         choices: ['module', 'site'],
-        message: 'Project type:'
+        message: 'Project type:',
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'isRepo',
+        "default": true,
+        message: 'Create github repo?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -139,6 +147,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     },
     dotfiles: function() {
       return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
+    },
+    repo: function() {
+      if (this.answers.isRepo) {
+        return this.composeWith('garlic-webapp:github');
+      }
     }
   }
 });
