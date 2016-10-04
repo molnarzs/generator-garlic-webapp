@@ -10,3 +10,4 @@ gulpfile.coffee
 karma.conf.js
 webpack.config.js
 webpack.common.config.js
+e2e/src/.pki
