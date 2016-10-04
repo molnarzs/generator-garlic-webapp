@@ -22,6 +22,15 @@ $ sudo npm install -g generator-garlic-webapp
 The generator has some peer dependencies. If they are missing (for instance, the [loopback.io generator](https://github.com/strongloop/generator-loopback)), you must also install them globally. The above install
 command will warn you and list the missing software in this case.
 
+## Environment variables
+
+When you use private Github and NPM repos, you have to specify some tokens to grant access to the resources. They are done via environment variables. In addition, you can work for several organizations in the same time, so you may have several scopes. This situation is handled by the following rules:
+
+* Your personal github access token must be in the ```GITHUB_TOKEN``` environment variable.
+* Your NPM token must be in environment variables like: ```NPM_TOKEN_Garlictech```:
+** Prefix: ```NPM_TOKEN```
+** Suffix: your scope in CamelCase.
+
 # The Generators
 
 ## General remarks
