@@ -117,8 +117,8 @@ module.exports = Module.name
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
-  install:
-    dependencies: ->
-      generatorLib.dependencies.bind(@)()
+  # install:
+  #   dependencies: ->
+  #     generatorLib.dependencies.bind(@)()
 
 module.exports = GarlicWebappGenerator

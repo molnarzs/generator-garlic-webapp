@@ -130,11 +130,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     dotfiles: function() {
       return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
     }
-  },
-  install: {
-    dependencies: function() {
-      return generatorLib.dependencies.bind(this)();
-    }
   }
 });
 
