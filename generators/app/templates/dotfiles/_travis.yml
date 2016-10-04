@@ -29,3 +29,4 @@ deploy:
   on:
     tags: true
     branch: master
+    repo: <%= conf.scope %>/<%= conf.appNameKC %>
