@@ -46,6 +46,6 @@
     "angular-ui-router": "^0.3"
   },
   "garlic": {
-    "type": "module"
+    "type": "<%= conf.projectType %>"
   }
 }

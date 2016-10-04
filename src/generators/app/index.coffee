@@ -22,9 +22,35 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     @composeWith 'garlic-webapp:angular-docker', {options: {"skip-install": true}}
 
   prompting: ->
-    generatorLib.prompting.bind(@)()
+    done = @async()
+    cb = (answers) =>
+      @answers = answers
+      @config.set {scope: @answers.scope}
+      @config.set {projectType: @answers.projectType}
+      done()
 
- 
+    @prompt [{
+        type    : 'input',
+        name    : 'scope',
+        default : 'garlictech',
+        message : 'Project scope (company github team):'
+        store   : true
+      }, {
+        type    : 'list'
+        name    : 'projectType'
+        default : 'module'
+        choices : ['module', 'site']
+        message : 'Project type:'
+        store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isRepo'
+        default : true
+        message : 'Create github repo?'
+        store   : true
+      }
+    ], cb.bind @
+
   writing:
     createConfig: ->
       generatorLib.createConfig.bind(@)()
@@ -95,11 +121,19 @@ module.exports = Module.name
       if not @fs.exists dest then @fs.write dest, ""
 
 
+    projectTypeFiles: ->
+      if @conf.projectType is 'module'
+        @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
+      else
+        @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
+
+
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
-  install:
-    dependencies: ->
-      generatorLib.dependencies.bind(@)()
+
+    repo: ->
+      if @answers.isRepo
+        @composeWith 'garlic-webapp:github'
 
 module.exports = GarlicWebappGenerator

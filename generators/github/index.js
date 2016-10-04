@@ -62,6 +62,12 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         "default": devTeamId,
         message: "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_" + this.conf.scopeCC + "):",
         store: true
+      }, {
+        type: 'confirm',
+        name: 'isPrivate',
+        "default": true,
+        message: "Private repo?",
+        store: true
       }
     ], cb.bind(this));
   },
@@ -79,15 +85,11 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         };
       })(this);
       console.log(chalk.blue("\nCreating GitHub repo...\n"));
-      repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": true, \"team_id\": " + this.answers.devTeam + "}\'";
+      repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": " + this.answers.isPrivate + ", \"team_id\": " + this.answers.devTeam + "}\'";
       generatorLib.execute(repoCreateCmd);
       generatorLib.execute("git init");
       generatorLib.execute("git remote add origin https://github.com/" + this.conf.scope + "/" + this.conf.appNameKC + ".git");
       _configureTravis();
-      console.log(chalk.blue("\nCommitting initial version...\n"));
-      generatorLib.execute("git add .");
-      generatorLib.execute("git commit -m 'Initial version.'");
-      generatorLib.execute('git push -u origin master');
       console.log(chalk.blue("\Configuring webhooks...\n"));
       webhook = {
         name: "web",
@@ -100,6 +102,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       };
       webhookCreateCmd = "curl https://api.github.com/repos/" + this.conf.scope + "/" + this.conf.appNameKC + "/hooks -u " + this.answers.githubToken + ":x-oauth-basic -d \'" + (JSON.stringify(webhook)) + "\'";
       generatorLib.execute(webhookCreateCmd);
+      console.log(chalk.blue("\nRepo is created. Nothing is committed yet!\n"));
       return done();
     }
   }

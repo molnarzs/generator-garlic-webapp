@@ -36,7 +36,42 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     });
   },
   prompting: function() {
-    return generatorLib.prompting.bind(this)();
+    var cb, done;
+    done = this.async();
+    cb = (function(_this) {
+      return function(answers) {
+        _this.answers = answers;
+        _this.config.set({
+          scope: _this.answers.scope
+        });
+        _this.config.set({
+          projectType: _this.answers.projectType
+        });
+        return done();
+      };
+    })(this);
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'scope',
+        "default": 'garlictech',
+        message: 'Project scope (company github team):',
+        store: true
+      }, {
+        type: 'list',
+        name: 'projectType',
+        "default": 'module',
+        choices: ['module', 'site'],
+        message: 'Project type:',
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'isRepo',
+        "default": true,
+        message: 'Create github repo?',
+        store: true
+      }
+    ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
@@ -99,13 +134,24 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return this.fs.write(dest, "");
       }
     },
+    projectTypeFiles: function() {
+      if (this.conf.projectType === 'module') {
+        return this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
+      } else {
+        return this.fs.copyTpl(this.templatePath('site/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
+      }
+    },
     dotfiles: function() {
       return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
-    }
-  },
-  install: {
-    dependencies: function() {
-      return generatorLib.dependencies.bind(this)();
+    },
+    repo: function() {
+      if (this.answers.isRepo) {
+        return this.composeWith('garlic-webapp:github');
+      }
     }
   }
 });

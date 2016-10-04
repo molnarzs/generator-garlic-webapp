@@ -48,11 +48,17 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         default : slackWebhookUrl
         message : "Slack webhook url: (we take the default from the environment variable SLACK_WEBHOOK_URL_#{@conf.scopeCC}):"
         store   : true
-      } , {
+      }, {
         type    : 'input'
         name    : 'devTeam'
         default : devTeamId
         message : "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_#{@conf.scopeCC}):"
+        store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isPrivate'
+        default : true
+        message : "Private repo?"
         store   : true
       }
     ], cb.bind @
@@ -70,17 +76,12 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       console.log chalk.blue "\nCreating GitHub repo...\n"
      
-      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": true, \"team_id\": #{@answers.devTeam}}\'"
+      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": #{@answers.isPrivate}, \"team_id\": #{@answers.devTeam}}\'"
       generatorLib.execute repoCreateCmd
       generatorLib.execute "git init"
       generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
 
       _configureTravis()
-
-      console.log chalk.blue "\nCommitting initial version...\n"
-      generatorLib.execute "git add ."
-      generatorLib.execute "git commit -m 'Initial version.'"
-      generatorLib.execute 'git push -u origin master'
 
       console.log chalk.blue "\Configuring webhooks...\n"
       webhook =
@@ -93,6 +94,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       webhookCreateCmd = "curl https://api.github.com/repos/#{@conf.scope}/#{@conf.appNameKC}/hooks -u #{@answers.githubToken}:x-oauth-basic -d \'#{JSON.stringify webhook}\'"
       generatorLib.execute webhookCreateCmd
+      console.log chalk.blue "\nRepo is created. Nothing is committed yet!\n"
 
       done()
 
