@@ -56,9 +56,9 @@ GarlicWebappZurbFoundationGenerator = yeoman.generators.Base.extend
       cb()
 
 
-    "webpack.common.config.js": ->
+    "hooks/webpack.js": ->
       cb = @async()
-      path = @destinationPath "./webpack.common.config.js"
+      path = @destinationPath "./hooks/webpack.js"
       content = fs.readFileSync path, 'utf8'
 
       replacedText = """

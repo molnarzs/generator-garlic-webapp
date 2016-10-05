@@ -54,10 +54,10 @@ GarlicWebappZurbFoundationGenerator = yeoman.generators.Base.extend({
       jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
       return cb();
     },
-    "webpack.common.config.js": function() {
+    "hooks/webpack.js": function() {
       var cb, content, path, replacedText;
       cb = this.async();
-      path = this.destinationPath("./webpack.common.config.js");
+      path = this.destinationPath("./hooks/webpack.js");
       content = fs.readFileSync(path, 'utf8');
       replacedText = "config.module.loaders.push({test: /foundation\..*\.js$/, loader: 'babel', query: {presets: ['react', 'es2015']}});\nconfig.sassLoader.includePaths.push('node_modules/foundation-sites/scss');\n// ===== yeoman hook config end =====";
       content = content.replace('// ===== yeoman hook config end =====', replacedText);
