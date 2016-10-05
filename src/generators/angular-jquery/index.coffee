@@ -26,6 +26,6 @@ GarlicWebappAngularJqueryGenerator = yeoman.generators.Base.extend
 
   install:
     dependencies: ->
-      @npmInstall ['jquery'], { 'save': true }
+      @npmInstall ['jquery'], { 'save': false }
 
 module.exports = GarlicWebappAngularJqueryGenerator
