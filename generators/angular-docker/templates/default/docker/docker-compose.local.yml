@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  webpack_server:
+  <%= c.webpackServerName %>:
     build: ..
     volumes:
       - "../src:/app/src"
