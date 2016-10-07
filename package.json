@@ -2,7 +2,7 @@
   "name": "generator-garlic-webapp",
   "description": "Generator for GarlicTech web applications.",
   "version": "0.0.0-semantically-released",
-  "license": "see LICENSE",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/molnarzs/generator-garlic-webapp.git"

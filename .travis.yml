@@ -18,6 +18,3 @@ script:
 - npm run build
 after_success:
   - npm run semantic-release
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
