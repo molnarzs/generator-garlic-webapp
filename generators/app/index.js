@@ -28,12 +28,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         providers: []
       }
     });
-    console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
-    return this.composeWith('garlic-webapp:angular-docker', {
-      options: {
-        "skip-install": true
-      }
-    });
+    return console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
   },
   prompting: function() {
     var cb, done;
@@ -152,6 +147,13 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       if (this.answers.isRepo) {
         return this.composeWith('garlic-webapp:github');
       }
+    },
+    docker: function() {
+      return this.composeWith('garlic-webapp:angular-docker', {
+        options: {
+          "skip-install": true
+        }
+      });
     }
   }
 });

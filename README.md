@@ -1,6 +1,11 @@
 # A [Yeoman](http://yeoman.io) generator to start a GarlicTech web app.
 
-[![Build Status](https://travis-ci.org/garlictech/generator-garlic-webapp.svg?branch=master)](https://travis-ci.org/garlictech/generator-garlic-webapp)
+[![Build Status][build]][link]
+[![semantic-release][semantic-image] ][semantic-url]
+[build]: https://travis-ci.org/garlictech/generator-garlic-webapp.svg?branch=master
+[link]: https://travis-ci.org/garlictech/generator-garlic-webapp
+[semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-generator--garlic--webapp-e10079.svg
+[semantic-url]: https://github.com/garlictech/generator-garlic-webapp
 
 ## Getting Started
 
