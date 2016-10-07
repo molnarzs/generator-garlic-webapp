@@ -2,12 +2,17 @@ language: node_js
 node_js:
   - '5'
 
+cache:
+  directories:
+    - node_modules
+
 sudo: required
 
 services:
   - docker
 
 before_install:
+  - npm prune
   - hooks/travis/before_install.sh
 
 install:
@@ -22,10 +27,3 @@ script:
 after_script:
   - npm run stop
 
-deploy:
-  provider: npm
-  email: "contact@<%= conf.scope %>.com"
-  on:
-    tags: true
-    branch: master
-    repo: <%= conf.scope %>/<%= conf.appNameKC %>

@@ -138,5 +138,7 @@ module.exports = Module.name
 
     docker: ->
       @composeWith 'garlic-webapp:angular-docker', {options: {"skip-install": true}}
+      @composeWith 'garlic-webapp:commitizen'
+      @composeWith 'garlic-webapp:semantic-release'
 
 module.exports = GarlicWebappGenerator
