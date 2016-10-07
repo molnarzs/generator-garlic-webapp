@@ -19,7 +19,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         providers: []
 
     console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
-    @composeWith 'garlic-webapp:angular-docker', {options: {"skip-install": true}}
 
   prompting: ->
     done = @async()
@@ -135,5 +134,9 @@ module.exports = Module.name
     repo: ->
       if @answers.isRepo
         @composeWith 'garlic-webapp:github'
+
+
+    docker: ->
+      @composeWith 'garlic-webapp:angular-docker', {options: {"skip-install": true}}
 
 module.exports = GarlicWebappGenerator
