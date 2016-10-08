@@ -4,7 +4,5 @@
 
 ## Development
 
-## Development
-
-We use the [Docker based GarlicTech workflow manager](https://github.com/garlictech/docker-images) to control development, build, deployment. 
+We use the [Docker based GarlicTech workflow manager](https://github.com/garlictech/workflows) to control development, build, deployment. 
 See the appropriate sections there, It is * important *. For the description of `npm run` commands, etc.

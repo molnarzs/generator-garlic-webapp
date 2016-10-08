@@ -4,6 +4,7 @@ yeoman = require('yeoman-generator')
 chalk = require('chalk')
 _ = require 'lodash'
 mkdirp = require 'mkdirp'
+jsonfile = require 'jsonfile'
 execute = require('child_process').execSync
 generatorLib = require '../lib'
 
@@ -115,17 +116,32 @@ Module = angular.module "#{@conf.angularModuleName}/Providers", []
 module.exports = Module.name
 """
 
-    "src/views/test-page/test-view-components.jade" : ->
-      dest = @destinationPath "./src/views/test-view/test-view-components.jade"
-      if not @fs.exists dest then @fs.write dest, ""
-
-
     projectTypeFiles: ->
       if @conf.projectType is 'module'
         @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
       else
         @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
 
+
+    "src/views/test-page/test-view-components.jade" : ->
+      if @conf.projectType is 'site'
+        dest = @destinationPath "./src/views/test-view/test-view-components.jade"
+        if not @fs.exists dest then @fs.write dest, ""
+
+
+    "src/index.coffee": ->
+      if @conf.projectType is 'site'
+        dest = @destinationPath "./src/index.coffee"
+        content = @fs.read dest
+
+        replacedText = """
+          #===== yeoman hook modules =====
+            require './views'
+            require './footer'
+            require './main-header'"""
+
+        content = content.replace '#===== yeoman hook modules =====', replacedText
+        @fs.write dest, content
 
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
@@ -135,8 +151,18 @@ module.exports = Module.name
       if @answers.isRepo
         @composeWith 'garlic-webapp:github'
 
-
+  end:
     docker: ->
       @composeWith 'garlic-webapp:angular-docker'
+
+    
+    "package.json": ->
+      if @conf.projectType is 'site'
+        cb = @async()
+        pjson = jsonfile.readFileSync @destinationPath("./package.json")
+        pjson.dependencies['angular-ui-router'] = "^0.3"
+        jsonfile.spaces = 2
+        jsonfile.writeFileSync @destinationPath("./package.json"), pjson
+        cb()
 
 module.exports = GarlicWebappGenerator

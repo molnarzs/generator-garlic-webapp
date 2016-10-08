@@ -23,7 +23,7 @@ before_script:
 
 script:
   - npm run unittest
-  - npm run e2e-test
+  - npm run e2etest
 after_script:
   - npm run stop
 
