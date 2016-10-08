@@ -42,12 +42,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         store: true
       }, {
         type: 'input',
-        name: 'npmToken',
-        "default": npmToken,
-        message: "NPM token: (we take the default from the environment variable NPM_TOKEN_" + this.conf.scopeCC + "):",
-        store: true
-      }, {
-        type: 'input',
         name: 'slackToken',
         "default": slackToken,
         message: "Slack token: (we take the default from the environment variable SLACK_TOKEN_" + this.conf.scopeCC + "):",
@@ -93,10 +87,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         return function() {
           console.log(chalk.blue("\nConfiguring travis...\n"));
           generatorLib.execute("travis enable");
-          generatorLib.execute("travis encrypt " + _this.answers.npmToken + " --add deploy.api_key");
-          generatorLib.execute("travis env set NPM_TOKEN " + _this.answers.npmToken);
-          generatorLib.execute("travis env set DOCKER_USER " + _this.answers.dockerUser);
-          generatorLib.execute("travis env set DOCKER_PASSWORD " + _this.answers.dockerPassword);
+          generatorLib.execute("travis env set DOCKER_USER " + _this.answers.dockerUser + " -P");
+          generatorLib.execute("travis env set DOCKER_PASSWORD " + _this.answers.dockerPassword + " -P");
           return generatorLib.execute("travis encrypt \"" + _this.conf.scope + ":" + _this.answers.slackToken + "\" --add notifications.slack.rooms");
         };
       })(this);

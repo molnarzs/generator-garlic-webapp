@@ -156,11 +156,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     },
     dotfiles: function() {
       return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
-    },
-    repo: function() {
-      if (this.answers.isRepo) {
-        return this.composeWith('garlic-webapp:github');
-      }
     }
   },
   end: {
@@ -176,6 +171,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         jsonfile.spaces = 2;
         jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
         return cb();
+      }
+    },
+    repo: function() {
+      if (this.answers.isRepo) {
+        return this.composeWith('garlic-webapp:github');
       }
     }
   }

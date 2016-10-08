@@ -8,7 +8,7 @@ Methods = {
   createConfig: function() {
     var appNameAsIs, appNameFQ, appNameFQcC, appNameKC, conf, scopeCC;
     conf = this.config.getAll();
-    scopeCC = _.capitalize(_.camelCase(conf.scope));
+    scopeCC = _.upperFirst(_.camelCase(conf.scope));
     appNameAsIs = scopeCC + " " + conf.appname;
     appNameKC = _.kebabCase(conf.appname);
     appNameFQ = _.kebabCase(appNameAsIs);
