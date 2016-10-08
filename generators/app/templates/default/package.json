@@ -34,12 +34,14 @@
     "stop": "docker/stop.sh",
     "unittest": "docker/unittest.sh",
     "build": "docker/build.sh",
-    "e2e-test": "docker/e2e-test.sh",
+    "e2etest": "docker/e2e-test.sh",
     "bash": "docker/bash.sh",
     "gulp": "docker/gulp.sh",
     "setup-dev": "scripts/setup-dev.sh",
     "start:docker": "scripts/start.sh",
-    "unittest:docker": "scripts/unittest.sh"
+    "unittest:docker": "scripts/unittest.sh",
+    "commit": "docker/commit.sh",
+    "semantic-release": "semantic-release/commit.sh"
   },
   "dependencies": {
     "angular": "^1.5",

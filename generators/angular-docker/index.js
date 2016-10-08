@@ -1,4 +1,4 @@
-var GarlicWebappGithubGenerator, _, chalk, generatorLib, path, util, yeoman;
+var GarlicWebappGithubGenerator, _, chalk, generatorLib, jsonfile, path, util, yeoman;
 
 util = require('util');
 
@@ -9,6 +9,8 @@ yeoman = require('yeoman-generator');
 chalk = require('chalk');
 
 _ = require('lodash');
+
+jsonfile = require('jsonfile');
 
 generatorLib = require('../lib');
 
@@ -32,6 +34,25 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       return this.fs.copyTpl(this.templatePath('dotfiles/_dockerignore'), this.destinationPath(dest + "/.dockerignore"), {
         c: this.conf
       });
+    },
+    "package.json": function() {
+      var cb, pjson;
+      cb = this.async();
+      pjson = jsonfile.readFileSync(this.destinationPath("./package.json"));
+      _.forEach(['start', 'stop', 'unittest', 'build', 'e2etest', 'bash', 'gulp'], function(label) {
+        return _.set(pjson, "scripts." + label, "docker/" + label + ".sh");
+      });
+      _.forEach(['start', 'unittest'], function(label) {
+        return _.set(pjson, "scripts." + label + ":docker", "scripts/" + label + ".sh");
+      });
+      _.set(pjson, "scripts.setup-dev", "scripts/setup-dev.sh");
+      jsonfile.spaces = 2;
+      jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
+      return cb();
+    },
+    compositions: function() {
+      this.composeWith('garlic-webapp:commitizen');
+      return this.composeWith('garlic-webapp:semantic-release');
     }
   }
 });

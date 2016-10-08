@@ -149,13 +149,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       }
     },
     docker: function() {
-      this.composeWith('garlic-webapp:angular-docker', {
-        options: {
-          "skip-install": true
-        }
-      });
-      this.composeWith('garlic-webapp:commitizen');
-      return this.composeWith('garlic-webapp:semantic-release');
+      return this.composeWith('garlic-webapp:angular-docker');
     }
   }
 });
