@@ -19,5 +19,6 @@ script:
 after_success:
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && npm run semantic-release'
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  only:
+    - master
+    - stable
