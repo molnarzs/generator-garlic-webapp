@@ -23,18 +23,14 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     slackToken = process.env["SLACK_TOKEN_#{@conf.scopeCC}"]
     slackWebhookUrl = process.env["SLACK_WEBHOOK_URL_#{@conf.scopeCC}"]
     devTeamId = process.env["DEV_TEAM_ID_#{@conf.scopeCC}"]
+    dockerUser = process.env.DOCKER_USER
+    dockerPassword = process.env.DOCKER_PASSWORD
 
     @prompt [{
         type    : 'input'
         name    : 'githubToken'
         default : githubToken
         message : 'Github token (we take the default from the environment variable GITHUB_TOKEN):'
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'npmToken'
-        default : npmToken
-        message : "NPM token: (we take the default from the environment variable NPM_TOKEN_#{@conf.scopeCC}):"
         store   : true
       }, {
         type    : 'input'
@@ -55,6 +51,18 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         message : "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_#{@conf.scopeCC}):"
         store   : true
       }, {
+        type    : 'input'
+        name    : 'dockerUser'
+        default : dockerUser
+        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
+        store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerPassword'
+        default : dockerPassword
+        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
+        store   : true
+      }, {
         type    : 'confirm'
         name    : 'isPrivate'
         default : true
@@ -71,7 +79,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         console.log chalk.blue "\nConfiguring travis...\n"
         generatorLib.execute "travis enable"
         generatorLib.execute "travis encrypt #{@answers.npmToken} --add deploy.api_key"
-        generatorLib.execute "travis env set NPM_TOKEN #{@answers.npmToken}"
+        generatorLib.execute "travis env set DOCKER_USER #{@answers.dockerUser} -P"
+        generatorLib.execute "travis env set DOCKER_PASSWORD #{@answers.dockerPassword} -P"
         generatorLib.execute "travis encrypt \"#{@conf.scope}:#{@answers.slackToken}\" --add notifications.slack.rooms"
 
       console.log chalk.blue "\nCreating GitHub repo...\n"

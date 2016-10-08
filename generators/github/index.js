@@ -18,7 +18,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     }
   },
   prompting: function() {
-    var cb, devTeamId, done, githubToken, npmToken, slackToken, slackWebhookUrl;
+    var cb, devTeamId, dockerPassword, dockerUser, done, githubToken, npmToken, slackToken, slackWebhookUrl;
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
@@ -31,6 +31,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     slackToken = process.env["SLACK_TOKEN_" + this.conf.scopeCC];
     slackWebhookUrl = process.env["SLACK_WEBHOOK_URL_" + this.conf.scopeCC];
     devTeamId = process.env["DEV_TEAM_ID_" + this.conf.scopeCC];
+    dockerUser = process.env.DOCKER_USER;
+    dockerPassword = process.env.DOCKER_PASSWORD;
     return this.prompt([
       {
         type: 'input',
@@ -63,6 +65,18 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         message: "Development team ID: (we take the default from the environment variable DEV_TEAM_ID_" + this.conf.scopeCC + "):",
         store: true
       }, {
+        type: 'input',
+        name: 'dockerUser',
+        "default": dockerUser,
+        message: "Docker private repo username: (we take the default from the environment variable DOCKER_USER):",
+        store: true
+      }, {
+        type: 'input',
+        name: 'dockerPassword',
+        "default": dockerPassword,
+        message: "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):",
+        store: true
+      }, {
         type: 'confirm',
         name: 'isPrivate',
         "default": true,
@@ -81,6 +95,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
           generatorLib.execute("travis enable");
           generatorLib.execute("travis encrypt " + _this.answers.npmToken + " --add deploy.api_key");
           generatorLib.execute("travis env set NPM_TOKEN " + _this.answers.npmToken);
+          generatorLib.execute("travis env set DOCKER_USER " + _this.answers.dockerUser);
+          generatorLib.execute("travis env set DOCKER_PASSWORD " + _this.answers.dockerPassword);
           return generatorLib.execute("travis encrypt \"" + _this.conf.scope + ":" + _this.answers.slackToken + "\" --add notifications.slack.rooms");
         };
       })(this);
