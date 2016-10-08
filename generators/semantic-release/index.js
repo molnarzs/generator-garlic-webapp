@@ -1,4 +1,4 @@
-var GarlicWebappGithubGenerator, _, chalk, generatorLib, jsonfile, path, util, yaml, yeoman,
+var GarlicWebappGithubGenerator, _, chalk, fs, generatorLib, jsonfile, path, util, yaml, yeoman,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 util = require('util');
@@ -14,6 +14,8 @@ jsonfile = require('jsonfile');
 _ = require('lodash');
 
 yaml = require('node-yaml');
+
+fs = require('fs');
 
 generatorLib = require('../lib');
 
@@ -44,10 +46,23 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         data.after_success = [];
       }
       if ((data.after_success[0] == null) || indexOf.call(data.after_success[0], "npm run semantic-release") < 0) {
-        data.after_success.unshift("npm run semantic-release");
+        data.after_success.unshift("[ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && npm run semantic-release");
       }
       _.set(data, "cache.directories", "node_modules");
       yaml.writeSync(file, data);
+      return cb();
+    },
+    "README.md": function() {
+      var cb, content, fileName;
+      cb = this.async();
+      fileName = this.destinationPath("./README.md");
+      content = fs.readFileSync(fileName, {
+        encoding: 'utf8'
+      });
+      content = _.split(content, '\n');
+      content.splice(2, 0, "[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)");
+      content = _.join(content, '\n');
+      fs.writeFileSync(fileName, content);
       return cb();
     }
   }

@@ -33,8 +33,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       dest = "./docker-images/#{@answers.name}"
 
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath(dest), {c: @conf}
-      
+      @fs.copyTpl @templatePath('default/image/**/*'), @destinationPath(dest), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_dockerignore'), @destinationPath("#{dest}/.dockerignore"), {c: @conf}
+      @fs.copyTpl @templatePath('default/scripts/**/*'), @destinationPath('./docker-images/scripts'), {c: @conf}
 
 module.exports = GarlicWebappGithubGenerator
