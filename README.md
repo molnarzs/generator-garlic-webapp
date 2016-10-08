@@ -91,12 +91,15 @@ The generated code will utilize the Docker based [client side workflow package](
 mkdir my-project
 cd my-project
 yo garlic-webapp:server
-# Select garlictech scope (the default), and a project name (default: the current directory name)
-# Select the values that the loopback generator asks.
+\# Select garlictech scope (the default), and a project name (default: the current directory name)
+\# Select the values that the loopback generator asks.
 npm run setup-dev
 npm run build
 npm start
-# See your server in http://0.0.0.0:3000
+\# See your server in http://0.0.0.0:3000
+\# ...then develop something, then:
+git add .
+npm run commit
 ```
 
 All the server projects are based on [loopback.io](http://loopback.io/), and the generated code is compatible with the [loopback generator](https://github.com/strongloop/generator-loopback).
@@ -122,6 +125,26 @@ are over, you should set up your development environment and start coding. So go
 
 During the generator examples, we use MyOrganization az as example organization name. Mind, that the organization refers to the github organization, and must be in CamelCase. For example, if your organization is at
 ```http://github.com/my-organization```, then the label you should use everywhere is ```MyOrganization```.
+
+## Generic generators
+
+They work both on server and client sides.
+
+### github
+
+Creates and initializes a github repo for the project. It also configures Travis CI, and sets up the Slack notifications.
+
+```
+yo garlic-webapp:github
+```
+
+The organization is taken from the scope variable of ```.yo-rc.json```. Then, you have to add some tokens. The generator
+can obtain those tokens from environment variables as well, it will offer them as defaults. The generation process will display those variable names.
+Some variable names follow the convention in the docker-image section.
+
+You can obtain the Slack webhook URL from the settings of any github repos (sending messages to the same Slack channel). As for Slack token, ask the admin of the organization.
+
+Also, ask the development team id from the admin.
 
 ### docker-image
 
