@@ -9,3 +9,4 @@ services:
       - "../hooks:/app/hooks"
     environment:
       - NODE_ENV
+      - CI
