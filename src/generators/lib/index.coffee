@@ -18,7 +18,7 @@ Methods =
       appNameAsIs: appNameAsIs
       appNameFQ: appNameFQ
       appNameFQcC: appNameFQcC
-      appNameFQCC: _.capitalize appNameFQcC
+      appNameFQCC: _.upperFirst appNameFQcC
       npmToken: process.env["NPM_TOKEN_#{scopeCC}"]
       slackToken: process.env["SLACK_TOKEN_#{scopeCC}"]
 
@@ -26,7 +26,7 @@ Methods =
   createDirectiveConfig: ->
     Methods.createConfig.bind(@)()
     if @options.view then @answers = @options.answers
-    @conf.componentNameCC = _.capitalize _.camelCase @answers.name
+    @conf.componentNameCC = _.upperFirst _.camelCase @answers.name
     @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.componentNameCC}"
     @conf.directiveNameCC = "#{@conf.appNameFQcC}#{@conf.componentNameCC}"
     @conf.directiveNameKC = "#{@conf.appNameFQ}-#{@answers.name}"

@@ -44,7 +44,7 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend({
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
       this.moduleNames = this.conf.angularModules.services;
       this.moduleNames.push(this.answers.name);
-      this.conf.serviceName = _.capitalize(_.camelCase(this.answers.name));
+      this.conf.serviceName = _.upperFirst(_.camelCase(this.answers.name));
       this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.serviceName;
       return this.conf.serviceNameFQ = this.conf.moduleName;
     },

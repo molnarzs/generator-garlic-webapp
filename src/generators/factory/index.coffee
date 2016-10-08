@@ -32,7 +32,7 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
       @moduleNames = @conf.angularModules.factories
       @moduleNames.push @answers.name
-      @conf.factoryName = _.capitalize _.camelCase @answers.name
+      @conf.factoryName = _.upperFirst _.camelCase @answers.name
       @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.factoryName}"
       @conf.factoryNameFQ = @conf.moduleName
 

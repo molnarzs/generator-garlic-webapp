@@ -33,7 +33,7 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
       @moduleNames = @conf.angularModules.services
       @moduleNames.push @answers.name
-      @conf.serviceName = _.capitalize _.camelCase @answers.name
+      @conf.serviceName = _.upperFirst _.camelCase @answers.name
       @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.serviceName}"
       @conf.serviceNameFQ = @conf.moduleName
 

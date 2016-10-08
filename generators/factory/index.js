@@ -42,7 +42,7 @@ GarlicWebappFactoryGenerator = yeoman.generators.Base.extend({
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
       this.moduleNames = this.conf.angularModules.factories;
       this.moduleNames.push(this.answers.name);
-      this.conf.factoryName = _.capitalize(_.camelCase(this.answers.name));
+      this.conf.factoryName = _.upperFirst(_.camelCase(this.answers.name));
       this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.factoryName;
       return this.conf.factoryNameFQ = this.conf.moduleName;
     },

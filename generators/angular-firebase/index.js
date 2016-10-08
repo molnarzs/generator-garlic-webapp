@@ -56,7 +56,7 @@ GarlicWebappAngularFirebaseGenerator = yeoman.generators.Base.extend({
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
       this.moduleNames = this.conf.angularModules.services;
       this.moduleNames.push(this.conf.service);
-      this.conf.serviceName = _.capitalize(_.camelCase(this.conf.service));
+      this.conf.serviceName = _.upperFirst(_.camelCase(this.conf.service));
       this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.serviceName;
       this.conf.serviceNameFQ = this.conf.moduleName;
       return this.conf = _.assign(this.conf, this.answers);
