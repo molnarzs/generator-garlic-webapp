@@ -13,7 +13,7 @@ generatorLib = require('../lib');
 GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
-      console.log(chalk.magenta('You\'re using the GarlicTech webapp generator.'));
+      console.log(chalk.magenta('You\'re using the GarlicTech github repo generator.'));
       return generatorLib.createConfig.bind(this)();
     }
   },

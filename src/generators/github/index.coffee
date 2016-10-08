@@ -8,7 +8,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   initializing:
 
     init: ->
-      console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
+      console.log chalk.magenta 'You\'re using the GarlicTech github repo generator.'
       generatorLib.createConfig.bind(@)()
 
 

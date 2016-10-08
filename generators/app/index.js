@@ -1,4 +1,4 @@
-var GarlicWebappGenerator, _, chalk, execute, generatorLib, mkdirp, path, util, yeoman;
+var GarlicWebappGenerator, _, chalk, execute, generatorLib, jsonfile, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -11,6 +11,8 @@ chalk = require('chalk');
 _ = require('lodash');
 
 mkdirp = require('mkdirp');
+
+jsonfile = require('jsonfile');
 
 execute = require('child_process').execSync;
 
@@ -122,13 +124,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Providers\", []\nmodule.exports = Module.name");
       }
     },
-    "src/views/test-page/test-view-components.jade": function() {
-      var dest;
-      dest = this.destinationPath("./src/views/test-view/test-view-components.jade");
-      if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "");
-      }
-    },
     projectTypeFiles: function() {
       if (this.conf.projectType === 'module') {
         return this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
@@ -140,6 +135,25 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         });
       }
     },
+    "src/views/test-page/test-view-components.jade": function() {
+      var dest;
+      if (this.conf.projectType === 'site') {
+        dest = this.destinationPath("./src/views/test-view/test-view-components.jade");
+        if (!this.fs.exists(dest)) {
+          return this.fs.write(dest, "");
+        }
+      }
+    },
+    "src/index.coffee": function() {
+      var content, dest, replacedText;
+      if (this.conf.projectType === 'site') {
+        dest = this.destinationPath("./src/index.coffee");
+        content = this.fs.read(dest);
+        replacedText = "#===== yeoman hook modules =====\n  require './views'\n  require './footer'\n  require './main-header'";
+        content = content.replace('#===== yeoman hook modules =====', replacedText);
+        return this.fs.write(dest, content);
+      }
+    },
     dotfiles: function() {
       return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
     },
@@ -147,9 +161,22 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       if (this.answers.isRepo) {
         return this.composeWith('garlic-webapp:github');
       }
-    },
+    }
+  },
+  end: {
     docker: function() {
       return this.composeWith('garlic-webapp:angular-docker');
+    },
+    "package.json": function() {
+      var cb, pjson;
+      if (this.conf.projectType === 'site') {
+        cb = this.async();
+        pjson = jsonfile.readFileSync(this.destinationPath("./package.json"));
+        pjson.dependencies['angular-ui-router'] = "^0.3";
+        jsonfile.spaces = 2;
+        jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
+        return cb();
+      }
     }
   }
 });
