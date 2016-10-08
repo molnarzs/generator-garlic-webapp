@@ -42,10 +42,13 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     mainFiles: function() {
       var dest;
       dest = "./docker-images/" + this.answers.name;
-      this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(dest), {
+      this.fs.copyTpl(this.templatePath('default/image/**/*'), this.destinationPath(dest), {
         c: this.conf
       });
-      return this.fs.copyTpl(this.templatePath('dotfiles/_dockerignore'), this.destinationPath(dest + "/.dockerignore"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/_dockerignore'), this.destinationPath(dest + "/.dockerignore"), {
+        c: this.conf
+      });
+      return this.fs.copyTpl(this.templatePath('default/scripts/**/*'), this.destinationPath('./docker-images/scripts'), {
         c: this.conf
       });
     }

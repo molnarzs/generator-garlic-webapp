@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker run -v $(pwd):/app/project garlictech2/workflows-common gulp $@
+docker run -v $(pwd):/app/project <%= c.dockerRepo %>/workflows-common gulp $@

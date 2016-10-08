@@ -1,5 +1,4 @@
-FROM garlictech2/webpack
+FROM <%= c.dockerRepo %>/webpack
 
-COPY .npmrc /root/.npmrc
 COPY package.json /app/
 RUN npm install --silent
