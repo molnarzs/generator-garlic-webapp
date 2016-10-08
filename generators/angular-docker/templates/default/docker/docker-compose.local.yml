@@ -7,4 +7,5 @@ services:
       - "../src:/app/src"
       - "../dev-site:/app/dev-site"
       - "../hooks:/app/hooks"
-    env_file: ../.env
+    environment:
+      - NODE_ENV

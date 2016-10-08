@@ -1,6 +1,6 @@
 {
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
-  "version": "0.0.1",
+  "version": "0.0.0-semantically-released",
   "description": "<%= conf.appNameAsIs %>",
   "main": "src/index.coffee",
   "license": "SEE LICENSE IN license.txt",
@@ -33,6 +33,7 @@
     "start": "docker/start.sh",
     "stop": "docker/stop.sh",
     "unittest": "docker/unittest.sh",
+    "unittest:single": "export NODE_ENV=test; docker/unittest.sh",
     "build": "docker/build.sh",
     "e2etest": "docker/e2e-test.sh",
     "bash": "docker/bash.sh",
