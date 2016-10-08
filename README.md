@@ -58,7 +58,11 @@ yo garlic-webapp
 npm run setup-dev
 npm run build
 npm start
-# 
+npm run unittest
+npm run e2etest
+# ...then develop something, then:
+git add .
+npm run commit
 ```
 
 [Your web site](http://localhost:8081) is: http://localhost:8081.
@@ -91,13 +95,13 @@ The generated code will utilize the Docker based [client side workflow package](
 mkdir my-project
 cd my-project
 yo garlic-webapp:server
-\# Select garlictech scope (the default), and a project name (default: the current directory name)
-\# Select the values that the loopback generator asks.
+# Select garlictech scope (the default), and a project name (default: the current directory name)
+# Select the values that the loopback generator asks.
 npm run setup-dev
 npm run build
 npm start
-\# See your server in http://0.0.0.0:3000
-\# ...then develop something, then:
+# See your server in http://0.0.0.0:3000
+# ...then develop something, then:
 git add .
 npm run commit
 ```
@@ -170,7 +174,7 @@ Do not forget to change labels in docker.my-organization.com, if your docker rep
 
 * If you changed ```scripts/build.sh``` (because, for example, your docker registry is not in the generated docker.my-organization.com), then do not allow the generator to overwrite this file. If you did, you have to re-implement your changes.
 
-### docker-image
+### commitizen
 
 ```
 yo garlic-webapp:commitizen
