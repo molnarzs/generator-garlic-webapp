@@ -30,7 +30,7 @@ GarlicWebappClientGenerator = yeoman.generators.Base.extend
       @conf = @config.getAll()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
         appName: _.kebabCase @conf.appName
-        appNameCC: _.capitalize _.camelCase @conf.appName
+        appNameCC: _.upperFirst _.camelCase @conf.appName
         appNameAsIs: @conf.appName
       
       @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")

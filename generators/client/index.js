@@ -43,7 +43,7 @@ GarlicWebappClientGenerator = yeoman.generators.Base.extend({
       this.conf = this.config.getAll();
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         appName: _.kebabCase(this.conf.appName),
-        appNameCC: _.capitalize(_.camelCase(this.conf.appName)),
+        appNameCC: _.upperFirst(_.camelCase(this.conf.appName)),
         appNameAsIs: this.conf.appName
       });
       this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));

@@ -12,7 +12,7 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend
       @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp provider generator.'
       @moduleNames = @conf.angularModules.providers
-      @conf.appNameCC = _.capitalize _.camelCase @conf.appName
+      @conf.appNameCC = _.upperFirst _.camelCase @conf.appName
 
   prompting: ->
     done = @async()
@@ -20,7 +20,7 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend
       done()
       @answers = answers
       @moduleNames.push @answers.name
-      @conf.providerName = _.capitalize _.camelCase @answers.name
+      @conf.providerName = _.upperFirst _.camelCase @answers.name
       @conf.moduleName = "#{@conf.appNameCC}.#{@conf.providerName}"
       @conf.providerNameFQ = "#{@conf.appNameCC}.#{@conf.providerName}"
 

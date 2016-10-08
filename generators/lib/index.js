@@ -20,7 +20,7 @@ Methods = {
       appNameAsIs: appNameAsIs,
       appNameFQ: appNameFQ,
       appNameFQcC: appNameFQcC,
-      appNameFQCC: _.capitalize(appNameFQcC),
+      appNameFQCC: _.upperFirst(appNameFQcC),
       npmToken: process.env["NPM_TOKEN_" + scopeCC],
       slackToken: process.env["SLACK_TOKEN_" + scopeCC]
     });
@@ -30,7 +30,7 @@ Methods = {
     if (this.options.view) {
       this.answers = this.options.answers;
     }
-    this.conf.componentNameCC = _.capitalize(_.camelCase(this.answers.name));
+    this.conf.componentNameCC = _.upperFirst(_.camelCase(this.answers.name));
     this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.componentNameCC;
     this.conf.directiveNameCC = "" + this.conf.appNameFQcC + this.conf.componentNameCC;
     this.conf.directiveNameKC = this.conf.appNameFQ + "-" + this.answers.name;

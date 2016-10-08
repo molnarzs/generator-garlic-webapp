@@ -20,7 +20,7 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend({
       this.conf = this.config.getAll();
       console.log(chalk.magenta('You\'re using the GarlicTech webapp provider generator.'));
       this.moduleNames = this.conf.angularModules.providers;
-      return this.conf.appNameCC = _.capitalize(_.camelCase(this.conf.appName));
+      return this.conf.appNameCC = _.upperFirst(_.camelCase(this.conf.appName));
     }
   },
   prompting: function() {
@@ -31,7 +31,7 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend({
         done();
         _this.answers = answers;
         _this.moduleNames.push(_this.answers.name);
-        _this.conf.providerName = _.capitalize(_.camelCase(_this.answers.name));
+        _this.conf.providerName = _.upperFirst(_.camelCase(_this.answers.name));
         _this.conf.moduleName = _this.conf.appNameCC + "." + _this.conf.providerName;
         return _this.conf.providerNameFQ = _this.conf.appNameCC + "." + _this.conf.providerName;
       };

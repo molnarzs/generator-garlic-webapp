@@ -17,7 +17,7 @@ GarlicWebappBCompGenerator = yeoman.generators.Base.extend
     done = @async()
     cb = (answers) =>
       @answers = answers
-      @conf.componentNameCC = _.capitalize _.camelCase @answers.name
+      @conf.componentNameCC = _.upperFirst _.camelCase @answers.name
       @conf.componentName = @answers.name
       @serverComponents.components.push @conf.componentName
       done()

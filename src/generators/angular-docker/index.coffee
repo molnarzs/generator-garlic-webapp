@@ -14,7 +14,25 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       generatorLib.createConfig.bind(@)()
       @conf.webpackServerName = "#{@conf.scope}.#{@conf.appNameKC}.webpack-server"
       @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
-      @conf.dockerRepo = "docker.#{@conf.scope}.com"
+
+
+  prompting: ->
+    done = @async()
+    cb = (answers) =>
+      @conf.dockerRepo = answers.dockerRepo
+      done()
+
+    dockerRepo = "docker.#{@conf.scope}.com"
+
+    @prompt [{
+        type    : 'input'
+        name    : 'dockerRepo'
+        default : dockerRepo
+        message : 'Docker repo:'
+        store   : true
+      }
+    ], cb.bind @
+
 
   writing:
     mainFiles: ->
