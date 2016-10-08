@@ -78,7 +78,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       _configureTravis = =>
         console.log chalk.blue "\nConfiguring travis...\n"
         generatorLib.execute "travis enable"
-        generatorLib.execute "travis encrypt #{@answers.npmToken} --add deploy.api_key"
         generatorLib.execute "travis env set DOCKER_USER #{@answers.dockerUser} -P"
         generatorLib.execute "travis env set DOCKER_PASSWORD #{@answers.dockerPassword} -P"
         generatorLib.execute "travis encrypt \"#{@conf.scope}:#{@answers.slackToken}\" --add notifications.slack.rooms"

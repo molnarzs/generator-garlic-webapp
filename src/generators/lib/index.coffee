@@ -5,7 +5,7 @@ execute = require('child_process').execSync
 Methods =
   createConfig: ->
     conf = @config.getAll()
-    scopeCC = _.capitalize _.camelCase conf.scope
+    scopeCC = _.upperFirst _.camelCase conf.scope
     appNameAsIs = "#{scopeCC} #{conf.appname}"
     appNameKC = _.kebabCase conf.appname
     appNameFQ = _.kebabCase appNameAsIs

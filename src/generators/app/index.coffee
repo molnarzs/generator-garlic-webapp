@@ -147,10 +147,6 @@ module.exports = Module.name
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
 
-    repo: ->
-      if @answers.isRepo
-        @composeWith 'garlic-webapp:github'
-
   end:
     docker: ->
       @composeWith 'garlic-webapp:angular-docker'
@@ -164,5 +160,10 @@ module.exports = Module.name
         jsonfile.spaces = 2
         jsonfile.writeFileSync @destinationPath("./package.json"), pjson
         cb()
+
+
+    repo: ->
+      if @answers.isRepo
+        @composeWith 'garlic-webapp:github'
 
 module.exports = GarlicWebappGenerator
