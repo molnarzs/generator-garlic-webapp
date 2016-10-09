@@ -72,9 +72,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     createConfig: function() {
-      var angularModuleName;
+      var angularModuleName, appname, match;
       generatorLib.createConfig.bind(this)();
-      angularModuleName = this.conf.scopeCC + "." + (_.upperFirst(_.camelCase(this.appname)));
+      match = /(.*) angular/.exec(this.appname);
+      appname = match ? match[1] : this.appname;
+      angularModuleName = this.conf.scopeCC + "." + (_.upperFirst(_.camelCase(appname)));
       this.conf.angularModuleName = angularModuleName;
       return this.config.set({
         angularModuleName: angularModuleName,

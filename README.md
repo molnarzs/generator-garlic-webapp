@@ -83,6 +83,31 @@ $ yo garlic-webapp
  * ```site```: A regular, AngularJS based site. In this case, ```index.html``` will be generated in the ```src``` folder, as the entry point of your site.
 * Confirm if you want to create a Github repo for the project. If you reply yes, the github/travis generator starts.
 
+**Good to know**
+
+* The generated module names will follow the following convention (assuming that your organization is my-organization, your project folder is my-module-name):
+
+Main angular module name:
+
+```
+MyOrganization.MyModuleName
+```
+
+Then, any services, etc. are named like:
+
+```
+MyOrganization.MyModuleName.MyService
+```
+
+The directives are named:
+
+```
+myOrganizationMyModuleMyDirective # in javascript
+my-organization-my-module-my-directive # in HTML
+```
+
+* if your project folder name ends with ```-angular``` (like a-cool-component-angular), then ```-angular``` will be omitted in the angular module name generation.
+
 After that, it scaffolds the webapp.
 
 The generated code will utilize the Docker based [client side workflow package](https://github.com/garlictech/docker-images). Go there for more information about how to develop your site/module.
