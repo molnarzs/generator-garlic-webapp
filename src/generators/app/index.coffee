@@ -83,7 +83,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Directives", []
+Module = angular.module "#{@conf.angularModuleName}.Directives", []
 module.exports = Module.name
 """
 
@@ -93,7 +93,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Services", []
+Module = angular.module "#{@conf.angularModuleName}.Services", []
 module.exports = Module.name
 """
 
@@ -103,7 +103,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Factories", []
+Module = angular.module "#{@conf.angularModuleName}.Factories", []
 module.exports = Module.name
 """
 
@@ -112,7 +112,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Providers", []
+Module = angular.module "#{@conf.angularModuleName}.Providers", []
 module.exports = Module.name
 """
 

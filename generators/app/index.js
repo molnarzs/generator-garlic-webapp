@@ -100,28 +100,28 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       var dest;
       dest = this.destinationPath("./src/directive-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Directives\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + ".Directives\", []\nmodule.exports = Module.name");
       }
     },
     "src/service-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/service-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Services\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + ".Services\", []\nmodule.exports = Module.name");
       }
     },
     "src/factory-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/factory-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Factories\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + ".Factories\", []\nmodule.exports = Module.name");
       }
     },
     "src/provider-modules.coffee": function() {
       var dest;
       dest = this.destinationPath("./src/provider-modules.coffee");
       if (!this.fs.exists(dest)) {
-        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + "/Providers\", []\nmodule.exports = Module.name");
+        return this.fs.write(dest, "Module = angular.module \"" + this.conf.angularModuleName + ".Providers\", []\nmodule.exports = Module.name");
       }
     },
     projectTypeFiles: function() {
