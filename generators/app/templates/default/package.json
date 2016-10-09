@@ -31,8 +31,6 @@
   "scripts": {
   },
   "dependencies": {
-    "angular": "^1.5",
-    "lodash": "^4"
   },
   "garlic": {
     "type": "<%= conf.projectType %>"
