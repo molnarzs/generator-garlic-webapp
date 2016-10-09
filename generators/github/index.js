@@ -81,7 +81,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     runRemoteGit: function() {
-      var _configureTravis, done, repoCreateCmd, webhook, webhookCreateCmd;
+      var _configureTravis, done, webhook, webhookCreateCmd;
       done = this.async();
       _configureTravis = (function(_this) {
         return function() {
@@ -93,10 +93,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         };
       })(this);
       console.log(chalk.blue("\nCreating GitHub repo...\n"));
-      repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": " + this.answers.isPrivate + ", \"team_id\": " + this.answers.devTeam + "}\'";
-      generatorLib.execute(repoCreateCmd);
-      generatorLib.execute("git init");
-      generatorLib.execute("git remote add origin https://github.com/" + this.conf.scope + "/" + this.conf.appNameKC + ".git");
       _configureTravis();
       console.log(chalk.blue("\Configuring webhooks...\n"));
       webhook = {

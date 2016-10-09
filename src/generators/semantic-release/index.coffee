@@ -21,7 +21,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       cb = @async()
       pjson = jsonfile.readFileSync @destinationPath("./package.json")
       _.set pjson, "scripts.semantic-release", "docker/semantic-release.sh"
-      pjson.version = "0.0.0-semantically-released"
       jsonfile.spaces = 2
       jsonfile.writeFileSync @destinationPath("./package.json"), pjson
       cb()
