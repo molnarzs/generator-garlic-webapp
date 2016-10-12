@@ -46,10 +46,10 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       cb = @async()
       pjson = jsonfile.readFileSync @destinationPath("./package.json")
 
-      _.forEach ['start', 'stop', 'unittest', 'build', 'e2etest', 'bash', 'gulp'], (label) ->
+      _.forEach ['start', 'stop', 'unittest', 'build', 'e2etest', 'bash', 'gulp', 'dist'], (label) ->
         _.set pjson, "scripts.#{label}", "docker/#{label}.sh"
 
-      _.forEach ['start', 'unittest'], (label) ->
+      _.forEach ['start', 'unittest', 'dist'], (label) ->
         _.set pjson, "scripts.#{label}:docker", "scripts/#{label}.sh"
 
       _.set pjson, "scripts.setup-dev", "scripts/setup-dev.sh"

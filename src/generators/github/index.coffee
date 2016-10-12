@@ -84,10 +84,10 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       console.log chalk.blue "\nCreating GitHub repo...\n"
      
-      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": #{@answers.isPrivate}, \"team_id\": #{@answers.devTeam}}\'"
-      generatorLib.execute repoCreateCmd
-      generatorLib.execute "git init"
-      generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
+      # repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": #{@answers.isPrivate}, \"team_id\": #{@answers.devTeam}}\'"
+      # generatorLib.execute repoCreateCmd
+      # generatorLib.execute "git init"
+      # generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
 
       _configureTravis()
 

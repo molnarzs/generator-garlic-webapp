@@ -54,7 +54,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
   writing:
     createConfig: ->
       generatorLib.createConfig.bind(@)()
-      angularModuleName = "#{@conf.scopeCC}.#{_.upperFirst _.camelCase @appname}"
+      match = /(.*) angular/.exec @appname
+      appname = if match then match[1] else @appname
+      angularModuleName = "#{@conf.scopeCC}.#{_.upperFirst _.camelCase appname}"
       @conf.angularModuleName = angularModuleName
 
       @config.set
@@ -83,7 +85,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Directives", []
+Module = angular.module "#{@conf.angularModuleName}.Directives", []
 module.exports = Module.name
 """
 
@@ -93,7 +95,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Services", []
+Module = angular.module "#{@conf.angularModuleName}.Services", []
 module.exports = Module.name
 """
 
@@ -103,7 +105,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Factories", []
+Module = angular.module "#{@conf.angularModuleName}.Factories", []
 module.exports = Module.name
 """
 
@@ -112,7 +114,7 @@ module.exports = Module.name
 
       if not @fs.exists dest
         @fs.write dest, """
-Module = angular.module "#{@conf.angularModuleName}/Providers", []
+Module = angular.module "#{@conf.angularModuleName}.Providers", []
 module.exports = Module.name
 """
 

@@ -32,7 +32,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       cb = this.async();
       pjson = jsonfile.readFileSync(this.destinationPath("./package.json"));
       _.set(pjson, "scripts.semantic-release", "docker/semantic-release.sh");
-      pjson.version = "0.0.0-semantically-released";
       jsonfile.spaces = 2;
       jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
       return cb();

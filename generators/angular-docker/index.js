@@ -58,10 +58,10 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       var cb, pjson;
       cb = this.async();
       pjson = jsonfile.readFileSync(this.destinationPath("./package.json"));
-      _.forEach(['start', 'stop', 'unittest', 'build', 'e2etest', 'bash', 'gulp'], function(label) {
+      _.forEach(['start', 'stop', 'unittest', 'build', 'e2etest', 'bash', 'gulp', 'dist'], function(label) {
         return _.set(pjson, "scripts." + label, "docker/" + label + ".sh");
       });
-      _.forEach(['start', 'unittest'], function(label) {
+      _.forEach(['start', 'unittest', 'dist'], function(label) {
         return _.set(pjson, "scripts." + label + ":docker", "scripts/" + label + ".sh");
       });
       _.set(pjson, "scripts.setup-dev", "scripts/setup-dev.sh");
