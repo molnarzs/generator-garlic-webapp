@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-source ../scripts/build.sh <%= c.imageName %>
+source ../scripts/build.sh "${PWD##*/}"

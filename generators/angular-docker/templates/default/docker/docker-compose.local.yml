@@ -8,6 +8,8 @@ services:
       - "../dev-site:/app/dev-site"
       - "../hooks:/app/hooks"
       - "../dist:/app/dist"
+      - "../package.json:/app/package.json"
+      - "../bower.json:/app/bower.json"
     environment:
       - NODE_ENV
       - CI
