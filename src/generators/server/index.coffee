@@ -11,106 +11,99 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     @config.set
       appname: @appname
 
-    console.log chalk.magenta 'You\'re using the GarlicTech webapp generator.'
-    @composeWith 'loopback', {options: {"skip-install": true}}
+    console.log chalk.magenta 'You\'re using the GarlicTech server generator.'
+    # @composeWith 'loopback', {options: {"skip-install": true}}
 
 
   prompting: ->
-    generatorLib.prompting.bind(@)()
+    done = @async()
+    cb = (answers) =>
+      @answers = answers
+      @config.set {scope: @answers.scope}
+      @config.set {type: @answers.type}
+      done()
 
+    dockerUser = process.env.DOCKER_USER
+    dockerPassword = process.env.DOCKER_PASSWORD
+    dockerRepo = process.env.DOCKER_REPO
+
+    @prompt [{
+        type    : 'input',
+        name    : 'scope',
+        default : 'garlictech',
+        message : 'Project scope (company github team):'
+        store   : true
+      }, {
+        type    : 'list',
+        name    : 'projectType',
+        choices : ['express', 'loopback', 'empty (libary)']
+        default : 'loopback',
+        message : 'Project type:'
+        store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerUser'
+        default : dockerUser
+        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
+        store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerPassword'
+        default : dockerPassword
+        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
+        store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerMachine'
+        message : "Enter the SSH access of the docker machine this repo uses. Keep it empty if the project does not use docker docker machine. Example: root@api.gtrack.events"
+        store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerRepo'
+        default : dockerRepo
+        message : 'Docker repo:'
+        store   : true
+      }
+    ], cb.bind @
  
   writing:
+    loopback: ->
+      if @answers.projectType is 'loopback'
+        cb = @async()
+        @composeWith 'loopback', {options: {"skip-install": true}}
+        generatorLib.execute "rm -rf client"
+        cb()
+
+
     createConfig: ->
       generatorLib.createConfig.bind(@)()
+      @conf.dockerUser = @answers.dockerUser
+      @conf.dockerPassword = @answers.dockerPassword
+      @conf.dockerMachine = @answers.dockerMachine
+      @conf.dockerRepo = if @answers.dockerRepo? then @answers.dockerRepo else "docker.garlictech.com"
+      if @answers.projectType is "express" then @conf.type = "server-common"
+      if @answers.projectType is "loopback" then @conf.type = "server-loopback"
 
   
     mainFiles: ->
       cb = @async()
-
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"),
-        conf: @conf
-
-      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"),
-        conf: @conf
-      
-      @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"),
-        conf: @conf
-      
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
       cb()
 
 
-    "package.json": ->
-      cb = @async()
-      pjson = jsonfile.readFileSync @destinationPath("./package.json")
-      pjson.name = "@#{@conf.scope}/#{@conf.appNameKC}"
-      pjson.version = "0.0.1"
-      pjson.description = "#{@conf.appNameAsIs}"
-      pjson.main = "dist/server.js"
-      pjson.license = "SEE LICENSE IN license.txt"
-      pjson.repository =
-        "type": "git"
-        "url": "https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
-  
-      pjson.author =
-        "name": "#{@conf.scopeCC}",
-        "email": "contact@#{@conf.scope}.com",
-        "url": "http://www.#{@conf.scope}.com"
-      pjson.contributors = [
-        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-      ]
+  end:
+    compositions: ->
+      @composeWith 'garlic-webapp:commitizen'
+      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
 
-      pjson.keywords = [
-        "#{@conf.appName}",
-        "#{@conf.appNameKC}",
-        "#{@conf.scope}"
-      ]
-
-      pjson.bugs =
-        "url": "https://github.com/#{@conf.scope}/#{@conf.appNameKC}/issues"
-      
-      pjson.homepage = "https://github.com/#{@conf.scope}/#{@conf.appNameKC}/wiki/Home"
-      
-      pjson.devDependencies =
-        "garlictech-workflows-server": "^0.1"
-
-      pjson.dependencies["garlictech-common-server"] = "^0.0"
-
-      pjson.engines =
-        "npm" : ">=3.0.0",
-        "node": ">=5.0.0"
-
-      pjson.scripts =
-        "build": "gulp build",
-        "start": "node .",
-        "start-dev": "gulp",
-        "debug": "node --debug-brk dist/server.js",
-        "unittest": "scripts/unittest.sh",
-        "systemtest": "scripts/systemtest.sh",
-        "setup-dev": "scripts/setup-dev.sh",
-        "test": "npm run unittest && npm run systemtest",
-        "posttest": "nsp check"
-
-      
-      pjson.garlic =
-        "unittest": "./dist/test/unit/index.js"
-    
-      pjson.config =
-        "port": 3000
-
-      jsonfile.spaces = 2
-      jsonfile.writeFileSync @destinationPath("./package.json"), pjson
-      cb()
-
-
-    dotfiles: ->
-      @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
   install:
     setupEnvironment: ->
       cb = @async()
-      generatorLib.execute "npm install"
       generatorLib.execute "npm run setup-dev"
-      generatorLib.execute "npm run build"
+      # generatorLib.execute "make build"
       cb()
 
 module.exports = GarlicWebappServerGenerator

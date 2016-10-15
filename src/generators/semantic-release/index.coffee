@@ -16,7 +16,36 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       generatorLib.createConfig.bind(@)()
 
 
+  prompting: ->
+    done = @async()
+
+    if @options?.answers?.dockerRepo?
+      @conf.dockerRepo = @options.answers.dockerRepo
+      done()
+    else
+      cb = (answers) =>
+        @conf.dockerRepo = answers.dockerRepo
+        done()
+
+      dockerRepo = "docker.#{@conf.scope}.com"
+
+      @prompt [{
+          type    : 'input'
+          name    : 'dockerRepo'
+          default : dockerRepo
+          message : 'Docker repo:'
+          store   : true
+        }
+      ], cb.bind @
+
+
   writing:
+    mainFiles: ->
+      cb = @async()
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
+      cb()
+
+
     "package.json": ->
       cb = @async()
       pjson = jsonfile.readFileSync @destinationPath("./package.json")
@@ -35,7 +64,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       if (not data.after_success[0]?) or "npm run semantic-release" not in data.after_success[0]
         data.after_success.unshift "[ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && npm run semantic-release"
 
-      _.set data, "cache.directories", "node_modules"
       yaml.writeSync file, data
       cb()
 

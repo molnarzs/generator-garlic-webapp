@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+. .env
+
+if [ "$1" == "-f" ]; then
+  export CI=true
+  export TRAVIS=true
+  export TRAVIS_BRANCH=master
+fi
+
 docker run \
   -v $(pwd):/app/project \
   -e CI \
