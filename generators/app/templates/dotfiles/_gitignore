@@ -10,29 +10,11 @@ Icon
 .Trashes
 
 # --------------------
-# IntelliJ Files
-# --------------------
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# --------------------
-# Netbeans Files
-# --------------------
-nbproject/private/
-builds/
-builds
-nbbuild/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-
-# --------------------
 # Node Files
 # --------------------
 .nodemonignore
 npm-debug.log
+node_modules/
 node_modules
 coverage/
 
@@ -59,11 +41,12 @@ logs/
 builds/
 dist/
 bin/
-.env
 *.bak
+credentials.json
+.env
+e2e/src/.pki
+e2e/src/supervisord.log
 .npmrc
-tokens.env
-
 
 # --------------------
 # Text editor files

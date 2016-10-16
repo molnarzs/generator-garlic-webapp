@@ -112,10 +112,16 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
       });
+      this.fs.copyTpl(this.templatePath('default/_package.json'), this.destinationPath("./package.json"), {
+        c: this.conf
+      });
       this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
         c: this.conf
       });
       this.fs.copyTpl(this.templatePath('dotfiles/_npmignore'), this.destinationPath("./.npmignore"), {
+        c: this.conf
+      });
+      this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
         c: this.conf
       });
       return cb();
