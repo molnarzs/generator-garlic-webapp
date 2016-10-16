@@ -12,6 +12,5 @@ coffeelint.json
 gulpfile.coffee
 docker-*
 Dockerfile*
-dist/test
-dist/**/test/*system-tests.js
+test
 dist/**/test/*unit-tests.js

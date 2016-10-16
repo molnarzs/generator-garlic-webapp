@@ -1,21 +1,6 @@
-FROM node:6
+FROM <%= c.dockerRepo %>/<%= c.type %>
 
-ARG NPM_TOKEN
+COPY package.json /app/
+RUN npm install --silent
 
-# Create app directory
-RUN mkdir -p /app
-WORKDIR /app
-
-# Install app dependencies
-ADD package.json /app/
-RUN echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
-RUN npm install --silent && rm -f ~/.npmrc
-
-RUN npm install --silent -g gulp
-
-ADD . /app/
-RUN npm run-script build
-
-EXPOSE 3000
-
-ENTRYPOINT [ "npm" ]
+COPY dist/ /app

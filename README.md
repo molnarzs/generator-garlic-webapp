@@ -67,6 +67,7 @@ npm run commit
 
 [Your web site](http://localhost:8081) is: http://localhost:8081.
 
+The generator generates files for the [Garlictech workflow](https://github.com/Garlictech/workflows). For the details of the above procedure, consult this site.
 
 ### Start a client project
 
@@ -119,37 +120,61 @@ The generated code will utilize the Docker based [client side workflow package](
 ```
 mkdir my-project
 cd my-project
-yo garlic-webapp:server
-# Select garlictech scope (the default), and a project name (default: the current directory name)
-# Select the values that the loopback generator asks.
+yo garlic-webapp:server --force
 npm run setup-dev
-npm run build
-npm start
+make build
+make start
 # See your server in http://0.0.0.0:3000
 # ...then develop something, then:
 git add .
 npm run commit
 ```
 
-All the server projects are based on [loopback.io](http://loopback.io/), and the generated code is compatible with the [loopback generator](https://github.com/strongloop/generator-loopback).
+The generator generates files for the [Garlictech workflow](https://github.com/Garlictech/workflows). For the details of the above procedure, consult this site.
 
 ### Start a server project
 
 * Create a project directory. The directory naming must be in kebabcase (for example: _My Project_ should be in directory _my-project_) Enter the directory, then:
 
 ```bash
-$ yo garlic-webapp:server
+$ yo garlic-webapp:server --force
 ```
 
+Mind the `--force` parameter. We use composed generators and sometimes, files must be overwritten. This option eliminates the confirmation questions. 
+
 * Type a scope or press return to select the default. The scope must be the organization id in github (so, for garlictech projects, it must be garlictech. You can see this ID in the URL of the github repos).
-* Type the project name (in kebabcase) or accept the default that is calculated by the directory name.
-* The loobpack generator starts. Answer its questions.
+* Select the project type.
+** `empty`: nothing. You start server development from scratch.
+** `express`: an Express server.
+** `loopback`: a loopback server. In this case, the loopback generator also starts.
+*** Accept the default application name!
 
-After that, the generator scaffolds the server. If you do not specify `--skip-install`, then the generator will install the npm dependencies as well.
+After that, the generator scaffolds the server.
 
-The generated code will utilize the [server side workflow package](https://github.com/garlictech/garlictech-workflows-server). When the installation of the dependencies 
-are over, you should set up your development environment and start coding. So go to the [workflow doc](https://github.com/garlictech/garlictech-workflows-server) and continue.
-  
+### Build, develop, start...
+
+For development, we use `make`. For example, build the development server image:
+
+```make build```
+
+Read the Makefile comments for all the commands, they are obvious. Normally, they start a docker container and execute a command.
+
+
+### Build the development server
+
+```make build```
+
+It uses the generated `Dockerfile.dev` and created a development server image. It id derived from the `workflows-server` image. Go [here](https://github.com/garlictech/workflows/tree/master/workflows-server) for all the npm packages pre-installed.
+You do not have to add the preinstalled packages to `package.json`, just start requiring them.
+
+### bash
+
+You can start a bash session inside a container.
+
+```
+make bash
+```
+
 ## The generators
 
 During the generator examples, we use MyOrganization az as example organization name. Mind, that the organization refers to the github organization, and must be in CamelCase. For example, if your organization is at

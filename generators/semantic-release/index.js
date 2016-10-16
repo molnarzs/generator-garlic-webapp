@@ -26,7 +26,40 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       return generatorLib.createConfig.bind(this)();
     }
   },
+  prompting: function() {
+    var cb, dockerRepo, done, ref, ref1;
+    done = this.async();
+    if (((ref = this.options) != null ? (ref1 = ref.answers) != null ? ref1.dockerRepo : void 0 : void 0) != null) {
+      this.conf.dockerRepo = this.options.answers.dockerRepo;
+      return done();
+    } else {
+      cb = (function(_this) {
+        return function(answers) {
+          _this.conf.dockerRepo = answers.dockerRepo;
+          return done();
+        };
+      })(this);
+      dockerRepo = "docker." + this.conf.scope + ".com";
+      return this.prompt([
+        {
+          type: 'input',
+          name: 'dockerRepo',
+          "default": dockerRepo,
+          message: 'Docker repo:',
+          store: true
+        }
+      ], cb.bind(this));
+    }
+  },
   writing: {
+    mainFiles: function() {
+      var cb;
+      cb = this.async();
+      this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
+        c: this.conf
+      });
+      return cb();
+    },
     "package.json": function() {
       var cb, pjson;
       cb = this.async();
@@ -47,7 +80,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       if ((data.after_success[0] == null) || indexOf.call(data.after_success[0], "npm run semantic-release") < 0) {
         data.after_success.unshift("[ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && npm run semantic-release");
       }
-      _.set(data, "cache.directories", "node_modules");
       yaml.writeSync(file, data);
       return cb();
     },

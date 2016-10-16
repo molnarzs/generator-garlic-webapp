@@ -33,7 +33,6 @@ nb-configuration.xml
 # --------------------
 .nodemonignore
 npm-debug.log
-node_modules/
 node_modules
 coverage/
 
@@ -60,9 +59,11 @@ logs/
 builds/
 dist/
 bin/
-*.bak
-credentials.coffee
 .env
+*.bak
+.npmrc
+tokens.env
+
 
 # --------------------
 # Text editor files

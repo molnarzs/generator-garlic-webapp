@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  <%= c.scope %>.<%= c.appNameKC %>.dev:
+    build:
+      context: ../
+      dockerfile: Dockerfile.dev
+    env_file:
+      - "./service.env"
+      - "../tokens.env"
+    volumes:
+      - "../:/app/project"
+    command: "gulp"
+    ports:
+      - "3000:3000"
