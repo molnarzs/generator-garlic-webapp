@@ -109,8 +109,11 @@ bash:
 clean:
 	-${DOCKER_COMPOSE} rm -f -v
 	-docker rmi ${SERVICE_NAME}
-	-docker rmi ${DEV_SERVICE_NAME}
 
 
 # Kill and delete everything
 destroy: kill-all clean
+
+# Start the services in debug mode
+debug:
+	${DOCKER_RUN} scripts/debug.sh
