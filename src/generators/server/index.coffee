@@ -56,6 +56,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     loopback: ->
       if @answers.projectType is 'loopback'
         cb = @async()
+        console.log chalk.red 'Now, we call the loopback generator. Do not change the project name! If it asks, overwrite all the files!'
         @composeWith 'loopback', {options: {"skip-install": true}}
         generatorLib.execute "rm -rf client"
         cb()
@@ -89,7 +90,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     setupEnvironment: ->
       cb = @async()
       generatorLib.execute "npm run setup-dev"
-      # generatorLib.execute "make build"
       cb()
 
 module.exports = GarlicWebappServerGenerator

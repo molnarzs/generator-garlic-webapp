@@ -148,6 +148,7 @@ Mind the `--force` parameter. We use composed generators and sometimes, files mu
 ** `express`: an Express server.
 ** `loopback`: a loopback server. In this case, the loopback generator also starts.
 *** Accept the default application name!
+** The following environment variables are taken into account: `DOCKER_REPO`.
 
 After that, the generator scaffolds the server.
 

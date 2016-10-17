@@ -5,7 +5,12 @@ export $(shell sed 's/=.*//' .env)
 SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml
-DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
+DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
+
+ifneq ($(TRAVIS),true)
+	DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.debug.yml
+	DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
+endif
 
 .PHONY: build dist test up stop rm-volumes rm destroy ps logs
 
@@ -91,7 +96,7 @@ logs-all:
 
 
 # Login to the docker registry of the project
-login:
+login:	
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 

@@ -70,6 +70,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       var cb;
       if (this.answers.projectType === 'loopback') {
         cb = this.async();
+        console.log(chalk.red('Now, we call the loopback generator. Do not change the project name! If it asks, overwrite all the files!'));
         this.composeWith('loopback', {
           options: {
             "skip-install": true

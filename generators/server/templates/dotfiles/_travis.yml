@@ -21,6 +21,7 @@ script:
 - make smoketest
 after_script:
 - make stop-all
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && docker/semantic-release.sh && make push && scripts/notify_dependencies.sh'
 branches:
   only:
   - master
