@@ -23,8 +23,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @config.set {type: @answers.type}
       done()
 
-    dockerUser = process.env.DOCKER_USER
-    dockerPassword = process.env.DOCKER_PASSWORD
     dockerRepo = process.env.DOCKER_REPO
 
     @prompt [{
@@ -39,18 +37,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         choices : ['express', 'loopback', 'empty (libary)']
         default : 'loopback',
         message : 'Project type:'
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'dockerUser'
-        default : dockerUser
-        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'dockerPassword'
-        default : dockerPassword
-        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
         store   : true
       }, {
         type    : 'input'
@@ -70,6 +56,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     loopback: ->
       if @answers.projectType is 'loopback'
         cb = @async()
+        console.log chalk.red 'Now, we call the loopback generator. Do not change the project name! If it asks, overwrite all the files!'
         @composeWith 'loopback', {options: {"skip-install": true}}
         generatorLib.execute "rm -rf client"
         cb()
@@ -77,8 +64,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
     createConfig: ->
       generatorLib.createConfig.bind(@)()
-      @conf.dockerUser = @answers.dockerUser
-      @conf.dockerPassword = @answers.dockerPassword
       @conf.dockerMachine = @answers.dockerMachine
       @conf.dockerRepo = if @answers.dockerRepo? then @answers.dockerRepo else "docker.garlictech.com"
       if @answers.projectType is "express" then @conf.type = "server-common"
@@ -88,8 +73,10 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
+      @fs.copyTpl @templatePath('default/_package.json'), @destinationPath("./package.json"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
       cb()
 
 
@@ -103,7 +90,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     setupEnvironment: ->
       cb = @async()
       generatorLib.execute "npm run setup-dev"
-      # generatorLib.execute "make build"
       cb()
 
 module.exports = GarlicWebappServerGenerator

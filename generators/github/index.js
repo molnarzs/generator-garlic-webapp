@@ -81,19 +81,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     runRemoteGit: function() {
-      var _configureTravis, done, webhook, webhookCreateCmd;
+      var done, webhook, webhookCreateCmd;
       done = this.async();
-      _configureTravis = (function(_this) {
-        return function() {
-          console.log(chalk.blue("\nConfiguring travis...\n"));
-          generatorLib.execute("travis enable");
-          generatorLib.execute("travis env set DOCKER_USER " + _this.answers.dockerUser + " -P");
-          generatorLib.execute("travis env set DOCKER_PASSWORD " + _this.answers.dockerPassword + " -P");
-          return generatorLib.execute("travis encrypt \"" + _this.conf.scope + ":" + _this.answers.slackToken + "\" --add notifications.slack.rooms");
-        };
-      })(this);
-      console.log(chalk.blue("\nCreating GitHub repo...\n"));
-      _configureTravis();
       console.log(chalk.blue("\Configuring webhooks...\n"));
       webhook = {
         name: "web",

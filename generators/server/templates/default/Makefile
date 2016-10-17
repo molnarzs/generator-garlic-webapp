@@ -7,6 +7,11 @@ DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml
 DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
 
+ifneq ($(TRAVIS),true)
+	DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.debug.yml
+	DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
+endif
+
 .PHONY: build dist test up stop rm-volumes rm destroy ps logs
 
 # Build the development services.
@@ -91,7 +96,7 @@ logs-all:
 
 
 # Login to the docker registry of the project
-login:
+login:	
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 
@@ -109,8 +114,11 @@ bash:
 clean:
 	-${DOCKER_COMPOSE} rm -f -v
 	-docker rmi ${SERVICE_NAME}
-	-docker rmi ${DEV_SERVICE_NAME}
 
 
 # Kill and delete everything
 destroy: kill-all clean
+
+# Start the services in debug mode
+debug:
+	${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME} scripts/debug.sh

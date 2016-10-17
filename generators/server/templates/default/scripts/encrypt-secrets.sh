@@ -1,3 +1,4 @@
 #! /usr/bin/env bash
 . .env
-travis encrypt-file tokens.env -r ${SCOPE}/${PROJECT} --add
+tar -zcvf secrets.tgz tokens.env
+travis encrypt-file secrets.tgz -r ${SCOPE}/${PROJECT}
