@@ -11,5 +11,3 @@ services:
     volumes:
       - "../:/app/project"
     command: "gulp"
-    ports:
-      - "3000:3000"

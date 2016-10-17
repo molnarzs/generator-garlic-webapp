@@ -4,7 +4,7 @@ export $(shell sed 's/=.*//' .env)
 
 SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
-DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml
+DOCKER_COMPOSE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml
 DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
 
 ifneq ($(TRAVIS),true)
