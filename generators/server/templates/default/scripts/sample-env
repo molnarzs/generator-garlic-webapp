@@ -1,6 +1,4 @@
 export NODE_ENV=development
-export DOCKER_USER=<%= c.dockerUser %>
-export DOCKER_PASSWORD=<%= c.dockerPassword %>
 export DOCKER_REGISTRY=<%= c.dockerRepo %>
 export PROJECT=<%= c.appNameKC %>
 export TARGET_IMAGE_NAME=<%= c.appNameKC %>

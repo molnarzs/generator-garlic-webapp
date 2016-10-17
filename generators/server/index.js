@@ -22,7 +22,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     return console.log(chalk.magenta('You\'re using the GarlicTech server generator.'));
   },
   prompting: function() {
-    var cb, dockerPassword, dockerRepo, dockerUser, done;
+    var cb, dockerRepo, done;
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
@@ -36,8 +36,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         return done();
       };
     })(this);
-    dockerUser = process.env.DOCKER_USER;
-    dockerPassword = process.env.DOCKER_PASSWORD;
     dockerRepo = process.env.DOCKER_REPO;
     return this.prompt([
       {
@@ -52,18 +50,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         choices: ['express', 'loopback', 'empty (libary)'],
         "default": 'loopback',
         message: 'Project type:',
-        store: true
-      }, {
-        type: 'input',
-        name: 'dockerUser',
-        "default": dockerUser,
-        message: "Docker private repo username: (we take the default from the environment variable DOCKER_USER):",
-        store: true
-      }, {
-        type: 'input',
-        name: 'dockerPassword',
-        "default": dockerPassword,
-        message: "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):",
         store: true
       }, {
         type: 'input',
@@ -95,8 +81,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     },
     createConfig: function() {
       generatorLib.createConfig.bind(this)();
-      this.conf.dockerUser = this.answers.dockerUser;
-      this.conf.dockerPassword = this.answers.dockerPassword;
       this.conf.dockerMachine = this.answers.dockerMachine;
       this.conf.dockerRepo = this.answers.dockerRepo != null ? this.answers.dockerRepo : "docker.garlictech.com";
       if (this.answers.projectType === "express") {

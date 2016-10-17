@@ -23,8 +23,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @config.set {type: @answers.type}
       done()
 
-    dockerUser = process.env.DOCKER_USER
-    dockerPassword = process.env.DOCKER_PASSWORD
     dockerRepo = process.env.DOCKER_REPO
 
     @prompt [{
@@ -39,18 +37,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         choices : ['express', 'loopback', 'empty (libary)']
         default : 'loopback',
         message : 'Project type:'
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'dockerUser'
-        default : dockerUser
-        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'dockerPassword'
-        default : dockerPassword
-        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
         store   : true
       }, {
         type    : 'input'
@@ -77,8 +63,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
     createConfig: ->
       generatorLib.createConfig.bind(@)()
-      @conf.dockerUser = @answers.dockerUser
-      @conf.dockerPassword = @answers.dockerPassword
       @conf.dockerMachine = @answers.dockerMachine
       @conf.dockerRepo = if @answers.dockerRepo? then @answers.dockerRepo else "docker.garlictech.com"
       if @answers.projectType is "express" then @conf.type = "server-common"
