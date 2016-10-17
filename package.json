@@ -1,7 +1,7 @@
 {
   "name": "generator-garlic-webapp",
   "description": "Generator for GarlicTech web applications.",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "license": "MIT",
   "repository": {
     "type": "git",
