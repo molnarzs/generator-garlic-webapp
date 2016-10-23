@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker-compose -f docker/docker-compose.local.yml -f docker/docker-compose.dev.yml run <%= c.webpackServerName %> /bin/bash
+docker-compose -f docker/docker-compose.webpack.yml run <%= c.webpackServerName %> /bin/bash

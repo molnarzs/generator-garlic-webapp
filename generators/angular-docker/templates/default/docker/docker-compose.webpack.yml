@@ -8,4 +8,4 @@ services:
     environment:
       - NODE_ENV
       - CI
-      - DEBUG
+    command: "npm run start:docker"

@@ -18,7 +18,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
   prompting: ->
     done = @async()
-    console.log 2,  @options
 
     if @options?.answers?.dockerRepo?
       @conf.dockerRepo = @options.answers.dockerRepo

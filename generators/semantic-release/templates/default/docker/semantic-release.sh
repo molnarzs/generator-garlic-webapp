@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-. .env
-
 if [ "$1" == "-f" ]; then
   export CI=true
   export TRAVIS=true

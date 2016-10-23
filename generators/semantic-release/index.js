@@ -29,7 +29,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   prompting: function() {
     var cb, dockerRepo, done, ref, ref1;
     done = this.async();
-    console.log(2, this.options);
     if (((ref = this.options) != null ? (ref1 = ref.answers) != null ? ref1.dockerRepo : void 0 : void 0) != null) {
       this.conf.dockerRepo = this.options.answers.dockerRepo;
       return done();
