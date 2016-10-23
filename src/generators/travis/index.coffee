@@ -69,12 +69,13 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       @conf.dockerPassword = @answers.dockerPassword
       @conf.slackToken = @answers.slackToken
       @conf.dockerMachine = @answers.dockerMachine
+      @conf.dockerRepo = @answers.dockerRepo
       done()
 
 
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {conf: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
 
 
   end:

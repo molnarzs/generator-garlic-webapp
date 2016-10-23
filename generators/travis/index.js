@@ -78,6 +78,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       this.conf.dockerPassword = this.answers.dockerPassword;
       this.conf.slackToken = this.answers.slackToken;
       this.conf.dockerMachine = this.answers.dockerMachine;
+      this.conf.dockerRepo = this.answers.dockerRepo;
       return done();
     },
     mainFiles: function() {
@@ -85,7 +86,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         c: this.conf
       });
       return this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
-        conf: this.conf
+        c: this.conf
       });
     }
   },
