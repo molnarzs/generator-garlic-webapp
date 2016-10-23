@@ -74,6 +74,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {conf: @conf}
 
 
   end:

@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-travis enable
+travis enable -R <%= c.scope %>/<%= c.appNameKC %>
 travis env set DOCKER_USER <%= c.dockerUser %> -P
 travis env set DOCKER_PASSWORD <%= c.dockerPassword %> -P
 travis encrypt "<%= c.scope %>:<%= c.slackToken %>" --add notifications.slack.rooms

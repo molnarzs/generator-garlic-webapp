@@ -81,8 +81,11 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       return done();
     },
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
+      this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
+      });
+      return this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
+        conf: this.conf
       });
     }
   },
@@ -91,7 +94,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       var done;
       done = this.async();
       generatorLib.execute(". ./travis_config.sh");
-      generatorLib.execute("rm ./travis_config.sh");
       return done();
     }
   }
