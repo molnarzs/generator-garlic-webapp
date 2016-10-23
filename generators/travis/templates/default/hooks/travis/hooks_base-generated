@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# DON'T MODIFY THIS FILE, IT'S GENERATED
+docker run -i -t \
+  -v $(pwd):/app/project \
+  <%= c.dockerRepo %>/workflows-common hooks/travis/$1

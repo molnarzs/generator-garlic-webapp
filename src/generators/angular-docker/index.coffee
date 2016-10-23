@@ -19,19 +19,23 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   prompting: ->
     done = @async()
     cb = (answers) =>
+      @answers = answers
       @conf.dockerRepo = answers.dockerRepo
       done()
 
-    dockerRepo = "docker.#{@conf.scope}.com"
+    if @options.answers?.dockerRepo?
+      cb @options.answers
+    else
+      dockerRepo = "docker.#{@conf.scope}.com"
 
-    @prompt [{
-        type    : 'input'
-        name    : 'dockerRepo'
-        default : dockerRepo
-        message : 'Docker repo:'
-        store   : true
-      }
-    ], cb.bind @
+      @prompt [{
+          type    : 'input'
+          name    : 'dockerRepo'
+          default : dockerRepo
+          message : 'Docker repo:'
+          store   : true
+        }
+      ], cb.bind @
 
 
   writing:
@@ -60,9 +64,16 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       cb()
 
 
-    compositions: ->
-      @composeWith 'garlic-webapp:commitizen'
-      @composeWith 'garlic-webapp:semantic-release'
+    commitizen: ->
+      cb = @async()
+      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
+      cb()
+
+
+    "semantic-release": ->
+      cb = @async()
+      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+      cb()
       
 
 module.exports = GarlicWebappGithubGenerator

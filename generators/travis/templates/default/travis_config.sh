@@ -18,5 +18,3 @@ if [ "<%= c.dockerMachine %>" != "" ]; then
   rm ${KEYFILE}.pub
 fi
 
-echo $0
-rm -f "$0"

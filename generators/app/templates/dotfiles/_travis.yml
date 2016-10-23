@@ -12,9 +12,7 @@ services:
   - docker
 
 before_install:
-  - npm prune
-  - hooks/travis/before_install.sh
-  - docker/login.sh
+  - hooks/travis/before_install
 
 install:
   - npm run build
@@ -32,3 +30,8 @@ branches:
   only:
     - master
     - stable
+
+after_success:
+  - hooks/travis/after_success
+after_deploy:
+  - hooks/travis/after_deploy

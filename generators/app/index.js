@@ -62,10 +62,22 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         message: 'Project type:',
         store: true
       }, {
+        type: 'input',
+        name: 'dockerRepo',
+        "default": 'docker.io',
+        message: 'Docker repo:',
+        store: true
+      }, {
         type: 'confirm',
         name: 'isRepo',
         "default": true,
         message: 'Create github repo?',
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'isTravis',
+        "default": true,
+        message: 'Configure travis.ci?',
         store: true
       }
     ], cb.bind(this));
@@ -89,7 +101,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         conf: this.conf
       });
-      this.fs.copyTpl(this.templatePath('default/_package.json'), this.destinationPath("./package.json"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
         conf: this.conf
       });
       this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
@@ -101,7 +113,9 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
         conf: this.conf
       });
-      this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
+      if (this.conf.projectType === 'site') {
+        this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
+      }
       return cb();
     },
     "src/directive-modules.coffee": function() {
@@ -168,7 +182,14 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   end: {
     docker: function() {
-      return this.composeWith('garlic-webapp:angular-docker');
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:angular-docker', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
     },
     "package.json": function() {
       var cb, pjson;
@@ -182,8 +203,30 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       }
     },
     repo: function() {
+      var cb;
       if (this.answers.isRepo) {
-        return this.composeWith('garlic-webapp:github');
+        cb = this.async();
+        this.composeWith('garlic-webapp:github', {
+          options: {
+            answers: this.answers
+          }
+        });
+        return cb();
+      }
+    },
+    travis: function() {
+      var cb;
+      if (this.answers.isTravis) {
+        if (!this.answers.isRepo) {
+          console.log(chalk.yellow('WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'));
+        }
+        cb = this.async();
+        this.composeWith('garlic-webapp:travis', {
+          options: {
+            answers: this.answers
+          }
+        });
+        return cb();
       }
     }
   }

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
+hooks/travis/hooks_base-generated before_install
+docker/login.sh
+
+# ADD YOUR PARTS HERE

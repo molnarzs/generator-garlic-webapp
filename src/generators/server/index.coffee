@@ -73,7 +73,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
-      @fs.copyTpl @templatePath('default/_package.json'), @destinationPath("./package.json"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
@@ -81,9 +81,16 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
 
   end:
-    compositions: ->
-      @composeWith 'garlic-webapp:commitizen'
+    commitizen: ->
+      cb = @async()
+      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
+      cb()
+
+
+    "semantic-release": ->
+      cb = @async()
       @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+      cb()
 
 
   install:

@@ -43,10 +43,22 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         message : 'Project type:'
         store   : true
       }, {
+        type    : 'input'
+        name    : 'dockerRepo'
+        default : 'docker.io'
+        message : 'Docker repo:'
+        store   : true
+      }, {
         type    : 'confirm'
         name    : 'isRepo'
         default : true
         message : 'Create github repo?'
+        store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isTravis'
+        default : true
+        message : 'Configure travis.ci?'
         store   : true
       }
     ], cb.bind @
@@ -67,11 +79,14 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {conf: @conf}
-      @fs.copyTpl @templatePath('default/_package.json'), @destinationPath("./package.json"), {conf: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {conf: @conf}
-      @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
+
+      if @conf.projectType is 'site'
+        @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
+        
       cb()
 
 
@@ -146,7 +161,9 @@ module.exports = Module.name
 
   end:
     docker: ->
-      @composeWith 'garlic-webapp:angular-docker'
+      cb = @async()
+      @composeWith 'garlic-webapp:angular-docker', options: {answers: @answers}
+      cb()
 
     
     "package.json": ->
@@ -161,6 +178,18 @@ module.exports = Module.name
 
     repo: ->
       if @answers.isRepo
-        @composeWith 'garlic-webapp:github'
+        cb = @async()
+        @composeWith 'garlic-webapp:github', options: {answers: @answers}
+        cb()
+
+
+    travis: ->
+      if @answers.isTravis
+        if not @answers.isRepo
+          console.log chalk.yellow 'WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'
+          
+        cb = @async()
+        @composeWith 'garlic-webapp:travis', options: {answers: @answers}
+        cb()
 
 module.exports = GarlicWebappGenerator

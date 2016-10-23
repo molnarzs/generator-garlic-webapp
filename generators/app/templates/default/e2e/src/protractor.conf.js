@@ -8,7 +8,7 @@ globalConfig = {
 
 exports.config = {
   baseUrl: globalConfig.baseUrl,
-  specs: ["/protractor/scenarios/*.scenarios.coffee"],
+  specs: ["/protractor/scenarios/*.scenarios.*"],
   framework: 'mocha',
   mochaOpts: {
     reporter: "spec",

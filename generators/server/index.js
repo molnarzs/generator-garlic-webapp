@@ -97,7 +97,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('default/_package.json'), this.destinationPath("./package.json"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
         c: this.conf
       });
       this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
@@ -113,13 +113,25 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     }
   },
   end: {
-    compositions: function() {
-      this.composeWith('garlic-webapp:commitizen');
-      return this.composeWith('garlic-webapp:semantic-release', {
+    commitizen: function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:commitizen', {
         options: {
           answers: this.answers
         }
       });
+      return cb();
+    },
+    "semantic-release": function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:semantic-release', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
     }
   },
   install: {

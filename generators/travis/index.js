@@ -18,8 +18,9 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     }
   },
   prompting: function() {
-    var cb, dockerPassword, dockerUser, done, slackToken;
+    var cb, dockerPassword, dockerUser, done, questions, ref, slackToken;
     done = this.async();
+    this.answers = {};
     cb = (function(_this) {
       return function(answers) {
         _this.answers = answers;
@@ -29,7 +30,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     slackToken = process.env["SLACK_TOKEN_" + this.conf.scopeCC];
     dockerUser = process.env.DOCKER_USER;
     dockerPassword = process.env.DOCKER_PASSWORD;
-    return this.prompt([
+    questions = [
       {
         type: 'input',
         name: 'slackToken',
@@ -55,7 +56,19 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         message: "Enter the SSH access of the docker machine this repo uses. Keep it empty if the project does not use docker docker machine. Example: root@api.gtrack.events",
         store: true
       }
-    ], cb.bind(this));
+    ];
+    if (((ref = this.options.answers) != null ? ref.dockerRepo : void 0) != null) {
+      this.answers.dockerRepo = this.options.answers.dockerRepo;
+    } else {
+      questions.push({
+        type: 'input',
+        name: 'dockerRepo',
+        "default": "docker." + this.conf.scope + ".com",
+        message: 'Docker repo:',
+        store: true
+      });
+    }
+    return this.prompt(questions, cb.bind(this));
   },
   writing: {
     createConfig: function() {
@@ -71,11 +84,14 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
       });
-    },
+    }
+  },
+  end: {
     executeScript: function() {
       var done;
       done = this.async();
       generatorLib.execute(". ./travis_config.sh");
+      generatorLib.execute("rm ./travis_config.sh");
       return done();
     }
   }

@@ -14,6 +14,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
   prompting: ->
     done = @async()
+    @answers = {}
     cb = (answers) =>
       @answers = answers
       done()
@@ -22,7 +23,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     dockerUser = process.env.DOCKER_USER
     dockerPassword = process.env.DOCKER_PASSWORD
 
-    @prompt [{
+    questions = [{
         type    : 'input'
         name    : 'slackToken'
         default : slackToken
@@ -47,7 +48,19 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         message : "Enter the SSH access of the docker machine this repo uses. Keep it empty if the project does not use docker docker machine. Example: root@api.gtrack.events"
         store   : true
       }
-    ], cb.bind @
+    ]
+
+    if @options.answers?.dockerRepo?
+      @answers.dockerRepo = @options.answers.dockerRepo
+    else
+      questions.push
+        type    : 'input'
+        name    : 'dockerRepo'
+        default : "docker.#{@conf.scope}.com"
+        message : 'Docker repo:'
+        store   : true
+
+    @prompt questions, cb.bind @
  
   writing:
     createConfig: ->
@@ -63,6 +76,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
 
 
+  end:
     executeScript: ->
       done = @async()
       generatorLib.execute ". ./travis_config.sh"
