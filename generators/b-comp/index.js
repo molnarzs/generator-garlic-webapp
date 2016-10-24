@@ -34,16 +34,25 @@ GarlicWebappBCompGenerator = yeoman.generators.Base.extend({
         return done();
       };
     })(this);
-    return this.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Component name (like foo-component): ',
-      required: true
-    }, cb.bind(this));
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Component name (like foo-component): ',
+        required: true
+      }, {
+        type: 'input',
+        name: 'serverPath',
+        "default": 'server',
+        store: 'true',
+        message: 'Component name (like foo-component): ',
+        required: true
+      }
+    ], cb.bind(this));
   },
   writing: {
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./server/" + this.conf.componentName), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.serverPath + "/" + this.conf.componentName), {
         c: this.conf
       });
     },
