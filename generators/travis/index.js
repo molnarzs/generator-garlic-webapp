@@ -95,6 +95,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       var done;
       done = this.async();
       generatorLib.execute(". ./travis_config.sh");
+      generatorLib.execute("rm ./travis_config.sh");
       return done();
     }
   }

@@ -12,7 +12,7 @@ before_install:
 install:
   - npm run build
 script:
-  - 'npm run unittest:single'
+  - npm run unittest:single
   - npm run e2etest
 branches:
   only:

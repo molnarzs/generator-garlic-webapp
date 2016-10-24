@@ -82,6 +82,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     executeScript: ->
       done = @async()
       generatorLib.execute ". ./travis_config.sh"
+      generatorLib.execute "rm ./travis_config.sh"
       done()
 
 
