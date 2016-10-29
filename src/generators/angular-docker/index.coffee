@@ -58,6 +58,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       _.set pjson, "scripts.setup-dev", "scripts/setup-dev.sh"
       _.set pjson, "scripts.unittest:single", "export NODE_ENV=test; docker/unittest.sh"
+
+      _.set pjson, "scripts.Build", "npm run build -- --no-cache"
   
       jsonfile.spaces = 2
       jsonfile.writeFileSync @destinationPath("./package.json"), pjson
