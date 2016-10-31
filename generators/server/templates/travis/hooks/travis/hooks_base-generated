@@ -11,4 +11,4 @@ docker run -i -t \
   -e TRAVIS_COMMIT \
   -e GH_USER \
   -e GH_TOKEN \
-  <%= c.dockerRepo %>/workflows-common hooks/travis/$1
+  <%= c.dockerRepo %>/workflows-server hooks/travis/$1

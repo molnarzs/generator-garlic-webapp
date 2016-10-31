@@ -16,7 +16,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     done = @async()
     @answers = {}
     cb = (answers) =>
-      @answers = answers
+      @answers = _.assign @answers, answers
       done()
 
     slackToken = process.env["SLACK_TOKEN_#{@conf.scopeCC}"]

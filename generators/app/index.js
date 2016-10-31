@@ -225,6 +225,16 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
+    },
+    travisLocal: function() {
+      var cb;
+      if (this.answers.isTravis) {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
+        return cb();
+      }
     }
   }
 });

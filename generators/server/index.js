@@ -62,6 +62,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         "default": dockerRepo,
         message: 'Docker repo:',
         store: true
+      }, {
+        type: 'confirm',
+        name: 'isTravis',
+        "default": true,
+        message: 'Configure travis.ci?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -100,9 +106,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
-        c: this.conf
-      });
       this.fs.copyTpl(this.templatePath('dotfiles/_npmignore'), this.destinationPath("./.npmignore"), {
         c: this.conf
       });
@@ -123,13 +126,26 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       });
       return cb();
     },
-    "semantic-release": function() {
+    travis: function() {
+      var cb;
+      if (this.answers.isTravis) {
+        if (!this.answers.isRepo) {
+          console.log(chalk.yellow('WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'));
+        }
+        cb = this.async();
+        this.composeWith('garlic-webapp:travis', {
+          options: {
+            answers: this.answers
+          }
+        });
+        return cb();
+      }
+    },
+    travisLocal: function() {
       var cb;
       cb = this.async();
-      this.composeWith('garlic-webapp:semantic-release', {
-        options: {
-          answers: this.answers
-        }
+      this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
+        conf: this.conf
       });
       return cb();
     }
@@ -138,7 +154,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     setupEnvironment: function() {
       var cb;
       cb = this.async();
-      generatorLib.execute("npm run setup-dev");
+      generatorLib.execute("npm run setup");
       return cb();
     }
   }

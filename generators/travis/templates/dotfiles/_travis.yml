@@ -1,24 +1,23 @@
 language: node_js
 node_js:
-  - '5'
+- '5'
 cache:
   directories:
-    - node_modules
+  - node_modules
 sudo: required
 services:
-  - docker
+- docker
 before_install:
-  - hooks/travis/before_install
+- hooks/travis/before_install
 install:
-  - npm run build
+- hooks/travis/install
 script:
-  - npm run unittest:single
-  - npm run e2etest
+- hooks/travis/script
 branches:
   only:
-    - master
-    - stable
+  - master
+  - stable
 after_success:
-  - hooks/travis/after_success
+- hooks/travis/after_success
 after_deploy:
-  - hooks/travis/after_deploy
+- hooks/travis/after_deploy

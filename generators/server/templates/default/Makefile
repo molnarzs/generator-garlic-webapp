@@ -6,14 +6,21 @@ SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
-DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
+DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
+DOCKER_RUN_NODEPS = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
 
 ifneq ($(TRAVIS),true)
 	DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE} -f docker/docker-compose.debug.yml
-	DOCKER_RUN = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
+	DOCKER_RUN = ${DOCKER_COMPOSE} run --service-ports --rm ${DEV_SERVICE_NAME}
+	DOCKER_RUN_NODEPS = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
 endif
 
 .PHONY: build dist test up stop rm-volumes rm destroy ps logs
+
+# Set up the development environment
+setup:
+	cp scripts/sample-env .env
+
 
 # Build the development services.
 build:
@@ -68,7 +75,7 @@ kill-all:
 
 # Execute the unit tests
 unittest:
-	${DOCKER_RUN} gulp unittest
+	${DOCKER_RUN_NODEPS} gulp unittest
 
 
 # Execute the system tests

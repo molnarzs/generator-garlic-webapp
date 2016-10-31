@@ -23,7 +23,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     this.answers = {};
     cb = (function(_this) {
       return function(answers) {
-        _this.answers = answers;
+        _this.answers = _.assign(_this.answers, answers);
         return done();
       };
     })(this);

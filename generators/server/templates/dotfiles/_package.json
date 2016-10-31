@@ -3,6 +3,7 @@
   "description": "<%= c.appname %>",
   "main": "server/index.coffee",
   "license": "SEE LICENSE IN license.txt",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
@@ -29,11 +30,16 @@
   "dependencies": {
   },
   "scripts": {
-    "setup-dev": "scripts/setup-dev.sh",
+    "setup": "make setup",
     "commit": "docker/commit.sh",
     "start": "make start",
     "unittest": "make unittest",
     "systemtest": "make systemtest"
   },
-  "files": ["dist"]
+  "files": ["dist"],
+  "config": {
+    "commitizen": {
+      "path": "/app/node_modules/cz-conventional-changelog"
+    }
+  }
 }

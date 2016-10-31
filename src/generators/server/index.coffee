@@ -12,7 +12,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       appname: @appname
 
     console.log chalk.magenta 'You\'re using the GarlicTech server generator.'
-    # @composeWith 'loopback', {options: {"skip-install": true}}
 
 
   prompting: ->
@@ -49,6 +48,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         default : dockerRepo
         message : 'Docker repo:'
         store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isTravis'
+        default : true
+        message : 'Configure travis.ci?'
+        store   : true
       }
     ], cb.bind @
  
@@ -74,7 +79,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
       cb()
@@ -87,16 +91,26 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       cb()
 
 
-    "semantic-release": ->
+    travis: ->
+      if @answers.isTravis
+        if not @answers.isRepo
+          console.log chalk.yellow 'WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'
+          
+        cb = @async()
+        @composeWith 'garlic-webapp:travis', options: {answers: @answers}
+        cb()
+        
+
+    travisLocal: ->
       cb = @async()
-      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+      @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {conf: @conf}
       cb()
 
 
   install:
     setupEnvironment: ->
       cb = @async()
-      generatorLib.execute "npm run setup-dev"
+      generatorLib.execute "npm run setup"
       cb()
 
 module.exports = GarlicWebappServerGenerator

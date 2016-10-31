@@ -9,7 +9,7 @@ Methods = {
     var appNameAsIs, appNameFQ, appNameFQcC, appNameKC, conf, scopeCC;
     conf = this.config.getAll();
     scopeCC = _.upperFirst(_.camelCase(conf.scope));
-    appNameAsIs = scopeCC + " " + conf.appname;
+    appNameAsIs = "" + conf.appname;
     appNameKC = _.kebabCase(conf.appname);
     appNameFQ = _.kebabCase(appNameAsIs);
     appNameFQcC = _.camelCase(appNameFQ);

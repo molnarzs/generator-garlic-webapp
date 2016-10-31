@@ -191,4 +191,11 @@ module.exports = Module.name
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
 
+
+    travisLocal: ->
+      if @answers.isTravis
+        cb = @async()
+        @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {conf: @conf}
+        cb()
+
 module.exports = GarlicWebappGenerator
