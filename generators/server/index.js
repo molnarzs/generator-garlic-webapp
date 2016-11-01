@@ -145,7 +145,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       var cb;
       cb = this.async();
       this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
-        conf: this.conf
+        c: this.conf
       });
       return cb();
     }
