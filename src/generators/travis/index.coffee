@@ -2,6 +2,7 @@ util = require('util')
 path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
+_ = require 'lodash'
 generatorLib = require '../lib'
 
 GarlicWebappGithubGenerator = yeoman.generators.Base.extend

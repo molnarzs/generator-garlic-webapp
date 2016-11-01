@@ -53,7 +53,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       var dest;
       dest = "./";
       this.conf.dockerRepo = this.answers.dockerRepo;
-      console.log(this.conf);
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(dest), {
         c: this.conf
       });

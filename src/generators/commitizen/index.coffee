@@ -40,7 +40,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       dest = "./"
       @conf.dockerRepo = @answers.dockerRepo
-      console.log @conf
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath(dest), {c: @conf}
 
 
