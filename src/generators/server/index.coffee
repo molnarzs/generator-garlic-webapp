@@ -81,6 +81,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
       cb()
 
 

@@ -6,3 +6,6 @@ Dockerfile
 Dockerfile.dev
 *-unit-tests.js
 node_modules
+tokens.env
+secrets.tgz
+secrets.tgz.enc

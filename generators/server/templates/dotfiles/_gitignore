@@ -44,7 +44,7 @@ bin/
 *.bak
 .npmrc
 tokens.env
-
+secrets.tgz
 
 # --------------------
 # Text editor files
