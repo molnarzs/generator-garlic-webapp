@@ -1,5 +1,4 @@
-var GarlicWebappGithubGenerator, _, chalk, fs, generatorLib, jsonfile, path, util, yaml, yeoman,
-  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+var GarlicWebappGithubGenerator, _, chalk, fs, generatorLib, jsonfile, path, util, yaml, yeoman;
 
 util = require('util');
 
@@ -67,20 +66,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       _.set(pjson, "scripts.semantic-release", "docker/semantic-release.sh");
       jsonfile.spaces = 2;
       jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
-      return cb();
-    },
-    ".travis.yml": function() {
-      var cb, data, file;
-      cb = this.async();
-      file = this.destinationPath("./.travis.yml");
-      data = yaml.readSync(file);
-      if (!data.after_success) {
-        data.after_success = [];
-      }
-      if ((data.after_success[0] == null) || indexOf.call(data.after_success[0], "npm run semantic-release") < 0) {
-        data.after_success.unshift("[ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && npm run semantic-release");
-      }
-      yaml.writeSync(file, data);
       return cb();
     },
     "README.md": function() {

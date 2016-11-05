@@ -90,6 +90,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       appname = match ? match[1] : this.appname;
       angularModuleName = this.conf.scopeCC + "." + (_.upperFirst(_.camelCase(appname)));
       this.conf.angularModuleName = angularModuleName;
+      this.conf.dockerRepo = this.answers.dockerRepo;
       return this.config.set({
         angularModuleName: angularModuleName,
         scope: this.answers.scope
@@ -223,6 +224,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
             answers: this.answers
           }
         });
+        this.composeWith('garlic-webapp:travis-prepare', {
+          options: {
+            answers: this.answers
+          }
+        });
         return cb();
       }
     },
@@ -231,7 +237,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       if (this.answers.isTravis) {
         cb = this.async();
         this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
-          conf: this.conf
+          c: this.conf
         });
         return cb();
       }

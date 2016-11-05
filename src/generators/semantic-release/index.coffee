@@ -55,18 +55,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       cb()
 
 
-    ".travis.yml": ->
-      cb = @async()
-      file = @destinationPath "./.travis.yml"
-      data = yaml.readSync file
-      if not data.after_success then data.after_success = []
-
-      if (not data.after_success[0]?) or "npm run semantic-release" not in data.after_success[0]
-        data.after_success.unshift "[ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && npm run semantic-release"
-
-      yaml.writeSync file, data
-      cb()
-
     "README.md": ->
       cb = @async()
       fileName = @destinationPath "./README.md"

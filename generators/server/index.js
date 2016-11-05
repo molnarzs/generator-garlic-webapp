@@ -47,7 +47,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'list',
         name: 'projectType',
-        choices: ['express', 'loopback', 'empty (libary)'],
+        choices: ['express', 'loopback', 'library'],
         "default": 'loopback',
         message: 'Project type:',
         store: true
@@ -103,19 +103,42 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/common/_npmignore'), this.destinationPath("./.npmignore"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('dotfiles/_npmignore'), this.destinationPath("./.npmignore"), {
-        c: this.conf
-      });
-      this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
-        c: this.conf
-      });
-      this.fs.copyTpl(this.templatePath('dotfiles/_dockerignore'), this.destinationPath("./.dockerignore"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/common/_gitignore'), this.destinationPath("./.gitignore"), {
         c: this.conf
       });
       return cb();
+    },
+    serverFiles: function() {
+      var cb;
+      if (this.answers.projectType !== 'library') {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('server/**/*'), this.destinationPath("./"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_dockerignore'), this.destinationPath("./.dockerignore"), {
+          c: this.conf
+        });
+        return cb();
+      }
+    },
+    libraryFiles: function() {
+      var cb;
+      if (this.answers.projectType === 'library') {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('library/**/*'), this.destinationPath("./"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/library/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        return cb();
+      }
     }
   },
   end: {
@@ -143,14 +166,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
-    },
-    travisLocal: function() {
-      var cb;
-      cb = this.async();
-      this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
-        c: this.conf
-      });
-      return cb();
     }
   },
   install: {

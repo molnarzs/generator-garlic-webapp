@@ -33,7 +33,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'list',
         name    : 'projectType',
-        choices : ['express', 'loopback', 'empty (libary)']
+        choices : ['express', 'loopback', 'library']
         default : 'loopback',
         message : 'Project type:'
         store   : true
@@ -78,11 +78,26 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/common/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/common/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
       cb()
+
+
+    serverFiles: ->
+      if @answers.projectType isnt 'library'
+        cb = @async()
+        @fs.copyTpl @templatePath('server/**/*'), @destinationPath("./"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
+        cb()
+
+
+    libraryFiles: ->
+      if @answers.projectType is 'library'
+        cb = @async()
+        @fs.copyTpl @templatePath('library/**/*'), @destinationPath("./"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/library/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        cb()
 
 
   end:
@@ -100,12 +115,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
-        
-
-    travisLocal: ->
-      cb = @async()
-      @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {c: @conf}
-      cb()
 
 
   install:

@@ -30,7 +30,7 @@
   "dependencies": {
   },
   "scripts": {
-    "setup": "make setup",
+    "setup": "scripts/setup.sh",
     "commit": "docker/commit.sh",
     "start": "make start",
     "unittest": "make unittest",

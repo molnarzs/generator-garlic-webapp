@@ -17,11 +17,6 @@ endif
 
 .PHONY: build dist test up stop rm-volumes rm destroy ps logs
 
-# Set up the development environment
-setup:
-	cp scripts/sample-env .env
-
-
 # Build the development services.
 build:
 	${DOCKER_COMPOSE} build
@@ -129,4 +124,4 @@ destroy: kill-all clean
 
 # Start the services in debug mode
 debug:
-	${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME} scripts/debug.sh
+	${DOCKER_RUN} scripts/debug.sh

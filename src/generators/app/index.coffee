@@ -70,12 +70,13 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       appname = if match then match[1] else @appname
       angularModuleName = "#{@conf.scopeCC}.#{_.upperFirst _.camelCase appname}"
       @conf.angularModuleName = angularModuleName
+      @conf.dockerRepo = @answers.dockerRepo
 
       @config.set
         angularModuleName: angularModuleName
         scope: @answers.scope
 
-  
+
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {conf: @conf}
@@ -85,7 +86,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
       if @conf.projectType is 'site'
         @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
-        
+
       cb()
 
 
@@ -164,7 +165,7 @@ module.exports = Module.name
       @composeWith 'garlic-webapp:angular-docker', options: {answers: @answers}
       cb()
 
-    
+
     "package.json": ->
       if @conf.projectType is 'site'
         cb = @async()
@@ -186,16 +187,17 @@ module.exports = Module.name
       if @answers.isTravis
         if not @answers.isRepo
           console.log chalk.yellow 'WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'
-          
+
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
+        @composeWith 'garlic-webapp:travis-prepare', options: {answers: @answers}
         cb()
 
 
     travisLocal: ->
       if @answers.isTravis
         cb = @async()
-        @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {conf: @conf}
+        @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {c: @conf}
         cb()
 
 module.exports = GarlicWebappGenerator

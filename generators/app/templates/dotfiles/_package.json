@@ -29,6 +29,16 @@
     "node": ">=5.0.0"
   },
   "scripts": {
+    "unittest": "docker/unittest.sh",
+    "build": "docker/build.sh",
+    "systemtest": "docker/systemtest.sh",
+    "setup": "scripts/setup.sh",
+    "unittest:single": "export NODE_ENV=test; docker/unittest.sh",
+    "commit": "docker/commit.sh",
+    "semantic-release": "docker/semantic-release.sh",
+    "dist": "docker/dist.sh",
+    "unittest:docker": "scripts/unittest.sh",
+    "dist:docker": "scripts/dist.sh"
   },
   "dependencies": {
   },
