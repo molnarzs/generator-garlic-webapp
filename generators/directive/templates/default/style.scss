@@ -1,5 +1,4 @@
-@import "~style/globals";
-
+<%- c.cssGlobals %>
 [<%= c.directiveNameKC %>],
 <%= c.directiveNameKC %> {
   .<%= c.directiveNameKC %>-container {

@@ -181,6 +181,21 @@ make bash
 During the generator examples, we use MyOrganization az as example organization name. Mind, that the organization refers to the github organization, and must be in CamelCase. For example, if your organization is at
 ```http://github.com/my-organization```, then the label you should use everywhere is ```MyOrganization```.
 
+## Generators for AngularJS projects
+
+```
+yo garlic-webapp:directive
+``` 
+
+Generate a directive. Asks for teh tirective name. If template extraction is enabled, then it generates ID for the directive templates in `$templateCache`,
+and adds references to the ui and style files in the `src/templates` module. Do, the template of the directive can be replced in another project.
+
+Otherwise, style and ui files are referenced directly from `directive.coffee`. In this case, teh templates cannot be replaced.
+
+The generator registers the directive in the main Angular module, so it ia available immediately.
+
+Allow rewiting files when it asks for it!
+
 ## Generic generators
 
 They work both on server and client sides.

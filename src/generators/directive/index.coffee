@@ -14,7 +14,7 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
     init: ->
       if not @options.view
         console.log chalk.magenta 'You\'re using the GarlicTech webapp directive generator.'
-  
+
       @folder = "./src"
 
 
@@ -31,17 +31,33 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
       name    : 'name'
       message : 'Module name (like foo-component):'
       required: true
-    }]
-    , cb.bind @
+    }, {
+      type    : 'confirm'
+      name    : 'isExtractAllowed'
+      message : 'Allow extracting the templates?'
+      required: true
+      store   : true
+      default : true
+    }], cb.bind @
 
   writing:
     createConfig: ->
       generatorLib.createDirectiveConfig.bind(@)()
+      console.log "templateUrl: '#{@conf.moduleName}'"
+
+      if @answers.isExtractAllowed
+        @conf.directiveHeader = ""
+        @conf.directiveTemplate = "templateUrl: '#{@conf.moduleName}'"
+        @conf.cssGlobals = ""
+      else
+        @conf.directiveHeader = "require './style'\n"
+        @conf.directiveTemplate = "template: require './ui'"
+        @conf.cssGlobals = "@import \"~style/globals\";\n"
 
 
     mainFiles: ->
       root = "#{@answers.name}"
-  
+
       if @options.view
         root = "views/#{@answers.name}-view"
 
@@ -72,5 +88,23 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
 
     saveConfig: ->
       @config.set 'angularModules', @conf.angularModules
+
+  end:
+    templates: ->
+      if not @answers.isExtractAllowed then return
+      done = @async()
+      path = @destinationPath "./src/templates/index.coffee"
+      content = fs.readFileSync path, 'utf8'
+
+      replacedText = """
+        #===== yeoman hook =====
+          require '../#{@answers.name}/style'
+          $templateCache.put '#{@conf.moduleName}', require '../#{@answers.name}/ui'
+      """
+
+      content = content.replace '#===== yeoman hook =====', replacedText
+      fs.writeFileSync path, content, 'utf8'
+      done()
+
 
 module.exports = GarlicWebappDirectiveGenerator
