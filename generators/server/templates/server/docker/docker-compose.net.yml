@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  <%= c.scope %>.<%= c.appNameKC %>.dev:
+    ports:
+      - "3000:3000"

@@ -24,24 +24,29 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     }
   },
   prompting: function() {
-    var cb, dockerRepo, done;
+    var cb, dockerRepo, done, ref;
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
+        _this.answers = answers;
         _this.conf.dockerRepo = answers.dockerRepo;
         return done();
       };
     })(this);
-    dockerRepo = "docker." + this.conf.scope + ".com";
-    return this.prompt([
-      {
-        type: 'input',
-        name: 'dockerRepo',
-        "default": dockerRepo,
-        message: 'Docker repo:',
-        store: true
-      }
-    ], cb.bind(this));
+    if (((ref = this.options.answers) != null ? ref.dockerRepo : void 0) != null) {
+      return cb(this.options.answers);
+    } else {
+      dockerRepo = "docker." + this.conf.scope + ".com";
+      return this.prompt([
+        {
+          type: 'input',
+          name: 'dockerRepo',
+          "default": dockerRepo,
+          message: 'Docker repo:',
+          store: true
+        }
+      ], cb.bind(this));
+    }
   },
   writing: {
     mainFiles: function() {
@@ -66,13 +71,30 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       });
       _.set(pjson, "scripts.setup-dev", "scripts/setup-dev.sh");
       _.set(pjson, "scripts.unittest:single", "export NODE_ENV=test; docker/unittest.sh");
+      _.set(pjson, "scripts.Build", "npm run build -- --no-cache");
       jsonfile.spaces = 2;
       jsonfile.writeFileSync(this.destinationPath("./package.json"), pjson);
       return cb();
     },
-    compositions: function() {
-      this.composeWith('garlic-webapp:commitizen');
-      return this.composeWith('garlic-webapp:semantic-release');
+    commitizen: function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:commitizen', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
+    },
+    "semantic-release": function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:semantic-release', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
     }
   }
 });

@@ -23,10 +23,36 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       return generatorLib.createConfig.bind(this)();
     }
   },
+  prompting: function() {
+    var cb, done, ref;
+    done = this.async();
+    this.answers = {};
+    cb = (function(_this) {
+      return function(answers) {
+        _this.answers = _.assign(_this.answers, answers);
+        return done();
+      };
+    })(this);
+    if (((ref = this.options.answers) != null ? ref.dockerRepo : void 0) != null) {
+      this.answers.dockerRepo = this.options.answers.dockerRepo;
+      return done();
+    } else {
+      return this.prompt([
+        {
+          type: 'input',
+          name: 'dockerRepo',
+          "default": "docker." + this.conf.scope + ".com",
+          message: 'Docker repo:',
+          store: true
+        }
+      ], cb.bind(this));
+    }
+  },
   writing: {
     mainFiles: function() {
       var dest;
       dest = "./";
+      this.conf.dockerRepo = this.answers.dockerRepo;
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath(dest), {
         c: this.conf
       });

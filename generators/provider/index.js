@@ -1,4 +1,4 @@
-var GarlicWebappProviderGenerator, _, chalk, fs, path, spawn, util, yeoman;
+var GarlicWebappProviderGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -14,13 +14,13 @@ _ = require('lodash');
 
 fs = require('fs');
 
+generatorLib = require('../lib');
+
 GarlicWebappProviderGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
-      console.log(chalk.magenta('You\'re using the GarlicTech webapp provider generator.'));
-      this.moduleNames = this.conf.angularModules.providers;
-      return this.conf.appNameCC = _.upperFirst(_.camelCase(this.conf.appName));
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp provider generator.'));
     }
   },
   prompting: function() {
@@ -39,11 +39,19 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend({
     return this.prompt({
       type: 'input',
       name: 'name',
-      message: 'Module name (like foo-service - mind that providers are actually for services): ',
+      message: 'Provider name (like my-service - mind that providers are actually for services): ',
       required: true
     }, cb.bind(this));
   },
   writing: {
+    createConfig: function() {
+      this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
+      this.moduleNames = this.conf.angularModules.providers;
+      this.moduleNames.push(this.answers.name);
+      this.conf.providerName = _.upperFirst(_.camelCase(this.answers.name));
+      this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.providerName;
+      return this.conf.providerNameFQ = this.conf.moduleName;
+    },
     mainFiles: function() {
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/" + this.answers.name), {
         c: this.conf

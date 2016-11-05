@@ -1,0 +1,4 @@
+DOCKER_REGISTRY=<%= c.dockerRepo %>
+PROJECT=<%= c.appNameKC %>
+SCOPE=<%= c.scope %>
+NODE_ENV=production

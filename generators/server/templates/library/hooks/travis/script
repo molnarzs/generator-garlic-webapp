@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
+hooks/travis/hooks_base-generated script
+
+# ADD YOUR PARTS HERE
+make unittest
+make systemtest

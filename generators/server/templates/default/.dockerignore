@@ -1,8 +1,0 @@
-.git
-.gitignore
-README.md
-docker-compose.yml
-Dockerfile
-Dockerfile.dev
-*-unit-tests.js
-node_modules

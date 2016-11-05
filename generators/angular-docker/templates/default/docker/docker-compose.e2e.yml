@@ -9,3 +9,5 @@ services:
     environment:
       - WEBSERVER_IP=<%= c.webpackServerName %>
     privileged: true
+    depends_on:
+      - <%= c.webpackServerName %>

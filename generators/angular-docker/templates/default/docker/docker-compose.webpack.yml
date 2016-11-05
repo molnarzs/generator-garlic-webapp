@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  <%= c.webpackServerName %>:
+    build: ..
+    volumes:
+      - "..:/app/project"
+    environment:
+      - NODE_ENV
+      - CI
+    command: "npm run start:docker"

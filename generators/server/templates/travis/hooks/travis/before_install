@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
+cp hooks/travis/sample-env ${TRAVIS_BUILD_DIR}/.env
+cp hooks/travis/dummy_tokens.env ${TRAVIS_BUILD_DIR}/tokens.env
+make login
+hooks/travis/hooks_base-generated before_install
+
+# ADD YOUR PARTS HERE

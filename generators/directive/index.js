@@ -47,12 +47,29 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
         name: 'name',
         message: 'Module name (like foo-component):',
         required: true
+      }, {
+        type: 'confirm',
+        name: 'isExtractAllowed',
+        message: 'Allow extracting the templates?',
+        required: true,
+        store: true,
+        "default": true
       }
     ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
-      return generatorLib.createDirectiveConfig.bind(this)();
+      generatorLib.createDirectiveConfig.bind(this)();
+      console.log("templateUrl: '" + this.conf.moduleName + "'");
+      if (this.answers.isExtractAllowed) {
+        this.conf.directiveHeader = "";
+        this.conf.directiveTemplate = "templateUrl: '" + this.conf.moduleName + "'";
+        return this.conf.cssGlobals = "";
+      } else {
+        this.conf.directiveHeader = "require './style'\n";
+        this.conf.directiveTemplate = "template: require './ui'";
+        return this.conf.cssGlobals = "@import \"~style/globals\";\n";
+      }
     },
     mainFiles: function() {
       var root;
@@ -93,6 +110,21 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
     },
     saveConfig: function() {
       return this.config.set('angularModules', this.conf.angularModules);
+    }
+  },
+  end: {
+    templates: function() {
+      var content, done, replacedText;
+      if (!this.answers.isExtractAllowed) {
+        return;
+      }
+      done = this.async();
+      path = this.destinationPath("./src/templates/index.coffee");
+      content = fs.readFileSync(path, 'utf8');
+      replacedText = "#===== yeoman hook =====\n  require '../" + this.answers.name + "/style'\n  $templateCache.put '" + this.conf.moduleName + "', require '../" + this.answers.name + "/ui'";
+      content = content.replace('#===== yeoman hook =====', replacedText);
+      fs.writeFileSync(path, content, 'utf8');
+      return done();
     }
   }
 });

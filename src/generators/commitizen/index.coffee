@@ -15,9 +15,31 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       generatorLib.createConfig.bind(@)()
 
 
+
+  prompting: ->
+    done = @async()
+    @answers = {}
+    cb = (answers) =>
+      @answers = _.assign @answers, answers
+      done()
+
+    if @options.answers?.dockerRepo?
+      @answers.dockerRepo = @options.answers.dockerRepo
+      done()
+    else
+      @prompt [{
+        type    : 'input'
+        name    : 'dockerRepo'
+        default : "docker.#{@conf.scope}.com"
+        message : 'Docker repo:'
+        store   : true
+      }], cb.bind @
+
+
   writing:
     mainFiles: ->
       dest = "./"
+      @conf.dockerRepo = @answers.dockerRepo
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath(dest), {c: @conf}
 
 

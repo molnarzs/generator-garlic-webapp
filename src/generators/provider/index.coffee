@@ -5,14 +5,13 @@ chalk = require('chalk')
 spawn = require('child_process').spawn
 _ = require 'lodash'
 fs = require 'fs'
+generatorLib = require '../lib'
 
 GarlicWebappProviderGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()
       console.log chalk.magenta 'You\'re using the GarlicTech webapp provider generator.'
-      @moduleNames = @conf.angularModules.providers
-      @conf.appNameCC = _.upperFirst _.camelCase @conf.appName
 
   prompting: ->
     done = @async()
@@ -27,11 +26,19 @@ GarlicWebappProviderGenerator = yeoman.generators.Base.extend
     @prompt
       type    : 'input'
       name    : 'name'
-      message : 'Module name (like foo-service - mind that providers are actually for services): '
+      message : 'Provider name (like my-service - mind that providers are actually for services): '
       required: true
     , cb.bind @
 
   writing:
+    createConfig: ->
+      @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
+      @moduleNames = @conf.angularModules.providers
+      @moduleNames.push @answers.name
+      @conf.providerName = _.upperFirst _.camelCase @answers.name
+      @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.providerName}"
+      @conf.providerNameFQ = @conf.moduleName
+
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/#{@answers.name}"), {c: @conf}
 

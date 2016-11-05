@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
+DOCKER_COMPOSE="docker-compose -f docker/docker-compose.dependencies.yml -f docker/docker-compose.webpack.yml -f docker/docker-compose.e2e.yml"
+
+if [ -n "TRAVIS" ]; then
+  DOCKER_COMPOSE="${DOCKER_COMPOSE} -f docker/docker-compose.debug.yml"
+fi
+
 if [ $# -eq 0 ]; then
-  docker-compose -f docker/docker-compose.e2e.yml up --force-recreate
+  $DOCKER_COMPOSE run --service-ports <%= c.e2eTesterName %>
+  $DOCKER_COMPOSE stop
 elif [ $1 == "bash" ]; then
-  docker-compose -f docker/docker-compose.e2e.yml run <%= c.e2eTesterName %> /bin/bash
+  $DOCKER_COMPOSE run --entrypoint=/bin/bash <%= c.e2eTesterName %>
 else
-   docker-compose -f docker/docker-compose.e2e.yml $@
+  $DOCKER_COMPOSE $@
 fi

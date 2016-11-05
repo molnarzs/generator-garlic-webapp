@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  <%= c.webpackServerName %>:
+    ports:
+      - "5858:5858"
+    environment:
+      - DEBUG
+
+  # <%= c.e2eTesterName %>:
+  #   ports:
+  #     - "5858:5858"
+  #   environment:
+  #     - DEBUG

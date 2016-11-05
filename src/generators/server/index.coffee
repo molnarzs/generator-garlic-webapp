@@ -12,7 +12,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       appname: @appname
 
     console.log chalk.magenta 'You\'re using the GarlicTech server generator.'
-    # @composeWith 'loopback', {options: {"skip-install": true}}
 
 
   prompting: ->
@@ -34,7 +33,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'list',
         name    : 'projectType',
-        choices : ['express', 'loopback', 'empty (libary)']
+        choices : ['express', 'loopback', 'library']
         default : 'loopback',
         message : 'Project type:'
         store   : true
@@ -48,6 +47,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         name    : 'dockerRepo'
         default : dockerRepo
         message : 'Docker repo:'
+        store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isTravis'
+        default : true
+        message : 'Configure travis.ci?'
         store   : true
       }
     ], cb.bind @
@@ -73,23 +78,49 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
-      @fs.copyTpl @templatePath('default/_package.json'), @destinationPath("./package.json"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_travis.yml'), @destinationPath("./.travis.yml"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/common/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
+      @fs.copyTpl @templatePath('dotfiles/common/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
       cb()
 
 
+    serverFiles: ->
+      if @answers.projectType isnt 'library'
+        cb = @async()
+        @fs.copyTpl @templatePath('server/**/*'), @destinationPath("./"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
+        cb()
+
+
+    libraryFiles: ->
+      if @answers.projectType is 'library'
+        cb = @async()
+        @fs.copyTpl @templatePath('library/**/*'), @destinationPath("./"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/library/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        cb()
+
+
   end:
-    compositions: ->
-      @composeWith 'garlic-webapp:commitizen'
-      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+    commitizen: ->
+      cb = @async()
+      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
+      cb()
+
+
+    travis: ->
+      if @answers.isTravis
+        if not @answers.isRepo
+          console.log chalk.yellow 'WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'
+          
+        cb = @async()
+        @composeWith 'garlic-webapp:travis', options: {answers: @answers}
+        cb()
 
 
   install:
     setupEnvironment: ->
       cb = @async()
-      generatorLib.execute "npm run setup-dev"
+      generatorLib.execute "npm run setup"
       cb()
 
 module.exports = GarlicWebappServerGenerator

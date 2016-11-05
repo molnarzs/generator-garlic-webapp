@@ -1,7 +1,0 @@
-version: '2'
-
-services:
-  <%= c.webpackServerName %>:
-    ports:
-      - "$PORT:8081"
-    command: "npm run start:docker"

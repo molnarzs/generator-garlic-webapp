@@ -47,7 +47,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'list',
         name: 'projectType',
-        choices: ['express', 'loopback', 'empty (libary)'],
+        choices: ['express', 'loopback', 'library'],
         "default": 'loopback',
         message: 'Project type:',
         store: true
@@ -61,6 +61,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         name: 'dockerRepo',
         "default": dockerRepo,
         message: 'Docker repo:',
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'isTravis',
+        "default": true,
+        message: 'Configure travis.ci?',
         store: true
       }
     ], cb.bind(this));
@@ -97,36 +103,76 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('default/_package.json'), this.destinationPath("./package.json"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/common/_npmignore'), this.destinationPath("./.npmignore"), {
         c: this.conf
       });
-      this.fs.copyTpl(this.templatePath('dotfiles/_travis.yml'), this.destinationPath("./.travis.yml"), {
-        c: this.conf
-      });
-      this.fs.copyTpl(this.templatePath('dotfiles/_npmignore'), this.destinationPath("./.npmignore"), {
-        c: this.conf
-      });
-      this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
+      this.fs.copyTpl(this.templatePath('dotfiles/common/_gitignore'), this.destinationPath("./.gitignore"), {
         c: this.conf
       });
       return cb();
+    },
+    serverFiles: function() {
+      var cb;
+      if (this.answers.projectType !== 'library') {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('server/**/*'), this.destinationPath("./"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_dockerignore'), this.destinationPath("./.dockerignore"), {
+          c: this.conf
+        });
+        return cb();
+      }
+    },
+    libraryFiles: function() {
+      var cb;
+      if (this.answers.projectType === 'library') {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('library/**/*'), this.destinationPath("./"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/library/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        return cb();
+      }
     }
   },
   end: {
-    compositions: function() {
-      this.composeWith('garlic-webapp:commitizen');
-      return this.composeWith('garlic-webapp:semantic-release', {
+    commitizen: function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:commitizen', {
         options: {
           answers: this.answers
         }
       });
+      return cb();
+    },
+    travis: function() {
+      var cb;
+      if (this.answers.isTravis) {
+        if (!this.answers.isRepo) {
+          console.log(chalk.yellow('WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'));
+        }
+        cb = this.async();
+        this.composeWith('garlic-webapp:travis', {
+          options: {
+            answers: this.answers
+          }
+        });
+        return cb();
+      }
     }
   },
   install: {
     setupEnvironment: function() {
       var cb;
       cb = this.async();
-      generatorLib.execute("npm run setup-dev");
+      generatorLib.execute("npm run setup");
       return cb();
     }
   }

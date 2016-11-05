@@ -74,22 +74,12 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   writing:
     runRemoteGit: ->
       done = @async()
-      
-      # _configureTravis = =>
-      #   console.log chalk.blue "\nConfiguring travis...\n"
-      #   generatorLib.execute "travis enable"
-      #   generatorLib.execute "travis env set DOCKER_USER #{@answers.dockerUser} -P"
-      #   generatorLib.execute "travis env set DOCKER_PASSWORD #{@answers.dockerPassword} -P"
-      #   generatorLib.execute "travis encrypt \"#{@conf.scope}:#{@answers.slackToken}\" --add notifications.slack.rooms"
-
-      # console.log chalk.blue "\nCreating GitHub repo...\n"
+      console.log chalk.blue "\nCreating GitHub repo...\n"
      
-      # repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": #{@answers.isPrivate}, \"team_id\": #{@answers.devTeam}}\'"
-      # generatorLib.execute repoCreateCmd
-      # generatorLib.execute "git init"
-      # generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
-
-      # _configureTravis()
+      repoCreateCmd = "curl https://api.github.com/orgs/#{@conf.scope}/repos -u #{@answers.githubToken}:x-oauth-basic -d \'{\"name\":\"#{@conf.appNameKC}\", \"private\": #{@answers.isPrivate}, \"team_id\": #{@answers.devTeam}}\'"
+      generatorLib.execute repoCreateCmd
+      generatorLib.execute "git init"
+      generatorLib.execute "git remote add origin https://github.com/#{@conf.scope}/#{@conf.appNameKC}.git"
 
       console.log chalk.blue "\Configuring webhooks...\n"
       webhook =

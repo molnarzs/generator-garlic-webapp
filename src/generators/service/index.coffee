@@ -23,7 +23,7 @@ GarlicWebappServiceGenerator = yeoman.generators.Base.extend
     @prompt
       type    : 'input'
       name    : 'name'
-      message : 'Module name (like foo-service): '
+      message : 'Service name (like foo-service): '
       required: true
     , cb.bind @
 

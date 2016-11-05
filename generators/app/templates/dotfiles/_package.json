@@ -1,0 +1,48 @@
+{
+  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+  "description": "<%= conf.appNameAsIs %>",
+  "main": "src/index.coffee",
+  "license": "SEE LICENSE IN license.txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>.git"
+  },
+  "author": {
+    "name": "<%= conf.scopeCC %>",
+    "email": "contact@<%= conf.scope %>.com",
+    "url": "http://www.<%= conf.scope %>.com"
+  },
+  "contributors": [
+    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+  ],
+  "keywords": [
+    "<%= conf.appName %>",
+    "<%= conf.appNameKC %>",
+    "<%= conf.scope %>"
+  ],
+  "bugs": {
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
+  },
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
+  "engines": {
+    "npm" : ">=3.0.0",
+    "node": ">=5.0.0"
+  },
+  "scripts": {
+    "unittest": "docker/unittest.sh",
+    "build": "docker/build.sh",
+    "systemtest": "docker/systemtest.sh",
+    "setup": "scripts/setup.sh",
+    "unittest:single": "export NODE_ENV=test; docker/unittest.sh",
+    "commit": "docker/commit.sh",
+    "semantic-release": "docker/semantic-release.sh",
+    "dist": "docker/dist.sh",
+    "unittest:docker": "scripts/unittest.sh",
+    "dist:docker": "scripts/dist.sh"
+  },
+  "dependencies": {
+  },
+  "garlic": {
+    "type": "<%= conf.projectType %>"
+  }
+}

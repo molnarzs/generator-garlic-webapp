@@ -1,5 +1,4 @@
-require './style'
-
+<%- c.directiveHeader %>
 module.exports = ->
   restrict: 'EA'
   scope: true
@@ -8,6 +7,6 @@ module.exports = ->
   priority: 0
   replace: false
   transclude: false
-  template: require './ui'
-  controller: "<%= c.moduleName %>.Controller"
+  <%- c.directiveTemplate %>
+  controller: "<%- c.moduleName %>.Controller"
   controllerAs: "ctrl"

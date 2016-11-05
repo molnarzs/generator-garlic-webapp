@@ -19,19 +19,23 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   prompting: ->
     done = @async()
     cb = (answers) =>
+      @answers = answers
       @conf.dockerRepo = answers.dockerRepo
       done()
 
-    dockerRepo = "docker.#{@conf.scope}.com"
+    if @options.answers?.dockerRepo?
+      cb @options.answers
+    else
+      dockerRepo = "docker.#{@conf.scope}.com"
 
-    @prompt [{
-        type    : 'input'
-        name    : 'dockerRepo'
-        default : dockerRepo
-        message : 'Docker repo:'
-        store   : true
-      }
-    ], cb.bind @
+      @prompt [{
+          type    : 'input'
+          name    : 'dockerRepo'
+          default : dockerRepo
+          message : 'Docker repo:'
+          store   : true
+        }
+      ], cb.bind @
 
 
   writing:
@@ -54,15 +58,24 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
       _.set pjson, "scripts.setup-dev", "scripts/setup-dev.sh"
       _.set pjson, "scripts.unittest:single", "export NODE_ENV=test; docker/unittest.sh"
+
+      _.set pjson, "scripts.Build", "npm run build -- --no-cache"
   
       jsonfile.spaces = 2
       jsonfile.writeFileSync @destinationPath("./package.json"), pjson
       cb()
 
 
-    compositions: ->
-      @composeWith 'garlic-webapp:commitizen'
-      @composeWith 'garlic-webapp:semantic-release'
+    commitizen: ->
+      cb = @async()
+      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
+      cb()
+
+
+    "semantic-release": ->
+      cb = @async()
+      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+      cb()
       
 
 module.exports = GarlicWebappGithubGenerator

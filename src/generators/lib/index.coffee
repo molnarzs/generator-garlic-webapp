@@ -6,17 +6,17 @@ Methods =
   createConfig: ->
     conf = @config.getAll()
     scopeCC = _.upperFirst _.camelCase conf.scope
-    appNameAsIs = "#{scopeCC} #{conf.appname}"
+    appNameAsIs = "#{conf.appname}"
     appNameKC = _.kebabCase conf.appname
     appNameFQ = _.kebabCase appNameAsIs
     appNameFQcC = _.camelCase appNameFQ
 
     @conf = _.assign conf,
-      scope: conf.scope
-      scopeCC: scopeCC
-      appNameKC: appNameKC
-      appNameAsIs: appNameAsIs
-      appNameFQ: appNameFQ
+      scope: conf.scope # foo-bar
+      scopeCC: scopeCC # FooBar
+      appNameKC: appNameKC # my-app
+      appNameAsIs: appNameAsIs # my app
+      appNameFQ: appNameFQ # my-app
       appNameFQcC: appNameFQcC
       appNameFQCC: _.upperFirst appNameFQcC
       npmToken: process.env["NPM_TOKEN_#{scopeCC}"]
