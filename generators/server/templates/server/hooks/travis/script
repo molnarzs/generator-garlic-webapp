@@ -9,4 +9,4 @@ make unittest
 make systemtest
 make start-d
 make smoketest
-make stop
+make kill-all
