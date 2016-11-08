@@ -5,6 +5,7 @@ chalk = require('chalk')
 _ = require 'lodash'
 generatorLib = require '../lib'
 
+
 GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   initializing:
 
@@ -20,57 +21,34 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       @answers = _.assign @answers, answers
       done()
 
-    questions = [{
-        type    : 'input'
-        name    : 'dockerMachine'
-        default : ""
-        message : "Enter the SSH access of the docker machine this repo uses. Keep it empty if the project does not use docker docker machine. Example: root@api.gtrack.events"
-        store   : true
-      }
-    ]
+    questions = []
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerMachine', 'input', "",
+      "Enter the SSH access of the docker machine this repo uses. Keep it empty if the project does not use docker docker machine. Example: root@api.gtrack.events",
+      true
 
-    if @options.answers?.slackToken?
-      @answers.slackToken = @options.answers.slackToken
-    else
-      questions.push
-        type    : 'input'
-        name    : process.env["SLACK_TOKEN_#{@conf.scopeCC}"]
-        default : slackToken
-        message : "Slack token: (we take the default from the environment variable SLACK_TOKEN_#{@conf.scopeCC}):"
-        store   : true
+    generatorLib.pushToQuestions.bind(@) questions, 'slackToken', 'input', process.env["SLACK_TOKEN_#{@conf.scopeCC}"],
+      "Slack token: (we take the default from the environment variable SLACK_TOKEN_#{@conf.scopeCC}):"
+      true
 
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerRepo', 'input', "docker.#{@conf.scope}.com",
+      'Docker repo:'
+      true
 
-    if @options.answers?.dockerRepo?
-      @answers.dockerRepo = @options.answers.dockerRepo
-    else
-      questions.push
-        type    : 'input'
-        name    : 'dockerRepo'
-        default : "docker.#{@conf.scope}.com"
-        message : 'Docker repo:'
-        store   : true
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerUser', 'input', process.env.DOCKER_USER,
+      "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
+      true
 
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerPassword', 'input', process.env.DOCKER_PASSWORD,
+      "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
+      true
 
-    if @options.answers?.dockerUser?
-      @answers.dockerUser = @options.answers.dockerUser
-    else
-      questions.push
-        type    : 'input'
-        name    : 'dockerUser'
-        default : process.env.DOCKER_USER
-        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
-        store   : true
+    generatorLib.pushToQuestions.bind(@) questions, 'githubUser', 'input', process.env.GITHUB_USER,
+      "Enter the github user:"
+      true
 
-    if @options.answers?.dockerPassword?
-      @answers.dockerPassword = @options.answers.dockerPassword
-    else
-      questions.push
-        type    : 'input'
-        name    : 'dockerPassword'
-        default : process.env.DOCKER_PASSWORD
-        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
-        store   : true
-
+    generatorLib.pushToQuestions.bind(@) questions, 'githubToken', 'input', process.env.GITHUB_TOKEN,
+      "Enter the github personal token:"
+      true
 
     @prompt questions, cb.bind @
 
@@ -91,11 +69,16 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
 
 
   end:
+    travisPrepare: ->
+      done = @async()
+      @composeWith 'garlic-webapp:travis-prepare', options: {answers: @answers}
+      done()
+
+
     executeScript: ->
       done = @async()
       generatorLib.execute ". ./travis_config.sh"
       generatorLib.execute "rm ./travis_config.sh"
       done()
-
 
 module.exports = GarlicWebappGithubGenerator

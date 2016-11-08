@@ -54,9 +54,16 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         default : true
         message : 'Configure travis.ci?'
         store   : true
+      }, {
+        type    : 'confirm'
+        name    : 'isRepo'
+        default : true
+        message : 'Create github repo?'
+        store   : true
       }
     ], cb.bind @
- 
+
+
   writing:
     loopback: ->
       if @answers.projectType is 'loopback'
@@ -74,7 +81,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       if @answers.projectType is "express" then @conf.type = "server-common"
       if @answers.projectType is "loopback" then @conf.type = "server-loopback"
 
-  
+
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
@@ -100,6 +107,13 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb()
 
 
+    expressFiles: ->
+      if @answers.projectType is 'express'
+        cb = @async()
+        @fs.copyTpl @templatePath('express/**/*'), @destinationPath("./"), {c: @conf}
+        cb()
+
+
   end:
     commitizen: ->
       cb = @async()
@@ -107,11 +121,18 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       cb()
 
 
+    repo: ->
+      if @answers.isRepo
+        cb = @async()
+        @composeWith 'garlic-webapp:github', options: {answers: @answers}
+        cb()
+
+
     travis: ->
       if @answers.isTravis
         if not @answers.isRepo
           console.log chalk.yellow 'WARNING: You disabled github repo creation. If the repo does not exist, the Travis commands will fail!'
-          
+
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()

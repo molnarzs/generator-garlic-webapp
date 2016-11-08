@@ -68,6 +68,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         "default": true,
         message: 'Configure travis.ci?',
         store: true
+      }, {
+        type: 'confirm',
+        name: 'isRepo',
+        "default": true,
+        message: 'Create github repo?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -139,6 +145,16 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
+    },
+    expressFiles: function() {
+      var cb;
+      if (this.answers.projectType === 'express') {
+        cb = this.async();
+        this.fs.copyTpl(this.templatePath('express/**/*'), this.destinationPath("./"), {
+          c: this.conf
+        });
+        return cb();
+      }
     }
   },
   end: {
@@ -151,6 +167,18 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         }
       });
       return cb();
+    },
+    repo: function() {
+      var cb;
+      if (this.answers.isRepo) {
+        cb = this.async();
+        this.composeWith('garlic-webapp:github', {
+          options: {
+            answers: this.answers
+          }
+        });
+        return cb();
+      }
     },
     travis: function() {
       var cb;

@@ -20,7 +20,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     }
   },
   prompting: function() {
-    var cb, done, questions, ref, ref1;
+    var cb, done, questions;
     done = this.async();
     this.answers = {};
     cb = (function(_this) {
@@ -29,43 +29,11 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         return done();
       };
     })(this);
-    questions = [
-      {
-        type: 'input',
-        name: 'githubToken',
-        "default": process.env.GITHUB_TOKEN,
-        message: "Enter the github personal token:",
-        store: true
-      }, {
-        type: 'input',
-        name: 'githubUser',
-        "default": process.env.GITHUB_USER,
-        message: "Enter the github user:",
-        store: true
-      }
-    ];
-    if (((ref = this.options.answers) != null ? ref.dockerUser : void 0) != null) {
-      this.answers.dockerUser = this.options.answers.dockerUser;
-    } else {
-      questions.push({
-        type: 'input',
-        name: 'dockerUser',
-        "default": process.env.DOCKER_USER,
-        message: "Docker private repo username: (we take the default from the environment variable DOCKER_USER):",
-        store: true
-      });
-    }
-    if (((ref1 = this.options.answers) != null ? ref1.dockerPassword : void 0) != null) {
-      this.answers.dockerPassword = this.options.answers.dockerPassword;
-    } else {
-      questions.push({
-        type: 'input',
-        name: 'dockerPassword',
-        "default": process.env.DOCKER_PASSWORD,
-        message: "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):",
-        store: true
-      });
-    }
+    questions = [];
+    generatorLib.pushToQuestions.bind(this)(questions, 'dockerUser', 'input', process.env.DOCKER_USER, "Docker private repo username: (we take the default from the environment variable DOCKER_USER):", true);
+    generatorLib.pushToQuestions.bind(this)(questions, 'dockerPassword', 'input', process.env.DOCKER_PASSWORD, "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):", true);
+    generatorLib.pushToQuestions.bind(this)(questions, 'githubUser', 'input', process.env.GITHUB_USER, "Enter the github user:", true);
+    generatorLib.pushToQuestions.bind(this)(questions, 'githubToken', 'input', process.env.GITHUB_TOKEN, "Enter the github personal token:", true);
     return this.prompt(questions, cb.bind(this));
   },
   writing: {
@@ -89,8 +57,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     executeScript: function() {
       var done;
       done = this.async();
-      generatorLib.execute(". ./travis_config.sh");
-      generatorLib.execute("rm ./travis_config.sh");
+      generatorLib.execute(". ./travis_prepare_config.sh");
+      generatorLib.execute("rm ./travis_prepare_config.sh");
       return done();
     }
   }

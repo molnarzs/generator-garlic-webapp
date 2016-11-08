@@ -68,4 +68,17 @@ Methods =
     execute command, {stdio:[0,1,2]}
 
 
+  pushToQuestions: (questions, property, type, deflt, message, store) ->
+    if @options.answers?[property]?
+      @answers[property] = @options.answers[property]
+      return null
+    else
+      questions.push
+        type    : type
+        name    : property
+        default : deflt
+        message : message
+        store   : store
+
+
 module.exports = Methods

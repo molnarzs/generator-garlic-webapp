@@ -1,9 +1,4 @@
 #! /usr/bin/env bash
-travis enable -R <%= c.scope %>/<%= c.appNameKC %>
-travis env set DOCKER_USER <%= c.dockerUser %> -P
-travis env set DOCKER_PASSWORD <%= c.dockerPassword %> -P
-travis encrypt "<%= c.scope %>:<%= c.slackToken %>" --add notifications.slack.rooms
-
 if [ "<%= c.dockerMachine %>" != "" ]; then
   KEYFILE=travis_key
   echo "You\'re now generating SSH keys for the docker machine of the project."

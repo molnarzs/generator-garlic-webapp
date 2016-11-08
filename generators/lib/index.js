@@ -77,6 +77,21 @@ Methods = {
     return execute(command, {
       stdio: [0, 1, 2]
     });
+  },
+  pushToQuestions: function(questions, property, type, deflt, message, store) {
+    var ref;
+    if (((ref = this.options.answers) != null ? ref[property] : void 0) != null) {
+      this.answers[property] = this.options.answers[property];
+      return null;
+    } else {
+      return questions.push({
+        type: type,
+        name: property,
+        "default": deflt,
+        message: message,
+        store: store
+      });
+    }
   }
 };
 
