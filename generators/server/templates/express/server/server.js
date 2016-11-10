@@ -45,7 +45,7 @@ var onError = function(error) {
   if (typeof port === 'string') {
     bind = 'Pipe ' + port;
   }
-  
+
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
@@ -86,10 +86,6 @@ app.set('port', port);
  * Create HTTP server.
  */
 server = http.createServer(app);
-
-// var setupPassport     = require('./passport');
-
-setupPassport();
 
 server.listen(port);
 server.on('error', onError);
