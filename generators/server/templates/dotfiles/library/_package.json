@@ -1,7 +1,7 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "src/index.coffee",
+  "main": "dist/index.js",
   "license": "SEE LICENSE IN license.txt",
   "version": "0.0.0",
   "repository": {

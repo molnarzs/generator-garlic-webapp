@@ -2,7 +2,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-DOCKER_RUN = docker run -v "${PWD}:/app/project" docker.garlictech.com/workflows-server
+DOCKER_RUN = docker run -v "${PWD}:/app/project" ${DOCKER_REGISTRY}/workflows-server
 
 .PHONY: build dist start unittest systemtest login bash
 
@@ -27,7 +27,7 @@ systemtest:
 
 
 # Login to the docker registry of the project
-login:	
+login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 
