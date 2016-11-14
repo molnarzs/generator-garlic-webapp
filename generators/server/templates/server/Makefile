@@ -9,8 +9,8 @@ DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
 DOCKER_RUN_NODEPS = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
 
-ifneq ($(TRAVIS),true)
-	DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE} -f docker/docker-compose.debug.yml
+ifeq ($(DEBUG),true)
+  DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE} -f docker/docker-compose.debug.yml
 	DOCKER_RUN = ${DOCKER_COMPOSE} run --service-ports --rm ${DEV_SERVICE_NAME}
 	DOCKER_RUN_NODEPS = ${DOCKER_COMPOSE} run --no-deps --service-ports --rm ${DEV_SERVICE_NAME}
 endif
@@ -95,11 +95,11 @@ logs:
 
 # List the running processes related to the server
 logs-all:
-	${DOCKER_COMPOSE} logs -f 
+	${DOCKER_COMPOSE} logs -f
 
 
 # Login to the docker registry of the project
-login:	
+login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 

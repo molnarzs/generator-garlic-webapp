@@ -7,4 +7,6 @@ hooks/travis/hooks_base-generated script
 # ADD YOUR PARTS HERE
 make unittest
 make systemtest
+make start-d
 make smoketest
+make kill-all

@@ -20,40 +20,23 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       @answers = _.assign @answers, answers
       done()
 
-    questions = [{
-        type    : 'input'
-        name    : 'githubToken'
-        default : process.env.GITHUB_TOKEN
-        message : "Enter the github personal token:"
-        store   : true
-      }, {
-        type    : 'input'
-        name    : 'githubUser'
-        default : process.env.GITHUB_USER
-        message : "Enter the github user:"
-        store   : true
-      }
-    ]
+    questions = []
 
-    if @options.answers?.dockerUser?
-      @answers.dockerUser = @options.answers.dockerUser
-    else
-      questions.push
-        type    : 'input'
-        name    : 'dockerUser'
-        default : process.env.DOCKER_USER
-        message : "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
-        store   : true
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerUser', 'input', process.env.DOCKER_USER,
+      "Docker private repo username: (we take the default from the environment variable DOCKER_USER):"
+      true
 
-    if @options.answers?.dockerPassword?
-      @answers.dockerPassword = @options.answers.dockerPassword
-    else
-      questions.push
-        type    : 'input'
-        name    : 'dockerPassword'
-        default : process.env.DOCKER_PASSWORD
-        message : "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
-        store   : true
+    generatorLib.pushToQuestions.bind(@) questions, 'dockerPassword', 'input', process.env.DOCKER_PASSWORD,
+      "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):"
+      true
+
+    generatorLib.pushToQuestions.bind(@) questions, 'githubUser', 'input', process.env.GITHUB_USER,
+      "Enter the github user:"
+      true
+
+    generatorLib.pushToQuestions.bind(@) questions, 'githubToken', 'input', process.env.GITHUB_TOKEN,
+      "Enter the github personal token:"
+      true
 
     @prompt questions, cb.bind @
 
@@ -75,8 +58,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
   end:
     executeScript: ->
       done = @async()
-      generatorLib.execute ". ./travis_config.sh"
-      generatorLib.execute "rm ./travis_config.sh"
+      generatorLib.execute ". ./travis_prepare_config.sh"
+      generatorLib.execute "rm ./travis_prepare_config.sh"
       done()
 
 

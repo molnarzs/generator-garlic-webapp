@@ -53,3 +53,4 @@ e2e/src/supervisord.log
 # --------------------
 *.sublime-project
 *.sublime-workspace
+.vscode/
