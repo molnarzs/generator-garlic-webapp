@@ -26,9 +26,17 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
+        var workflowsServerType;
         _this.answers = answers;
         _this.config.set({
           scope: _this.answers.scope
+        });
+        _this.config.set({
+          type: _this.answers.type
+        });
+        workflowsServerType = _this.answers.type === 'loopback' ? "workflows-loopback-server" : "workflows-server";
+        _this.config.set({
+          workflowsType: _this.answers.workflowsServerType
         });
         _this.config.set({
           type: _this.answers.type

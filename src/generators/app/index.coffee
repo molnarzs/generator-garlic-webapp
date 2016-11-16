@@ -190,7 +190,6 @@ module.exports = Module.name
 
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
-        @composeWith 'garlic-webapp:travis-prepare', options: {answers: @answers}
         cb()
 
 

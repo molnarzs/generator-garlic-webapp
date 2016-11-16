@@ -224,11 +224,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
             answers: this.answers
           }
         });
-        this.composeWith('garlic-webapp:travis-prepare', {
-          options: {
-            answers: this.answers
-          }
-        });
         return cb();
       }
     },
