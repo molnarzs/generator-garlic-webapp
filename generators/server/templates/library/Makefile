@@ -2,7 +2,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-DOCKER_RUN = docker run -v "${PWD}:/app/project" ${DOCKER_REGISTRY}/workflows-server
+DOCKER_RUN = docker run --rm -v "${PWD}:/app/project" ${DOCKER_REGISTRY}/workflows-server
 
 .PHONY: build dist start unittest systemtest login bash
 

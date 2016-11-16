@@ -1,5 +1,6 @@
 var cowsay = require('cowsay');
-var pkginfo = require(__dirname + '/package.json');
+// The path below refers to the docker image location!
+var pkginfo = require('/app/package.json');
 
 console.log(chalk.blue(cowsay.say({
     text: pkginfo.description,
@@ -10,7 +11,6 @@ console.log(chalk.blue(cowsay.say({
 console.log(chalk.blue("SERVER VERSION: ", pkginfo.version));
 
 module.exports = function(app) {
-
     if (process.env.NODE_ENV === 'production') {
         console.log("CORS stuff is disabled in " + process.env.NODE_ENV + " mode.");
     } else {

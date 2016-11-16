@@ -29,7 +29,7 @@ start:
 
 
 # Build the distribution package
-dist:
+dist: build
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
 
 
@@ -74,7 +74,7 @@ unittest:
 
 
 # Execute the system tests
-systemtest:
+systemtest: build
 	${DOCKER_RUN} scripts/systemtest.sh
 
 

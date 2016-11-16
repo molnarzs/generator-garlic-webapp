@@ -20,6 +20,11 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @answers = answers
       @config.set {scope: @answers.scope}
       @config.set {type: @answers.type}
+
+      workflowsServerType = if @answers.type is 'loopback' then "workflows-loopback-server" else "workflows-server"
+      @config.set {workflowsType: @answers.workflowsServerType}
+
+      @config.set {type: @answers.type}
       done()
 
     dockerRepo = process.env.DOCKER_REPO

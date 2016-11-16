@@ -12,7 +12,9 @@ spawn = require('child_process').spawn;
 
 _ = require('lodash');
 
-fs = require('fs');
+fs = require('fs-extra');
+
+path = require('path');
 
 gulpFilter = require('gulp-filter');
 
@@ -114,16 +116,23 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
   },
   end: {
     templates: function() {
-      var content, done, replacedText;
+      var content, done, dstPath, newRoot, replacedText;
       if (!this.answers.isExtractAllowed) {
         return;
       }
       done = this.async();
-      path = this.destinationPath("./src/templates/index.coffee");
-      content = fs.readFileSync(path, 'utf8');
+      dstPath = this.destinationPath("./src/templates/index.coffee");
+      if (!fs.existsSync(dstPath)) {
+        newRoot = path.join(__dirname, '..', 'app', 'templates');
+        this.sourceRoot(newRoot);
+        this.fs.copyTpl(this.templatePath('default/src/templates/**/*'), this.destinationPath(this.folder + "/" + root), {
+          conf: this.conf
+        });
+      }
+      content = fs.readFileSync(dstPath, 'utf8');
       replacedText = "#===== yeoman hook =====\n  require '../" + this.answers.name + "/style'\n  $templateCache.put '" + this.conf.moduleName + "', require '../" + this.answers.name + "/ui'";
       content = content.replace('#===== yeoman hook =====', replacedText);
-      fs.writeFileSync(path, content, 'utf8');
+      fs.writeFileSync(dstPath, content, 'utf8');
       return done();
     }
   }

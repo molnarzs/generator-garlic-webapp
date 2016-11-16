@@ -5,7 +5,8 @@ execute = require('child_process').execSync
 Methods =
   createConfig: ->
     conf = @config.getAll()
-    scopeCC = _.upperFirst _.camelCase conf.scope
+    scopecC = _.camelCase conf.scope
+    scopeCC = _.upperFirst scopecC
     appNameAsIs = "#{conf.appname}"
     appNameKC = _.kebabCase conf.appname
     appNameFQ = _.kebabCase appNameAsIs
@@ -13,6 +14,7 @@ Methods =
 
     @conf = _.assign conf,
       scope: conf.scope # foo-bar
+      scopecC: scopecC # fooBar
       scopeCC: scopeCC # FooBar
       appNameKC: appNameKC # my-app
       appNameAsIs: appNameAsIs # my app
@@ -28,8 +30,8 @@ Methods =
     if @options.view then @answers = @options.answers
     @conf.componentNameCC = _.upperFirst _.camelCase @answers.name
     @conf.moduleName = "#{@conf.angularModuleName}.#{@conf.componentNameCC}"
-    @conf.directiveNameCC = "#{@conf.appNameFQcC}#{@conf.componentNameCC}"
-    @conf.directiveNameKC = "#{@conf.appNameFQ}-#{@answers.name}"
+    @conf.directiveNameCC = "#{@conf.scopecC}#{@conf.appNameFQCC}#{@conf.componentNameCC}"
+    @conf.directiveNameKC = "#{@conf.scope}-#{@conf.appNameFQ}-#{@answers.name}"
 
     if @options.view
       @conf.moduleName = "#{@conf.moduleName}.View"

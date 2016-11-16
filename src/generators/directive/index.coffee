@@ -4,7 +4,8 @@ yeoman = require('yeoman-generator')
 chalk = require('chalk')
 spawn = require('child_process').spawn
 _ = require 'lodash'
-fs = require 'fs'
+fs = require 'fs-extra'
+path = require 'path'
 gulpFilter = require 'gulp-filter'
 gulpRename = require 'gulp-rename'
 generatorLib = require '../lib'
@@ -93,8 +94,14 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
     templates: ->
       if not @answers.isExtractAllowed then return
       done = @async()
-      path = @destinationPath "./src/templates/index.coffee"
-      content = fs.readFileSync path, 'utf8'
+      dstPath = @destinationPath "./src/templates/index.coffee"
+
+      if not fs.existsSync dstPath
+        newRoot = path.join __dirname, '..', 'app', 'templates'
+        @sourceRoot newRoot
+        @fs.copyTpl @templatePath('default/src/templates/**/*'), @destinationPath("#{@folder}/#{root}"), {conf: @conf}
+
+      content = fs.readFileSync dstPath, 'utf8'
 
       replacedText = """
         #===== yeoman hook =====
@@ -103,7 +110,7 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
       """
 
       content = content.replace '#===== yeoman hook =====', replacedText
-      fs.writeFileSync path, content, 'utf8'
+      fs.writeFileSync dstPath, content, 'utf8'
       done()
 
 

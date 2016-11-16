@@ -6,15 +6,17 @@ execute = require('child_process').execSync;
 
 Methods = {
   createConfig: function() {
-    var appNameAsIs, appNameFQ, appNameFQcC, appNameKC, conf, scopeCC;
+    var appNameAsIs, appNameFQ, appNameFQcC, appNameKC, conf, scopeCC, scopecC;
     conf = this.config.getAll();
-    scopeCC = _.upperFirst(_.camelCase(conf.scope));
+    scopecC = _.camelCase(conf.scope);
+    scopeCC = _.upperFirst(scopecC);
     appNameAsIs = "" + conf.appname;
     appNameKC = _.kebabCase(conf.appname);
     appNameFQ = _.kebabCase(appNameAsIs);
     appNameFQcC = _.camelCase(appNameFQ);
     return this.conf = _.assign(conf, {
       scope: conf.scope,
+      scopecC: scopecC,
       scopeCC: scopeCC,
       appNameKC: appNameKC,
       appNameAsIs: appNameAsIs,
@@ -32,8 +34,8 @@ Methods = {
     }
     this.conf.componentNameCC = _.upperFirst(_.camelCase(this.answers.name));
     this.conf.moduleName = this.conf.angularModuleName + "." + this.conf.componentNameCC;
-    this.conf.directiveNameCC = "" + this.conf.appNameFQcC + this.conf.componentNameCC;
-    this.conf.directiveNameKC = this.conf.appNameFQ + "-" + this.answers.name;
+    this.conf.directiveNameCC = "" + this.conf.scopecC + this.conf.appNameFQCC + this.conf.componentNameCC;
+    this.conf.directiveNameKC = this.conf.scope + "-" + this.conf.appNameFQ + "-" + this.answers.name;
     if (this.options.view) {
       this.conf.moduleName = this.conf.moduleName + ".View";
       this.conf.directiveNameCC = this.conf.directiveNameCC + "View";
