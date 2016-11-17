@@ -8,6 +8,8 @@ services:
     env_file:
       - "./service.env"
       - "../tokens.env"
+    environment:
+      - NODE_ENV
     volumes:
       - "../:/app/project"
     command: "gulp"

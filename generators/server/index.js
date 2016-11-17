@@ -166,6 +166,18 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     }
   },
   end: {
+    loopbackChanges: function() {
+      var cb, data, file, text;
+      if (this.answers.projectType === 'loopback') {
+        cb = this.async();
+        file = this.destinationPath("./server/server.js");
+        data = fs.readFileSync(file).toString().split("\n");
+        data.splice(1, 0, "require('./app-config-local');");
+        text = data.join("\n");
+        fs.writeFileSync(file, text);
+        return cb();
+      }
+    },
     commitizen: function() {
       var cb;
       cb = this.async();

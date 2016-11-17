@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - "./service.env"
+    environment:
+      - NODE_ENV
     volumes:
       - "../:/app/project"
     command: "gulp"

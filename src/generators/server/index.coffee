@@ -120,6 +120,17 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
 
   end:
+    loopbackChanges: ->
+      if @answers.projectType is 'loopback'
+        cb = @async()
+        file = @destinationPath "./server/server.js"
+        data = fs.readFileSync(file).toString().split "\n"
+        data.splice 1, 0, "require('./app-config-local');"
+        text = data.join "\n"
+        fs.writeFileSync file, text
+        cb()
+
+
     commitizen: ->
       cb = @async()
       @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
