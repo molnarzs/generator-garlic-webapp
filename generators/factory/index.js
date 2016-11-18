@@ -1,4 +1,4 @@
-var GarlicWebappFactoryGenerator, _, chalk, fs, path, spawn, util, yeoman;
+var GarlicWebappFactoryGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -13,6 +13,8 @@ spawn = require('child_process').spawn;
 _ = require('lodash');
 
 fs = require('fs');
+
+generatorLib = require('../lib');
 
 GarlicWebappFactoryGenerator = yeoman.generators.Base.extend({
   initializing: {

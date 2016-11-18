@@ -172,7 +172,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         cb = this.async();
         file = this.destinationPath("./server/server.js");
         data = fs.readFileSync(file).toString().split("\n");
-        data.splice(1, 0, "require('./app-config-local');");
+        data.splice(6, 0, "require('./app-config-local')(app);");
         text = data.join("\n");
         fs.writeFileSync(file, text);
         return cb();
