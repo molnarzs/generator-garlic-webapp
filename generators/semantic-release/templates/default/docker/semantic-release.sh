@@ -10,4 +10,5 @@ docker run \
   -e CI \
   -e TRAVIS \
   -e TRAVIS_BRANCH \
+  -e GH_TOKEN=$GITHUB_TOKEN \
   <%= c.dockerRepo %>/workflows-common npm run semantic-release

@@ -27,7 +27,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       name    : 'moduleName'
       message : "Module name to be imported:"
     }], cb.bind @
- 
+
 
   writing:
     writeFiles: ->
@@ -41,14 +41,13 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
     writeModules: ->
       done = @async()
       @moduleRootRemote = "/tmp/directive-import"
-      # fs.removeSync @moduleRootRemote
-      # generatorLib.execute "git clone https://github.com/#{@conf.scope}/#{@answers.moduleName} #{@moduleRootRemote}"
+      fs.removeSync @moduleRootRemote
+      generatorLib.execute "git clone https://github.com/#{@conf.scope}/#{@answers.moduleName} #{@moduleRootRemote}"
       @moduleRootLocal = path.join 'src', 'templates', @conf.scope, @answers.moduleName
       fs.mkdirsSync @moduleRootLocal
       yorc = fs.readJsonSync path.join @moduleRootRemote, '.yo-rc.json'
       srcAngularModuleName = yorc['generator-garlic-webapp'].angularModuleName
-      # directives = yorc.angularModules.directives
-      directives = yorc['generator-garlic-webapp'].angularModules.ui
+      directives = yorc['generator-garlic-webapp'].angularModules.directives
 
       indexFile = """
         Module = angular.module '#{@conf.angularModuleName}.Templates.#{srcAngularModuleName}', []
@@ -84,6 +83,5 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       mainIndexFileContent = mainIndexFileContent.replace '# ===== yeoman hook ====', replacedText
       fs.writeFileSync mainIndexFilePath, mainIndexFileContent, 'utf8'
       done()
-
 
 module.exports = GarlicWebappGithubGenerator

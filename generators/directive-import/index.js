@@ -58,11 +58,13 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       var directives, done, indexFile, mainIndexFileContent, mainIndexFilePath, replacedText, srcAngularModuleName, yorc;
       done = this.async();
       this.moduleRootRemote = "/tmp/directive-import";
+      fs.removeSync(this.moduleRootRemote);
+      generatorLib.execute("git clone https://github.com/" + this.conf.scope + "/" + this.answers.moduleName + " " + this.moduleRootRemote);
       this.moduleRootLocal = path.join('src', 'templates', this.conf.scope, this.answers.moduleName);
       fs.mkdirsSync(this.moduleRootLocal);
       yorc = fs.readJsonSync(path.join(this.moduleRootRemote, '.yo-rc.json'));
       srcAngularModuleName = yorc['generator-garlic-webapp'].angularModuleName;
-      directives = yorc['generator-garlic-webapp'].angularModules.ui;
+      directives = yorc['generator-garlic-webapp'].angularModules.directives;
       indexFile = "Module = angular.module '" + this.conf.angularModuleName + ".Templates." + srcAngularModuleName + "', []\n.run ['$templateCache', ($templateCache) ->\n";
       _.forEach(directives, (function(_this) {
         return function(directive) {
