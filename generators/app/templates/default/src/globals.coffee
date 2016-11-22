@@ -1,0 +1,1 @@
+require "expose?_!lodash"
