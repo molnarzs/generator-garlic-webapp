@@ -90,18 +90,27 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
     saveConfig: ->
       @config.set 'angularModules', @conf.angularModules
 
-  end:
+
     templates: ->
       if not @answers.isExtractAllowed then return
       done = @async()
-      dstPath = @destinationPath "./src/templates/index.coffee"
+      dstPath = @destinationPath "./src/templates"
 
       if not fs.existsSync dstPath
         newRoot = path.join __dirname, '..', 'app', 'templates'
         @sourceRoot newRoot
-        @fs.copyTpl @templatePath('default/src/templates/**/*'), @destinationPath("#{@folder}/#{root}"), {conf: @conf}
+        fs.mkdirsSync dstPath
+        @fs.copyTpl @templatePath('default/src/templates/**/*'), dstPath, {conf: @conf}
 
-      content = fs.readFileSync dstPath, 'utf8'
+      done()
+
+
+  end:
+    templates: ->
+      if not @answers.isExtractAllowed then return
+      done = @async()
+      dstIndex = @destinationPath "./src/templates/index.coffee"
+      content = fs.readFileSync dstIndex, 'utf8'
 
       replacedText = """
         #===== yeoman hook =====
@@ -110,7 +119,7 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend
       """
 
       content = content.replace '#===== yeoman hook =====', replacedText
-      fs.writeFileSync dstPath, content, 'utf8'
+      fs.writeFileSync dstIndex, content, 'utf8'
       done()
 
 

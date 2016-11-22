@@ -112,27 +112,37 @@ GarlicWebappDirectiveGenerator = yeoman.generators.Base.extend({
     },
     saveConfig: function() {
       return this.config.set('angularModules', this.conf.angularModules);
-    }
-  },
-  end: {
+    },
     templates: function() {
-      var content, done, dstPath, newRoot, replacedText;
+      var done, dstPath, newRoot;
       if (!this.answers.isExtractAllowed) {
         return;
       }
       done = this.async();
-      dstPath = this.destinationPath("./src/templates/index.coffee");
+      dstPath = this.destinationPath("./src/templates");
       if (!fs.existsSync(dstPath)) {
         newRoot = path.join(__dirname, '..', 'app', 'templates');
         this.sourceRoot(newRoot);
-        this.fs.copyTpl(this.templatePath('default/src/templates/**/*'), this.destinationPath(this.folder + "/" + root), {
+        fs.mkdirsSync(dstPath);
+        this.fs.copyTpl(this.templatePath('default/src/templates/**/*'), dstPath, {
           conf: this.conf
         });
       }
-      content = fs.readFileSync(dstPath, 'utf8');
+      return done();
+    }
+  },
+  end: {
+    templates: function() {
+      var content, done, dstIndex, replacedText;
+      if (!this.answers.isExtractAllowed) {
+        return;
+      }
+      done = this.async();
+      dstIndex = this.destinationPath("./src/templates/index.coffee");
+      content = fs.readFileSync(dstIndex, 'utf8');
       replacedText = "#===== yeoman hook =====\n  require '../" + this.answers.name + "/style'\n  $templateCache.put '" + this.conf.moduleName + "', require '../" + this.answers.name + "/ui'";
       content = content.replace('#===== yeoman hook =====', replacedText);
-      fs.writeFileSync(dstPath, content, 'utf8');
+      fs.writeFileSync(dstIndex, content, 'utf8');
       return done();
     }
   }

@@ -8,6 +8,10 @@ console.log(chalk.blue(cowsay.say({
   T: 'U '
 })));
 
+if (!process.env.NODE_ENV) {
+  throw new Error("NODE_ENV is undefined!");
+}
+
 console.log(chalk.blue("SERVER VERSION: ", pkginfo.version));
 
 module.exports = function(app) {
