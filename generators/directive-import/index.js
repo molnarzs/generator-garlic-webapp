@@ -55,7 +55,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
   },
   end: {
     writeModules: function() {
-      var directives, done, indexFile, mainIndexFileContent, mainIndexFilePath, replacedText, srcAngularModuleName, yorc;
+      var directives, done, indexFile, mainIndexFileContent, mainIndexFilePath, replacedText, srcAngularModuleName, srcDir, targetDir, yorc;
       done = this.async();
       this.moduleRootRemote = "/tmp/directive-import";
       fs.removeSync(this.moduleRootRemote);
@@ -65,10 +65,14 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       yorc = fs.readJsonSync(path.join(this.moduleRootRemote, '.yo-rc.json'));
       srcAngularModuleName = yorc['generator-garlic-webapp'].angularModuleName;
       directives = yorc['generator-garlic-webapp'].angularModules.directives;
-      indexFile = "Module = angular.module '" + this.conf.angularModuleName + ".Templates." + srcAngularModuleName + "', []\n.run ['$templateCache', ($templateCache) ->\n";
+      indexFile = "require './style'\n\nModule = angular.module '" + this.conf.angularModuleName + ".Templates." + srcAngularModuleName + "', []\n.run ['$templateCache', ($templateCache) ->\n";
+      srcDir = path.join(this.moduleRootRemote, 'src', 'style');
+      targetDir = path.join(this.moduleRootLocal, 'style');
+      fs.mkdirsSync(targetDir);
+      cp(path.join(srcDir, "*"), targetDir);
       _.forEach(directives, (function(_this) {
         return function(directive) {
-          var directiveNameCC, srcDir, targetDir;
+          var directiveNameCC;
           srcDir = path.join(_this.moduleRootRemote, 'src', directive);
           targetDir = path.join(_this.moduleRootLocal, directive);
           fs.mkdirsSync(targetDir);

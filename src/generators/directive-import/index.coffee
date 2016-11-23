@@ -50,10 +50,16 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       directives = yorc['generator-garlic-webapp'].angularModules.directives
 
       indexFile = """
-        Module = angular.module '#{@conf.angularModuleName}.Templates.#{srcAngularModuleName}', []
-        .run ['$templateCache', ($templateCache) ->
+        require './style'
 
+        Module = angular.module '#{@conf.angularModuleName}.Templates.#{srcAngularModuleName}', []
+        .run ['$templateCache', ($templateCache) ->\n
       """
+
+      srcDir = path.join @moduleRootRemote, 'src', 'style'
+      targetDir = path.join @moduleRootLocal,  'style'
+      fs.mkdirsSync targetDir
+      cp path.join(srcDir, "*"), targetDir
 
       _.forEach directives, (directive) =>
         srcDir = path.join @moduleRootRemote, 'src', directive

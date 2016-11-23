@@ -29,7 +29,7 @@ start:
 
 
 # Build the distribution package
-dist: build
+dist: clean build
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
 
 
@@ -117,7 +117,7 @@ bash:
 clean:
 	-${DOCKER_COMPOSE} rm -f -v
 	-docker rmi ${SERVICE_NAME}
-
+	-rm -rf dist
 
 # Kill and delete everything
 destroy: kill-all clean
