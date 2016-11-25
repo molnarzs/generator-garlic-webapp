@@ -116,7 +116,8 @@ bash:
 # Remove all the images
 clean:
 	-${DOCKER_COMPOSE} rm -f -v
-	-docker rmi ${SERVICE_NAME}
+	-docker rmi ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
+	-docker rmi docker_${DEV_SERVICE_NAME}
 	-rm -rf dist
 
 # Kill and delete everything
