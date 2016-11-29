@@ -1,0 +1,10 @@
+FROM <%= conf.dockerRepo %>/angular2
+
+# Do not copy package.json!
+COPY ./package.json /app/package_project.json
+COPY ./bower.json /app
+
+# install_dependencies will merge deps in the container
+RUN docker_scripts/install_dependencies /app/package_project.json && \
+  bower install --silent --allow-root && \
+  yarn cache clean

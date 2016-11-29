@@ -1,0 +1,18 @@
+{
+  "name": "<%= conf.appNameKC %>",
+  "version": "0.0.1",
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>",
+  "contributors": [
+    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+  ],
+  "license": "SEE LICENSE IN license.txt",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
