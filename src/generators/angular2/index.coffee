@@ -11,7 +11,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
   initializing: ->
     @config.set
       appname: @appname
-      angularModules: {}
+      angularModules:
+        directives: []
+        services: []
+        components: []
 
     console.log chalk.magenta 'You\'re using the GarlicTech angular 2 app generator.'
 

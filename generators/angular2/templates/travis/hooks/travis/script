@@ -5,5 +5,5 @@ set -e
 hooks/travis/hooks_base-generated script
 
 # ADD YOUR PARTS HERE
-npm run unittest:single
-npm run e2etest
+npm run unittest
+# npm run e2etest

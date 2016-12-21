@@ -20,7 +20,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   initializing: function() {
     this.config.set({
       appname: this.appname,
-      angularModules: {}
+      angularModules: {
+        directives: [],
+        services: [],
+        components: []
+      }
     });
     return console.log(chalk.magenta('You\'re using the GarlicTech angular 2 app generator.'));
   },

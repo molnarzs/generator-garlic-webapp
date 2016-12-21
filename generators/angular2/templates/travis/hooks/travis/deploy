@@ -5,3 +5,5 @@ set -e
 hooks/travis/hooks_base-generated deploy
 
 # ADD YOUR PARTS HERE
+npm run dist
+~/.local/bin/aws s3 sync dist s3://aws-website-camnjoycom-i9mmc --delete
