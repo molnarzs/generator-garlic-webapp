@@ -30,20 +30,38 @@
   },
   "scripts": {
     "unittest": "docker/unittest.sh",
-    "build": "docker/build.sh --pull",
-    "build:all": "docker/build.sh --pull --no-cache",
-    "build:dev": "docker/build.sh",
-    "build:dev:all": "docker/build.sh --no-cache",
+    "build": "docker/build.sh",
+    "build:docker": "docker/build.sh $@",
+    "build:docker:all": "docker/build.sh --pull --no-cache",
+    "build:prod": "docker/build-prod.sh",
+    "clean": "docker/npm.sh clean",
     "setup": "scripts/setup.sh",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
     "dist": "docker/dist.sh",
     "start": "docker/start.sh",
+    "start:docker": "docker/start-docker.sh $@",
     "stop": "docker/stop.sh",
     "e2etest": "docker/e2etest.sh",
     "bash": "docker/bash.sh"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/router": "3.2.1",
+    "angularfire2": "^2.0.0-beta.6",
+    "jasmine-core": "~2.5.2",
+    "@types/core-js": "0.9.35",
+    "@types/jasmine": "^2.5.36",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.11",
+    "zone.js": "^0.6.21"
+  },
   "garlic": {
     "type": "<%= conf.projectType %>"
   }

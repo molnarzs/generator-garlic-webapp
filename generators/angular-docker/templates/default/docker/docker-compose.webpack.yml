@@ -6,8 +6,11 @@ services:
       context: ..
       dockerfile: Dockerfile.dev
     volumes:
-      - "..:/app/project"
+      - "../src:/app/project/src"
+      - "../hooks:/app/project/hooks"
+      - "../reports:/app/reports"
+      - "../dist:/app/dist"
     environment:
       - NODE_ENV
       - CI
-    command: "npm run start:docker"
+    command: "npm start"

@@ -13,6 +13,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       console.log chalk.magenta 'You\'re using the GarlicTech webapp / angular docker files generator.'
       generatorLib.createConfig.bind(@)()
       @conf.webpackServerName = "#{@conf.scope}.#{@conf.appNameKC}.webpack-server"
+      @conf.distImageName = "#{@conf.dockerRepo}/#{@conf.appNameKC}"
       @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
 
 
@@ -60,7 +61,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       _.set pjson, "scripts.unittest:single", "export NODE_ENV=test; docker/unittest.sh"
 
       _.set pjson, "scripts.Build", "npm run build -- --no-cache"
-  
+
       jsonfile.spaces = 2
       jsonfile.writeFileSync @destinationPath("./package.json"), pjson
       cb()
@@ -76,6 +77,6 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       cb = @async()
       @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
       cb()
-      
+
 
 module.exports = GarlicWebappGithubGenerator

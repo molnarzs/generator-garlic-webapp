@@ -8,23 +8,3 @@
 
 We use the [Docker based GarlicTech workflow manager](https://github.com/garlictech/workflows) to control development, build, deployment. 
 See the appropriate sections there, It is * important *. For the description of `npm run`, `make`, etc. commands, consult the page.
-
-Here, we summarize the most important points.
-
-### Set up the development environment
-
-After cloning a repo:
-
-```
-npm run setup-dev
-```
-
-It creates the default `.env` file that you can customize.
-
-### .env file
-
-It sets the following environment variables:
-
-* `NODE_ENV`
-
-Default: `development`. In this case, the `npm run unittest` command does not exit, it watches file changes.

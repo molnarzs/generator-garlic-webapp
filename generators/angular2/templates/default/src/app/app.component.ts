@@ -4,7 +4,8 @@ import { MAIN } from './shared/constant/main';
 
 @Component({
     selector: 'app-main',
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.jade',
+    styleUrls: ['app.component.scss']
 })
 export class AppComponent {
     public appBrand: string;

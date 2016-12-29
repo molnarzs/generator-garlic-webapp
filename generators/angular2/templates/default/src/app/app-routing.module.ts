@@ -1,24 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-const appRoutes: Routes = [
-    {
-        path: 'todolist',
-        loadChildren: 'app/todolist/todolist.module#TodolistModule'
-    }
+import { HomeComponent } from './home/home.component';
+
+export const routes: Routes = [
+  { path: '', component: HomeComponent }
 ];
 
-@NgModule({
-    imports: [
-        RouterModule.forRoot(appRoutes, {
-            preloadingStrategy: PreloadAllModules
-        })
-    ],
-    exports: [
-        RouterModule
-    ],
-    providers: []
-})
-export class AppRoutingModule {
-
-}
+export const routing: ModuleWithProviders = RouterModule.forChild(routes);

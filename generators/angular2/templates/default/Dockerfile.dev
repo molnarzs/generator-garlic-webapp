@@ -1,17 +1,16 @@
-FROM docker.camnjoy.com/angular2
-# FROM docker.camnjoy.com/angular2
+FROM <%= conf.dockerRepo %>/angular2
 
-# Don't modify these lines - START :)
-COPY ./src/dll /app/config/dll
-RUN npm run build:dll
-# Don't modify these lines - END
-
-# Do not overwrite package.json!
-COPY ./package.json /app/package_project.json
+COPY ./package_project.json /app/package_project.json
 COPY ./bower.json /app
 
 # install_dependencies will merge deps in the container
-RUN docker_scripts/install_dependencies /app/package_project.json
-RUN rm /app/package_project.json
-RUN bower install --silent --allow-root
-RUN yarn cache clean
+RUN docker_scripts/install_dependencies /app/package_project.json && \
+  rm /app/package_project.json && \
+  yarn && \
+  bower install --silent --allow-root
+
+# Don't modify these lines - END
+COPY ./src/dll /app/config/dll
+RUN echo "APP_ENV=development" > /app/.env
+RUN npm run build:dll
+# Don't modify these lines - START :)
