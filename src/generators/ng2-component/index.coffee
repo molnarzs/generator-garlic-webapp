@@ -43,9 +43,6 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
       @conf.selector = "app-#{@conf.scope}-#{@answers.name}"
 
     mainFiles: ->
-      console.log 1, "./#{@answers.baseFolder}/#{@answers.name}"
-      console.log 2, @answers
-      console.log 3, @answers.name
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
 
