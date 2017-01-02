@@ -87,70 +87,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       cb()
 
 
-#     "src/directive-modules.coffee" : ->
-#       dest = @destinationPath "./src/directive-modules.coffee"
-
-#       if not @fs.exists dest
-#         @fs.write dest, """
-# Module = angular.module "#{@conf.angularModuleName}.Directives", []
-# module.exports = Module.name
-# """
-
-
-#     "src/service-modules.coffee" : ->
-#       dest = @destinationPath "./src/service-modules.coffee"
-
-#       if not @fs.exists dest
-#         @fs.write dest, """
-# Module = angular.module "#{@conf.angularModuleName}.Services", []
-# module.exports = Module.name
-# """
-
-
-#     "src/factory-modules.coffee" : ->
-#       dest = @destinationPath "./src/factory-modules.coffee"
-
-#       if not @fs.exists dest
-#         @fs.write dest, """
-# Module = angular.module "#{@conf.angularModuleName}.Factories", []
-# module.exports = Module.name
-# """
-
-#     "src/provider-modules.coffee" : ->
-#       dest = @destinationPath "./src/provider-modules.coffee"
-
-#       if not @fs.exists dest
-#         @fs.write dest, """
-# Module = angular.module "#{@conf.angularModuleName}.Providers", []
-# module.exports = Module.name
-# """
-
     projectTypeFiles: ->
       if @conf.projectType is 'module'
         @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
       else
         @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
 
-
-    # "src/views/test-page/test-view-components.jade" : ->
-    #   if @conf.projectType is 'site'
-    #     dest = @destinationPath "./src/views/test-view/test-view-components.jade"
-    #     if not @fs.exists dest then @fs.write dest, ""
-
-
-    # "src/index.coffee": ->
-    #   if @conf.projectType is 'site'
-    #     dest = @destinationPath "./src/index.coffee"
-    #     content = @fs.read dest
-
-    #     replacedText = """
-    #       #===== yeoman hook modules =====
-    #         require './views'
-    #         require './footer'
-    #         require './main-header'"""
-
-    #     content = content.replace '#===== yeoman hook modules =====', replacedText
-    #     @fs.write dest, content
 
     dotfiles: ->
       @fs.copy @templatePath('default/.*'), @destinationPath("./")
@@ -161,16 +103,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       cb = @async()
       @composeWith 'garlic-webapp:angular-docker', options: {answers: @answers}
       cb()
-
-
-    # "package.json": ->
-    #   if @conf.projectType is 'site'
-    #     cb = @async()
-    #     pjson = jsonfile.readFileSync @destinationPath("./package.json")
-    #     pjson.dependencies['angular-ui-router'] = "^0.3"
-    #     jsonfile.spaces = 2
-    #     jsonfile.writeFileSync @destinationPath("./package.json"), pjson
-    #     cb()
 
 
     repo: ->
@@ -195,5 +127,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         cb = @async()
         @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {c: @conf}
         cb()
+
+    modulePart: ->
+      if @conf.projectType is 'module'
+        generatorLib.execute 'pushd dev-site; ln -sf ../app/tslint.json .; popd'
+
 
 module.exports = GarlicWebappGenerator

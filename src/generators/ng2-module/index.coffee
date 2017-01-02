@@ -24,7 +24,7 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
     @prompt [{
       type    : 'input'
       name    : 'name'
-      message : 'Module name with optional path relative to src, and without "module" (like base/foo): '
+      message : 'Module name with optional path relative to src/app, and without "module" (like base/foo): '
       required: true
     }, {
       type    : 'confirm'

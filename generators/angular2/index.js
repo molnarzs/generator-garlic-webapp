@@ -174,6 +174,11 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
+    },
+    modulePart: function() {
+      if (this.conf.projectType === 'module') {
+        return generatorLib.execute('pushd dev-site; ln -sf ../app/tslint.json .; popd');
+      }
     }
   }
 });

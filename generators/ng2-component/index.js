@@ -22,7 +22,7 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
-      return console.log(chalk.magenta('You\'re using the GarlicTech webapp Angular 2 module generator.'));
+      return console.log(chalk.magenta('You\'re using the GarlicTech webapp Angular 2 component generator.'));
     }
   },
   prompting: function() {
@@ -37,36 +37,32 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
     return this.prompt([
       {
         type: 'input',
-        name: 'name',
-        message: 'Module name with optional path relative to src/app, and without "module" (like base/foo): ',
-        required: true
-      }, {
-        type: 'confirm',
-        name: 'isRouting',
-        message: 'Generate routing?',
+        name: 'baseFolder',
+        "default": 'src/app',
+        message: 'Base folder relative to the app root (like src/app): ',
         required: true,
-        "default": false,
         store: true
+      }, {
+        type: 'input',
+        name: 'name',
+        message: 'Component name without the component suffix (like foo-bar): ',
+        required: true
       }
     ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
-      this.conf.moduleName = _.upperFirst(_.camelCase(path.basename(this.answers.name + "Module")));
-      return this.conf.routingModuleName = this.conf.moduleName + "Routing";
+      this.conf.componentName = _.upperFirst(_.camelCase(this.answers.name + "-component"));
+      return this.conf.selector = "app-" + this.conf.scope + "-" + this.answers.name;
     },
     mainFiles: function() {
-      console.log(this.answers.isRouting);
-      if (this.answers.isRouting) {
-        return this.fs.copyTpl(this.templatePath('with-routing/**/*'), this.destinationPath("./src/app/" + this.answers.name), {
-          c: this.conf
-        });
-      } else {
-        return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/app/" + this.answers.name), {
-          c: this.conf
-        });
-      }
+      console.log(1, "./" + this.answers.baseFolder + "/" + this.answers.name);
+      console.log(2, this.answers);
+      console.log(3, this.answers.name);
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
+        c: this.conf
+      });
     }
   }
 });
