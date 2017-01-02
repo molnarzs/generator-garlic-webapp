@@ -23,8 +23,15 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
 
     @prompt [{
       type    : 'input'
+      name    : 'baseFolder'
+      default : 'src/app'
+      message : 'Base folder relative to the app root (like src/app): '
+      required: true
+      store   : true
+    }, {
+      type    : 'input'
       name    : 'name'
-      message : 'Module name with optional path relative to src/app, and without "module" (like base/foo): '
+      message : 'Module name without "module" (like foo-bar): '
       required: true
     }, {
       type    : 'confirm'
@@ -39,15 +46,15 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
   writing:
     createConfig: ->
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
-      @conf.moduleName = _.upperFirst _.camelCase path.basename @answers.name + "Module"
+      @conf.moduleName = _.upperFirst _.camelCase "#{@answers.name}-module"
       @conf.routingModuleName = "#{@conf.moduleName}Routing"
 
 
     mainFiles: ->
       console.log @answers.isRouting
       if @answers.isRouting
-        @fs.copyTpl @templatePath('with-routing/**/*'), @destinationPath("./src/app/#{@answers.name}"), {c: @conf}
+        @fs.copyTpl @templatePath('with-routing/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
       else
-        @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/app/#{@answers.name}"), {c: @conf}
+        @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
 module.exports = GarlicWebappNg2ServiceGenerator

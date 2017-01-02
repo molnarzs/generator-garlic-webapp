@@ -21,22 +21,28 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
       @answers = answers
       done()
 
-    @prompt
+    @prompt [{
+      type    : 'input'
+      name    : 'baseFolder'
+      default : 'src/app'
+      message : 'Base folder relative to the app root (like src/app): '
+      required: true
+      store   : true
+    }, {
       type    : 'input'
       name    : 'name'
-      message : 'Service name with optional path relative to src (like base/foo-service): '
+      message : 'Service name without Service part (like foo-bar): '
       required: true
-    , cb.bind @
+    }], cb.bind @
 
 
   writing:
     createConfig: ->
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
-      @conf.serviceName = _.upperFirst _.camelCase path.basename @answers.name
+      @conf.serviceName = _.upperFirst _.camelCase "#{@answers.name}-service"
 
 
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./src/app/#{@answers.name}"), {c: @conf}
-
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
 module.exports = GarlicWebappNg2ServiceGenerator

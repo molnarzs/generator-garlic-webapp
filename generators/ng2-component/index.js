@@ -57,9 +57,6 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
       return this.conf.selector = "app-" + this.conf.scope + "-" + this.answers.name;
     },
     mainFiles: function() {
-      console.log(1, "./" + this.answers.baseFolder + "/" + this.answers.name);
-      console.log(2, this.answers);
-      console.log(3, this.answers.name);
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
         c: this.conf
       });

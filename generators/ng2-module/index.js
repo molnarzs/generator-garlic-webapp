@@ -37,8 +37,15 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
     return this.prompt([
       {
         type: 'input',
+        name: 'baseFolder',
+        "default": 'src/app',
+        message: 'Base folder relative to the app root (like src/app): ',
+        required: true,
+        store: true
+      }, {
+        type: 'input',
         name: 'name',
-        message: 'Module name with optional path relative to src/app, and without "module" (like base/foo): ',
+        message: 'Module name without "module" (like foo-bar): ',
         required: true
       }, {
         type: 'confirm',
@@ -53,17 +60,17 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
   writing: {
     createConfig: function() {
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
-      this.conf.moduleName = _.upperFirst(_.camelCase(path.basename(this.answers.name + "Module")));
+      this.conf.moduleName = _.upperFirst(_.camelCase(this.answers.name + "-module"));
       return this.conf.routingModuleName = this.conf.moduleName + "Routing";
     },
     mainFiles: function() {
       console.log(this.answers.isRouting);
       if (this.answers.isRouting) {
-        return this.fs.copyTpl(this.templatePath('with-routing/**/*'), this.destinationPath("./src/app/" + this.answers.name), {
+        return this.fs.copyTpl(this.templatePath('with-routing/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
           c: this.conf
         });
       } else {
-        return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/app/" + this.answers.name), {
+        return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
           c: this.conf
         });
       }

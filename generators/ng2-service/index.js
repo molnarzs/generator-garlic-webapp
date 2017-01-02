@@ -34,20 +34,29 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
         return done();
       };
     })(this);
-    return this.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Service name with optional path relative to src (like base/foo-service): ',
-      required: true
-    }, cb.bind(this));
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'baseFolder',
+        "default": 'src/app',
+        message: 'Base folder relative to the app root (like src/app): ',
+        required: true,
+        store: true
+      }, {
+        type: 'input',
+        name: 'name',
+        message: 'Service name without Service part (like foo-bar): ',
+        required: true
+      }
+    ], cb.bind(this));
   },
   writing: {
     createConfig: function() {
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
-      return this.conf.serviceName = _.upperFirst(_.camelCase(path.basename(this.answers.name)));
+      return this.conf.serviceName = _.upperFirst(_.camelCase(this.answers.name + "-service"));
     },
     mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./src/app/" + this.answers.name), {
+      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
         c: this.conf
       });
     }
