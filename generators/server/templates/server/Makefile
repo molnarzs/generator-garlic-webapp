@@ -29,7 +29,7 @@ start:
 
 
 # Build the distribution package
-dist:
+dist: clean build
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
 
 
@@ -74,7 +74,7 @@ unittest:
 
 
 # Execute the system tests
-systemtest:
+systemtest: build
 	${DOCKER_RUN} scripts/systemtest.sh
 
 
@@ -116,8 +116,9 @@ bash:
 # Remove all the images
 clean:
 	-${DOCKER_COMPOSE} rm -f -v
-	-docker rmi ${SERVICE_NAME}
-
+	-docker rmi ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
+	-docker rmi docker_${DEV_SERVICE_NAME}
+	-rm -rf dist
 
 # Kill and delete everything
 destroy: kill-all clean

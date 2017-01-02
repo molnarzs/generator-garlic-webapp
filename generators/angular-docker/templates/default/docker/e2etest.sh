@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+set -e
 DOCKER_COMPOSE="docker-compose -f docker/docker-compose.dependencies.yml -f docker/docker-compose.webpack.yml -f docker/docker-compose.e2e.yml"
 
-if [ -n "TRAVIS" ]; then
+if [[ $DEBUG ]]; then
   DOCKER_COMPOSE="${DOCKER_COMPOSE} -f docker/docker-compose.debug.yml"
 fi
 

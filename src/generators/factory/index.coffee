@@ -5,6 +5,7 @@ chalk = require('chalk')
 spawn = require('child_process').spawn
 _ = require 'lodash'
 fs = require 'fs'
+generatorLib = require '../lib'
 
 GarlicWebappFactoryGenerator = yeoman.generators.Base.extend
   initializing:

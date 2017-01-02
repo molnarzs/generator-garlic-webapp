@@ -1,0 +1,8 @@
+FROM <%= conf.dockerRepo %>/webpack
+
+COPY ./package.json /app
+COPY ./bower.json /app
+
+RUN yarn install && \
+  bower install --silent --allow-root && \
+  yarn cache clean

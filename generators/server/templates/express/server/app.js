@@ -12,8 +12,6 @@ app = (require('express'))();
 
 app.use((require('helmet'))());
 
-app.use((require('morgan'))('dev'));
-
 app.use(passport.initialize());
 
 bodyParser = require('body-parser');

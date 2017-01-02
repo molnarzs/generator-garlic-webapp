@@ -1,4 +1,4 @@
-Module = angular.module "<%= conf.angularModuleName %>", []
+Module = angular.module "<%= conf.angularModuleName %>.Templates", []
 
 .run ['$templateCache', ($templateCache) ->
   # NB! The line below is required for garlic yeoman generator and should not be changed. Otherwise, you are cursed.

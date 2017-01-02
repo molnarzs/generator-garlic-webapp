@@ -26,9 +26,17 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
+        var workflowsServerType;
         _this.answers = answers;
         _this.config.set({
           scope: _this.answers.scope
+        });
+        _this.config.set({
+          type: _this.answers.type
+        });
+        workflowsServerType = _this.answers.type === 'loopback' ? "workflows-loopback-server" : "workflows-server";
+        _this.config.set({
+          workflowsType: _this.answers.workflowsServerType
         });
         _this.config.set({
           type: _this.answers.type
@@ -158,6 +166,18 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     }
   },
   end: {
+    loopbackChanges: function() {
+      var cb, data, file, text;
+      if (this.answers.projectType === 'loopback') {
+        cb = this.async();
+        file = this.destinationPath("./server/server.js");
+        data = fs.readFileSync(file).toString().split("\n");
+        data.splice(6, 0, "require('./app-config-local')(app);");
+        text = data.join("\n");
+        fs.writeFileSync(file, text);
+        return cb();
+      }
+    },
     commitizen: function() {
       var cb;
       cb = this.async();

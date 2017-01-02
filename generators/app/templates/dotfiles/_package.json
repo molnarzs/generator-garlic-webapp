@@ -25,23 +25,25 @@
   },
   "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
   "engines": {
-    "npm" : ">=3.0.0",
+    "npm": ">=3.0.0",
     "node": ">=5.0.0"
   },
   "scripts": {
     "unittest": "docker/unittest.sh",
-    "build": "docker/build.sh",
-    "systemtest": "docker/systemtest.sh",
+    "build": "docker/build.sh --pull",
+    "build:all": "docker/build.sh --pull --no-cache",
+    "build:dev": "docker/build.sh",
+    "build:dev:all": "docker/build.sh --no-cache",
     "setup": "scripts/setup.sh",
-    "unittest:single": "export NODE_ENV=test; docker/unittest.sh",
     "commit": "docker/commit.sh",
-    "semantic-release": "docker/semantic-release.sh",
+    "release": "docker/semantic-release.sh",
     "dist": "docker/dist.sh",
-    "unittest:docker": "scripts/unittest.sh",
-    "dist:docker": "scripts/dist.sh"
+    "start": "docker/start.sh",
+    "stop": "docker/stop.sh",
+    "e2etest": "docker/e2etest.sh",
+    "bash": "docker/bash.sh"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "garlic": {
     "type": "<%= conf.projectType %>"
   }

@@ -2,14 +2,14 @@
 
 declare -i timeout=5
 
-while ! TEST_OUTPUT=`curl -s --fail http://localhost:3000/alive`;
+while ! TEST_OUTPUT=`curl -s --fail http://localhost:3000`;
     do sleep 0.1;
 done
 
 ## Assert server response
-if [ "$TEST_OUTPUT" != "Success" ]
+if [[ "$TEST_OUTPUT" == *"started"* ]]
 then
-  echo "Failed asserting that '${TEST_OUTPUT}' equals 'Success'" && exit 1;
-else
   echo "Smoke test passed"
+else
+  echo "Failed asserting that '${TEST_OUTPUT}' contains 'started'" && exit 1;
 fi

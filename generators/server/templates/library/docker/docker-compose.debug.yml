@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  <%= c.scope %>.<%= c.appNameKC %>.dev:
+    ports:
+      - "5858:5858"
+    environment:
+      - DEBUG

@@ -20,6 +20,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
       console.log(chalk.magenta('You\'re using the GarlicTech webapp / angular docker files generator.'));
       generatorLib.createConfig.bind(this)();
       this.conf.webpackServerName = this.conf.scope + "." + this.conf.appNameKC + ".webpack-server";
+      this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
       return this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
     }
   },

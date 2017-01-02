@@ -46,16 +46,60 @@ Some of the generators may use ```NPM_TOKEN``` as well. If both token variables 
 * Some of the generator questions provide default values. They are either calculated (for example, based on the current directory), or the generator records the last value you selected, and offers that.
 * Selecting a default: simply press return.
 
-## Develop a client side app
+### Develop an Angular 2 project
 
 *tl;dr*
 
 ```
 mkdir my-project
 cd my-project
-yo garlic-webapp
+yo garlic-webapp:angular2
 # Select garlictech scope (the default)
-npm run setup-dev
+npm run setup
+npm run build:docker
+npm start
+npm run unittest
+npm run e2etest
+npm run build:prod
+# ...then develop something, then:
+git add .
+npm run commit
+```
+
+### Scaffold an Angular 2 project
+
+```
+mkdir my-project
+cd my-project
+yo garlic-webapp:angular2
+```
+
+Answer the (straighforward) questions, then you have a scaffolded Angular 2 app that you can build and start immediately.
+
+### Generate elements
+
+You can use the following generators (deduct from their names what they generate):
+
+```
+yo garlic-webapp:ng2-service
+yo garlic-webapp:ng2-module
+yo garlic-webapp:ng2-component
+```
+
+You can add the base folder of the component and the component name. Mind, that the generated file names do not follow the usual Angular 2 conventions, because we utilize webpack file resolution.
+
+Mind, that the generators generete new files only: for example, you can generate a service in a module folder with the intention that the module should provide the service. You have to add the service manually to the `provides` array of the module.
+
+## Develop an Angular 1 client side app
+
+*tl;dr*
+
+```
+mkdir my-project
+cd my-project
+yo garlic-webapp:angular2
+# Select garlictech scope (the default)
+npm run setup
 npm run build
 npm start
 npm run unittest
@@ -69,7 +113,7 @@ npm run commit
 
 The generator generates files for the [Garlictech workflow](https://github.com/Garlictech/workflows). For the details of the above procedure, consult this site.
 
-### Start a client project
+### Scaffold an Angular 1 project
 
 All the client projects are based on Angular JS, plus some dockerized software (webpack, karma, protractor).
 

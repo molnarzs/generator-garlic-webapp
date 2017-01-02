@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  <%= c.scope %>.<%= c.appNameKC %>.dev:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    env_file:
+      - "./service.env"
+    environment:
+      - NODE_ENV
+    volumes:
+      - "../:/app/project"
+    command: "gulp"

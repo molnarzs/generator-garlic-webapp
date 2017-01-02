@@ -1,0 +1,68 @@
+{
+  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+  "description": "<%= conf.appNameAsIs %>",
+  "main": "src/index.coffee",
+  "license": "SEE LICENSE IN license.txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>.git"
+  },
+  "author": {
+    "name": "<%= conf.scopeCC %>",
+    "email": "contact@<%= conf.scope %>.com",
+    "url": "http://www.<%= conf.scope %>.com"
+  },
+  "contributors": [
+    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+  ],
+  "keywords": [
+    "<%= conf.appName %>",
+    "<%= conf.appNameKC %>",
+    "<%= conf.scope %>"
+  ],
+  "bugs": {
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
+  },
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
+  "engines": {
+    "npm": ">=3.0.0",
+    "node": ">=5.0.0"
+  },
+  "scripts": {
+    "unittest": "docker/unittest.sh",
+    "build": "docker/build.sh",
+    "build:docker": "docker/build.sh $@",
+    "build:docker:all": "docker/build.sh --pull --no-cache",
+    "build:prod": "docker/build-prod.sh",
+    "clean": "docker/npm.sh clean",
+    "setup": "scripts/setup.sh",
+    "commit": "docker/commit.sh",
+    "release": "docker/semantic-release.sh",
+    "dist": "docker/dist.sh",
+    "start": "docker/start.sh",
+    "start:docker": "docker/start-docker.sh $@",
+    "stop": "docker/stop.sh",
+    "e2etest": "docker/e2etest.sh",
+    "bash": "docker/bash.sh"
+  },
+  "devDependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/router": "3.2.1",
+    "angularfire2": "^2.0.0-beta.6",
+    "jasmine-core": "~2.5.2",
+    "@types/core-js": "0.9.35",
+    "@types/jasmine": "^2.5.36",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.11",
+    "zone.js": "^0.6.21"
+  },
+  "garlic": {
+    "type": "<%= conf.projectType %>"
+  }
+}
