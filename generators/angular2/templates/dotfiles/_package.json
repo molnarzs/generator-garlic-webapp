@@ -30,7 +30,6 @@
   },
   "scripts": {
     "unittest": "docker/unittest.sh",
-    "build": "docker/build.sh",
     "build:docker": "docker/build.sh $@",
     "build:docker:all": "docker/build.sh --pull --no-cache",
     "build:prod": "docker/build-prod.sh",

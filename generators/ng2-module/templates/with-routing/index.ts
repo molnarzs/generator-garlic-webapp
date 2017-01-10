@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { <%= c.routingModuleName %> } from './routing.module';
+import { Routing } from './routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    <%= c.routingModuleName %>
+    Routing
   ],
   declarations: [],
   providers: []
