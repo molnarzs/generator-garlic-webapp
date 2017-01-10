@@ -1,4 +1,4 @@
-var GarlicWebappServerGenerator, chalk, generatorLib, jsonfile, mkdirp, path, util, yeoman;
+var GarlicWebappServerGenerator, chalk, fs, generatorLib, jsonfile, mkdirp, path, util, yeoman;
 
 util = require('util');
 
@@ -9,6 +9,8 @@ yeoman = require('yeoman-generator');
 chalk = require('chalk');
 
 mkdirp = require('mkdirp');
+
+fs = require('fs-extra');
 
 jsonfile = require('jsonfile');
 

@@ -3,6 +3,7 @@ path = require('path')
 yeoman = require('yeoman-generator')
 chalk = require('chalk')
 mkdirp = require 'mkdirp'
+fs = require 'fs-extra'
 jsonfile = require 'jsonfile'
 generatorLib = require '../lib'
 

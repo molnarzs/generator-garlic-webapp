@@ -43,6 +43,6 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
 
 
     mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
+      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}-service"), {c: @conf}
 
 module.exports = GarlicWebappNg2ServiceGenerator

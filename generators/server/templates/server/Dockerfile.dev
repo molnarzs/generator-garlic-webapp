@@ -2,5 +2,5 @@ FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>
 
 COPY package.json /app/
 
-RUN npm install --silent && \
-  npm cache clear
+RUN yarn && \
+  yarn cache clean

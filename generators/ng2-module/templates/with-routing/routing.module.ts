@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { Component } from './component';
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: []
-})
-export class <%= c.routingModuleName %> { }
+export const routes: Routes = [
+  { path: '', component: Component }
+];
+
+export const Routing: ModuleWithProviders = RouterModule.forChild(routes);
