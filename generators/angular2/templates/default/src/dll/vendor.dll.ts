@@ -19,7 +19,5 @@ import '@angularclass/hmr';
 
 // RxJS
 // Uncomment below if you use RxJS in many non-preload lazy-loaded modules
-// import 'rxjs';
+import 'rxjs';
 
-// Global packages
-import 'bootstrap/dist/js/bootstrap';

@@ -1,7 +1,7 @@
 {
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "src/index.coffee",
+  "main": "src/index.ts",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -45,20 +45,19 @@
     "bash": "docker/bash.sh"
   },
   "devDependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/router": "3.2.1",
-    "angularfire2": "^2.0.0-beta.6",
-    "jasmine-core": "~2.5.2",
+    "@angular/common": "2.2.4",
+    "@angular/compiler": "2.2.4",
+    "@angular/core": "2.2.4",
+    "@angular/forms": "2.2.4",
+    "@angular/http": "2.2.4",
+    "@angular/platform-browser": "2.2.4",
+    "@angular/platform-browser-dynamic": "2.2.4",
+    "@angular/router": "3.2.4",
+    "jasmine-core": "^2.5.2",
     "@types/core-js": "0.9.35",
     "@types/jasmine": "^2.5.36",
     "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.11",
+    "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.21"
   },
   "garlic": {
