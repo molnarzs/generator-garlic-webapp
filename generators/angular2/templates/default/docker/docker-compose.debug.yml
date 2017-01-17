@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  <%= conf.webpackServerName %>:
+    ports:
+      - "5858:5858"
+    environment:
+      - DEBUG
+
+  # <%= conf.e2eTesterName %>:
+  #   ports:
+  #     - "5858:5858"
+  #   environment:
+  #     - DEBUG

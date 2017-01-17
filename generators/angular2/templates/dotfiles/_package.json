@@ -1,7 +1,10 @@
 {
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "src/index.coffee",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -30,38 +33,38 @@
   },
   "scripts": {
     "unittest": "docker/unittest.sh",
-    "build:docker": "docker/build.sh $@",
-    "build:docker:all": "docker/build.sh --pull --no-cache",
+    "build:docker": "docker/build-dev.sh $@",
+    "build:docker:all": "docker/build-dev.sh --pull --no-cache",
+    "build:dev": "docker/build-dev.sh $@",
+    "build:dev:all": "docker/build-dev.sh --pull --no-cache",
     "build:prod": "docker/build-prod.sh",
     "clean": "docker/npm.sh clean",
     "setup": "scripts/setup.sh",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
-    "dist": "docker/dist.sh",
-    "start": "docker/start.sh",
-    "start:docker": "docker/start-docker.sh $@",
-    "stop": "docker/stop.sh",
+    "start": "docker/start-dev.sh",
+    "start:dev": "docker/start-dev.sh",
+    "start:prod": "docker/start-prod.sh $@",
+    "stop:dev": "docker/stop-devsh",
     "e2etest": "docker/e2etest.sh",
     "bash": "docker/bash.sh"
   },
-  "devDependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/router": "3.2.1",
-    "angularfire2": "^2.0.0-beta.6",
-    "jasmine-core": "~2.5.2",
+  "dependencies": {
+    "@angular/common": "2.2.4",
+    "@angular/compiler": "2.2.4",
+    "@angular/core": "2.2.4",
+    "@angular/forms": "2.2.4",
+    "@angular/http": "2.2.4",
+    "@angular/platform-browser": "2.2.4",
+    "@angular/platform-browser-dynamic": "2.2.4",
+    "@angular/router": "3.2.4",
     "@types/core-js": "0.9.35",
-    "@types/jasmine": "^2.5.36",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.11",
-    "zone.js": "^0.6.21"
+    "rxjs": "5.0.0-beta.12"
   },
-  "garlic": {
-    "type": "<%= conf.projectType %>"
+  "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "@types/jasmine": "^2.5.36",
+    "zone.js": "^0.6.21",
+    "codelyzer": "2.0.0-beta.1"
   }
 }

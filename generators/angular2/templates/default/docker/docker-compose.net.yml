@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  <%= conf.webpackServerName %>:
+    ports:
+      - "8081:8081"
