@@ -65,12 +65,17 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       generatorLib.createConfig.bind(@)()
       match = /(.*) angular/.exec @appname
       appname = if match then match[1] else @appname
-      angularModuleName = "#{@conf.scopeCC}.#{_.upperFirst _.camelCase appname}"
-      @conf.angularModuleName = angularModuleName
       @conf.dockerRepo = @answers.dockerRepo
+      @conf.webpackServerName = "#{@conf.scope}.#{@conf.appNameKC}.webpack-server"
+      @conf.distImageName = "#{@conf.dockerRepo}/#{@conf.appNameKC}"
+      @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
+
+      if @conf.projectType is 'module'
+        @conf.selectorPrefix = "#{@conf.scope}-#{@conf.appNameKC}"
+      else
+        @conf.selectorPrefix = "app"
 
       @config.set
-        angularModuleName: angularModuleName
         scope: @answers.scope
 
 
@@ -99,12 +104,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
 
 
   end:
-    docker: ->
-      cb = @async()
-      @composeWith 'garlic-webapp:angular-docker', options: {answers: @answers}
-      cb()
-
-
     repo: ->
       if @answers.isRepo
         cb = @async()
@@ -127,10 +126,5 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         cb = @async()
         @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {c: @conf}
         cb()
-
-    modulePart: ->
-      if @conf.projectType is 'module'
-        generatorLib.execute 'pushd dev-site; ln -sf ../app/tslint.json .; popd'
-
 
 module.exports = GarlicWebappGenerator

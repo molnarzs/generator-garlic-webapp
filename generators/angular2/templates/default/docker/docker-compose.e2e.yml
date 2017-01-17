@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  <%= conf.e2eTesterName %>:
+    build: ../e2e
+    volumes:
+      - "../e2e/src:/protractor"
+      - "/dev/shm:/dev/shm"
+    environment:
+      - WEBSERVER_IP=<%= conf.webpackServerName %>
+    privileged: true
+    depends_on:
+      - <%= conf.webpackServerName %>

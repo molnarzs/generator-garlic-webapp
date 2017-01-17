@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  <%= conf.webpackServerName %>:
+    build:
+      context: ..
+    volumes:
+      - "../src:/app/project/src"
+      - "../hooks:/app/project/hooks"
+      - "../reports:/app/reports"
+      - "../dist:/app/dist"
+      - "../dev-site:/app/project/dev-site"
+    environment:
+      - NODE_ENV
+      - CI
+    command: "npm start"

@@ -80,15 +80,20 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
   },
   writing: {
     createConfig: function() {
-      var angularModuleName, appname, match;
+      var appname, match;
       generatorLib.createConfig.bind(this)();
       match = /(.*) angular/.exec(this.appname);
       appname = match ? match[1] : this.appname;
-      angularModuleName = this.conf.scopeCC + "." + (_.upperFirst(_.camelCase(appname)));
-      this.conf.angularModuleName = angularModuleName;
       this.conf.dockerRepo = this.answers.dockerRepo;
+      this.conf.webpackServerName = this.conf.scope + "." + this.conf.appNameKC + ".webpack-server";
+      this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
+      this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
+      if (this.conf.projectType === 'module') {
+        this.conf.selectorPrefix = this.conf.scope + "-" + this.conf.appNameKC;
+      } else {
+        this.conf.selectorPrefix = "app";
+      }
       return this.config.set({
-        angularModuleName: angularModuleName,
         scope: this.answers.scope
       });
     },
@@ -128,16 +133,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     }
   },
   end: {
-    docker: function() {
-      var cb;
-      cb = this.async();
-      this.composeWith('garlic-webapp:angular-docker', {
-        options: {
-          answers: this.answers
-        }
-      });
-      return cb();
-    },
     repo: function() {
       var cb;
       if (this.answers.isRepo) {
@@ -173,11 +168,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
           c: this.conf
         });
         return cb();
-      }
-    },
-    modulePart: function() {
-      if (this.conf.projectType === 'module') {
-        return generatorLib.execute('pushd dev-site; ln -sf ../app/tslint.json .; popd');
       }
     }
   }
