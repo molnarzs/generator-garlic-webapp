@@ -2,6 +2,8 @@
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
   "description": "<%= conf.appNameAsIs %>",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.js",
   "files": [
     "dist"
   ],
