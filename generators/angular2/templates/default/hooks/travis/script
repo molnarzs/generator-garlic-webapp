@@ -6,7 +6,6 @@ hooks/travis/hooks_base-generated script
 
 # ADD YOUR PARTS HERE
 npm run unittest
-npm run build:prod
 
 if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
   echo "e2etest skipped!"
