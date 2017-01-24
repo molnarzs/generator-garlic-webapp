@@ -120,6 +120,17 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
 
+    commitizen: ->
+      cb = @async()
+      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
+      cb()
+
+
+    "semantic-release": ->
+      cb = @async()
+      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
+      cb()
+
 
     travisLocal: ->
       if @answers.isTravis

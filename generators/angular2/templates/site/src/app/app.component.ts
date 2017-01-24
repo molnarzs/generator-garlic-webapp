@@ -4,7 +4,7 @@ import { MAIN } from './shared/constant/main';
 
 @Component({
     selector: 'app-main',
-    templateUrl: 'app.component.jade',
+    templateUrl: 'app.component.pug',
     styleUrls: ['app.component.scss']
 })
 export class AppComponent {
