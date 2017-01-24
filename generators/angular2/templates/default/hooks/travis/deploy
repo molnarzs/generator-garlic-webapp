@@ -5,4 +5,3 @@ set -e
 hooks/travis/hooks_base-generated deploy
 
 # ADD YOUR PARTS HERE
-npm run dist

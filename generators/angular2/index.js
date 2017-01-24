@@ -160,15 +160,25 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return cb();
       }
     },
-    travisLocal: function() {
+    commitizen: function() {
       var cb;
-      if (this.answers.isTravis) {
-        cb = this.async();
-        this.fs.copyTpl(this.templatePath('travis/**/*'), this.destinationPath("./"), {
-          c: this.conf
-        });
-        return cb();
-      }
+      cb = this.async();
+      this.composeWith('garlic-webapp:commitizen', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
+    },
+    "semantic-release": function() {
+      var cb;
+      cb = this.async();
+      this.composeWith('garlic-webapp:semantic-release', {
+        options: {
+          answers: this.answers
+        }
+      });
+      return cb();
     }
   }
 });

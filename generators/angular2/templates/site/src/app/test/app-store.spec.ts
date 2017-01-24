@@ -1,4 +1,4 @@
-import { AppStore } from './app-store';
+import { AppStore } from '../app-store';
 
 describe('AppStore', () => {
     let service: AppStore;

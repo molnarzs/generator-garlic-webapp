@@ -5,4 +5,5 @@ set -e
 hooks/travis/hooks_base-generated install
 
 # ADD YOUR PARTS HERE
-npm run setup
+npm run build:dev
+npm run build:prod

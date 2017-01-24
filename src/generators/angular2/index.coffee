@@ -132,10 +132,4 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       cb()
 
 
-    travisLocal: ->
-      if @answers.isTravis
-        cb = @async()
-        @fs.copyTpl @templatePath('travis/**/*'), @destinationPath("./"), {c: @conf}
-        cb()
-
 module.exports = GarlicWebappGenerator
