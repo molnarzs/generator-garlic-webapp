@@ -5,5 +5,4 @@ set -e
 hooks/travis/hooks_base-generated install
 
 # ADD YOUR PARTS HERE
-make build
 make dist
