@@ -74,7 +74,7 @@ unittest:
 
 
 # Execute the system tests
-systemtest: build
+systemtest:
 	${DOCKER_RUN} scripts/systemtest.sh
 
 
@@ -123,6 +123,13 @@ clean:
 # Kill and delete everything
 destroy: kill-all clean
 
+
 # Start the services in debug mode
 debug:
-	${DOCKER_RUN} scripts/debug.sh
+	${DOCKER_RUN} gulp debug
+
+
+# LATEST_VERSION=$(npm show @${SCOPE}/${PROJECT} version)
+# Tag the image after the latest npm tag
+tag:
+	scripts/tag-image.sh ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
