@@ -1,7 +1,7 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "server/index.coffee",
+  "main": "project/dist/server/server.js",
   "license": "SEE LICENSE IN license.txt",
   "version": "0.0.0",
   "repository": {
@@ -24,11 +24,13 @@
   },
   "homepage": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/wiki/Home",
   "engines": {
-    "npm" : ">=3.0.0",
+    "npm": ">=3.0.0",
     "node": ">=5.0.0"
   },
   "dependencies": {
+    "garlictech-common-server": "^0.0"
   },
+  "devDependencies": {},
   "scripts": {
     "setup": "scripts/setup.sh",
     "commit": "docker/commit.sh",
@@ -36,7 +38,7 @@
     "unittest": "make unittest",
     "systemtest": "make systemtest"
   },
-  "files": ["dist"],
+  "files": ["project/dist"],
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"

@@ -5,6 +5,7 @@ export $(shell sed 's/=.*//' .env)
 SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml
+DOCKER_COMPOSE_PROD = docker-compose -f docker/docker-compose.prod.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
 DOCKER_RUN_NODEPS = ${DOCKER_COMPOSE} run --no-deps --rm ${DEV_SERVICE_NAME}
@@ -23,14 +24,14 @@ build:
 	${DOCKER_RUN_NODEPS} gulp compile
 
 
-# Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
-start:
-	${DOCKER_COMPOSE} up
-
-
 # Build the distribution package
 dist: clean build
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
+
+
+# Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
+start:
+	${DOCKER_COMPOSE} up
 
 
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
@@ -41,6 +42,21 @@ start-d:
 # Stop the development server
 stop:
 	${DOCKER_COMPOSE} stop ${DEV_SERVICE_NAME}
+
+
+# Start the production server and the defined services.
+start-prod:
+	${DOCKER_COMPOSE_PROD} up -d
+
+
+# Start the production server and the defined services.
+stop-prod:
+	${DOCKER_COMPOSE_PROD} down
+
+
+# List the running processes related to the server
+logs-prod:
+	${DOCKER_COMPOSE_PROD} logs -f
 
 
 # Stop the development server and the services
@@ -80,7 +96,7 @@ systemtest:
 
 # Execute the smoke tests
 smoketest:
-	test/smoke/smoke_test.sh
+	project/test/smoke/smoke_test.sh
 
 
 # List the running processes related to the server
@@ -104,7 +120,7 @@ login:
 
 
 # Push the distribution image to the registry
-push: login dist
+push: login
 	docker push ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
 
 

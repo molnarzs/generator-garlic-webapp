@@ -1,6 +1,5 @@
 FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>
 
-COPY package.json /app/
-
-RUN yarn && \
-  yarn cache clean
+COPY package.json /app/package_project.json
+# install_dependencies will merge deps in the container
+RUN scripts/install_dependencies package_project.json

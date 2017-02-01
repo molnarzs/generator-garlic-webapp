@@ -17,6 +17,13 @@ branches:
   only:
   - master
   - stable
+deploy:
+  provider: script
+  script: hooks/travis/deploy
+  skip_cleanup: true
+  'on':
+    repo: <%= c.scope %>/<%= c.appNameKC %>
+    branch: master
 after_success:
 - hooks/travis/after_success
 after_deploy:
