@@ -4,7 +4,7 @@ COPY ./package.json /app/package_project.json
 # COPY ./bower.json /app
 
 # install_dependencies will merge deps in the container
-RUN scripts/install_dependencies /app/package_project.json
+RUN scripts/install-project-dependencies.sh package_project.json
 
 #  bower install --silent --allow-root
 

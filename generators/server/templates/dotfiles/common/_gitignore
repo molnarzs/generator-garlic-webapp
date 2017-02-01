@@ -38,7 +38,7 @@ modules/views/
 .tmp/
 logs/
 builds/
-dist/
+project/dist/
 bin/
 .env
 *.bak
@@ -52,4 +52,5 @@ secrets.tgz
 *.sublime-project
 *.sublime-workspace
 .vscode/
+
 

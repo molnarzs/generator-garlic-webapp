@@ -19,8 +19,8 @@
     "node_modules",
     "coverage",
     "config",
-    "dist",
-    "src/main-ngc.ts",
+    "e2e",
+    "project/src/main-ngc.ts",
     "report"
   ]
 }

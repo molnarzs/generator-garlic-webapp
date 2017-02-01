@@ -52,21 +52,20 @@
     "bash": "docker/bash.sh"
   },
   "dependencies": {
-    "@angular/common": "2.2.4",
-    "@angular/compiler": "2.2.4",
-    "@angular/core": "2.2.4",
-    "@angular/forms": "2.2.4",
-    "@angular/http": "2.2.4",
-    "@angular/platform-browser": "2.2.4",
-    "@angular/platform-browser-dynamic": "2.2.4",
-    "@angular/router": "3.2.4",
-    "@types/core-js": "0.9.35",
-    "rxjs": "5.0.0-beta.12"
+    "@angular/common": "2.4.5",
+    "@angular/compiler": "2.4.5",
+    "@angular/core": "2.4.5",
+    "@angular/forms": "2.4.5",
+    "@angular/http": "2.4.5",
+    "@angular/platform-browser": "2.4.5",
+    "@angular/platform-browser-dynamic": "2.4.5",
+    "@angular/router": "3.4.5",
+    "rxjs": "^5.0.1"
   },
   "devDependencies": {
-    "jasmine-core": "^2.5.2",
     "@types/jasmine": "^2.5.36",
-    "zone.js": "^0.6.21",
-    "codelyzer": "2.0.0-beta.1"
+    "codelyzer": "^2.0.0-beta.4",
+    "jasmine-core": "~2.5.2",
+    "@types/node": "6.0.51"
   }
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 declare -i timeout=5
+make start-prod
 
 while ! TEST_OUTPUT=`curl -s --fail http://localhost:3000`;
     do sleep 0.1;
@@ -13,3 +14,5 @@ then
 else
   echo "Failed asserting that '${TEST_OUTPUT}' contains 'started'" && exit 1;
 fi
+
+make stop-prod
