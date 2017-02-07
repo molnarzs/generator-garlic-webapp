@@ -47,6 +47,14 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
         name: 'name',
         message: 'Component name without the component suffix (like foo-bar): ',
         required: true
+      }, {
+        type: 'list',
+        name: 'templateType',
+        "default": 'pug',
+        choices: ['pug', 'html'],
+        store: true,
+        required: true,
+        message: 'Template type: '
       }
     ], cb.bind(this));
   },
@@ -54,10 +62,16 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
     createConfig: function() {
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
       this.conf.componentName = _.upperFirst(_.camelCase(this.answers.name + "-component"));
-      return this.conf.selector = "app-" + this.conf.scope + "-" + this.answers.name;
+      this.conf.selector = "app-" + this.conf.scope + "-" + this.answers.name;
+      return this.conf.templateType = this.answers.templateType;
     },
     mainFiles: function() {
       return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
+        c: this.conf
+      });
+    },
+    templateFiles: function() {
+      return this.fs.copyTpl(this.templatePath(this.conf.templateType + "/**/*"), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
         c: this.conf
       });
     }
