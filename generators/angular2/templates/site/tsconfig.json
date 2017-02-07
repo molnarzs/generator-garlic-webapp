@@ -19,7 +19,7 @@
     "node_modules",
     "coverage",
     "config",
-    "e2e",
+    "project/e2e",
     "project/src/main-ngc.ts",
     "report"
   ]

@@ -21,7 +21,8 @@
     "coverage",
     "config",
     "dist",
-    "dev-site/main-ngc.ts",
+    "project/e2e",
+    "project/dev-site/main-ngc.ts",
     "report"
   ]
 }

@@ -9,7 +9,7 @@ RUN scripts/install-project-dependencies.sh package_project.json
 #  bower install --silent --allow-root
 
 # Don't modify these lines - END
-COPY ./src/dll /app/config/dll
+COPY ./project/src/dll /app/config/dll
 RUN echo "APP_ENV=development" > /app/.env
 RUN npm run build:dll
 COPY ./tslint.json tsconfig.json /app/

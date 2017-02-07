@@ -6,8 +6,7 @@ services:
       context: ..
       dockerfile: Dockerfile.dev
     volumes:
-      - "../src:/app/project/src"
-      - "../hooks:/app/project/hooks"
+      - "../project:/app/project"
       - "../reports:/app/reports"
       - "../dist:/app/dist"
     environment:
