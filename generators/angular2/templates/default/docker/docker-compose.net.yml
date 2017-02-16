@@ -4,3 +4,4 @@ services:
   <%= conf.webpackServerName %>:
     ports:
       - "8081:8081"
+      - "9876:9876"

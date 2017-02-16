@@ -5,7 +5,9 @@ services:
     build:
       context: ..
     volumes:
-      - "../project:/app/project"
+      - "../src:/app/src"
+      - "../dev-site:/app/dev-site"
+      - "../hooks:/app/hooks"
       - "../reports:/app/reports"
       - "../dist:/app/dist"
     environment:

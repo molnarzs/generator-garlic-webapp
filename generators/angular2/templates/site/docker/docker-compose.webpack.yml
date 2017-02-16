@@ -6,9 +6,10 @@ services:
       context: ..
       dockerfile: Dockerfile.dev
     volumes:
-      - "../project:/app/project"
-      - "../reports:/app/reports"
-      - "../dist:/app/dist"
+      - "../project/src:/app/src"
+      - "../project/dist:/app/dist"
+      - "../project/hooks:/app/hooks"
+      - "../project/reports:/app/reports"
     environment:
       - NODE_ENV
       - CI

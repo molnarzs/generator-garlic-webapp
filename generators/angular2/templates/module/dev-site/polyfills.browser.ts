@@ -1,4 +1,11 @@
-import 'core-js/es6';
+// TODO(gdi2290): switch to DLLs
+
+// Polyfills
+
+// import 'ie-shim'; // Internet Explorer 9 support
+
+// import 'core-js/es6';
+// Added parts of es6 which are necessary for your project or your browser support requirements.
 import 'core-js/es6/symbol';
 import 'core-js/es6/object';
 import 'core-js/es6/function';
@@ -12,16 +19,25 @@ import 'core-js/es6/array';
 import 'core-js/es6/regexp';
 import 'core-js/es6/map';
 import 'core-js/es6/set';
+import 'core-js/es6/weak-map';
+import 'core-js/es6/weak-set';
+import 'core-js/es6/typed';
 import 'core-js/es6/reflect';
+// see issue https://github.com/AngularClass/angular2-webpack-starter/issues/709
+// import 'core-js/es6/promise';
 
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 
-
-if (process.env.APP_ENV === 'production') {
+if ('production' === ENV) {
   // Production
+
 } else {
+
   // Development
   Error.stackTraceLimit = Infinity;
+
+  /* tslint:disable no-var-requires */
   require('zone.js/dist/long-stack-trace-zone');
+
 }
