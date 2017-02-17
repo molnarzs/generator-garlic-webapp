@@ -28,20 +28,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
-        var workflowsServerType;
         _this.answers = answers;
         _this.config.set({
           scope: _this.answers.scope
         });
         _this.config.set({
-          type: _this.answers.type
-        });
-        workflowsServerType = _this.answers.type === 'loopback' ? "workflows-loopback-server" : "workflows-server";
-        _this.config.set({
-          workflowsType: _this.answers.workflowsServerType
-        });
-        _this.config.set({
-          type: _this.answers.type
+          projectType: _this.answers.projectType
         });
         return done();
       };
@@ -104,8 +96,10 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     },
     createConfig: function() {
       generatorLib.createConfig.bind(this)();
+      console.log("******", this.conf);
       this.conf.dockerMachine = this.answers.dockerMachine;
       this.conf.dockerRepo = this.answers.dockerRepo != null ? this.answers.dockerRepo : "docker.garlictech.com";
+      this.conf.workflowsServerType = this.answers.projectType === 'loopback' ? "workflows-loopback-server" : "workflows-server";
       if (this.answers.projectType === "express") {
         this.conf.type = "server-common";
       }

@@ -11,5 +11,8 @@ services:
     environment:
       - NODE_ENV
     volumes:
-      - "../project:/app/project"
+      - "../src:/app/src"
+      - "../test:/app/test"
+      - "../hooks:/app/hooks"
+      - "../dist:/app/dist"
     command: "gulp"

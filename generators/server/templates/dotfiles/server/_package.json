@@ -1,7 +1,7 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "project/dist/server/server.js",
+  "main": "dist/server.js",
   "license": "SEE LICENSE IN license.txt",
   "version": "0.0.0",
   "repository": {
@@ -27,18 +27,16 @@
     "npm": ">=3.0.0",
     "node": ">=5.0.0"
   },
-  "dependencies": {
-    "garlictech-common-server": "^0.0"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "setup": "scripts/setup.sh",
+    "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
     "start": "make start",
     "unittest": "make unittest",
     "systemtest": "make systemtest"
   },
-  "files": ["project/dist"],
+  "files": ["dist"],
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
