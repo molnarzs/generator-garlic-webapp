@@ -11,4 +11,4 @@ docker run -i -t \
   -e TRAVIS_COMMIT \
   -e GH_USER \
   -e GH_TOKEN \
-  <%= conf.dockerRepo %>/workflows-common hooks/travis/$1
+  <%= conf.dockerRepo %>/workflows-common:${npm_package_config_dockerWorkflowVersion} hooks/travis/$1
