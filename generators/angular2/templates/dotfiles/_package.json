@@ -46,8 +46,8 @@
     "start:dev": "docker/start-dev.sh",
     "start:prod": "docker/start-prod.sh $@",
     "stop:dev": "docker/stop-devsh",
-    "unittest": "docker/npm.sh unittest",
-    "unittest:watch": "docker/npm.sh unittest:watch",
+    "unittest": "docker/unittest.sh unittest",
+    "unittest:watch": "docker/unittest.sh unittest:watch",
     "e2etest": "docker/e2etest.sh",
     "bash": "docker/bash.sh",
     "semantic-release": "docker/semantic-release.sh"
