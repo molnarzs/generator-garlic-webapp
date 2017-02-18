@@ -75,6 +75,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         "default": true,
         message: 'Configure travis.ci?',
         store: true
+      }, {
+        type: 'input',
+        name: 'dockerWorkflowVersion',
+        "default": 19,
+        message: 'Docker workflow version?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -88,6 +94,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.conf.webpackServerName = this.conf.scope + "." + this.conf.appNameKC + ".webpack-server";
       this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
       this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
+      this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
       if (this.conf.projectType === 'module') {
         this.conf.selectorPrefix = this.conf.scope + "-" + this.conf.appNameKC;
       } else {
@@ -112,9 +119,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
         conf: this.conf
       });
-      if (this.conf.projectType === 'site') {
-        this.fs.copy(this.templatePath('default_assets/**/*'), this.destinationPath("./src/"));
-      }
       return cb();
     },
     projectTypeFiles: function() {

@@ -2,7 +2,10 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated deploy
+hooks/travis/hooks_base-generated script
 
 # ADD YOUR PARTS HERE
-
+npm run build:dev
+npm run lint
+npm run unittest
+npm run build:prod

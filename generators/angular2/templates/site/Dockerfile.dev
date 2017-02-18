@@ -1,4 +1,4 @@
-FROM <%= conf.dockerRepo %>/angular2-webapp
+FROM <%= conf.dockerRepo %>/angular2-webapp:<%= conf.dockerWorkflowVersion %>
 
 COPY ./package.json /app/package_project.json
 COPY ./bower.json /app

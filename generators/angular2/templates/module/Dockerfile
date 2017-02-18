@@ -1,4 +1,4 @@
-FROM <%= conf.dockerRepo %>/angular2-module
+FROM <%= conf.dockerRepo %>/angular2-module:<%= conf.dockerWorkflowVersion %>
 
 # install_dependencies will merge deps in the container
 COPY ./package.json /app/package_project.json

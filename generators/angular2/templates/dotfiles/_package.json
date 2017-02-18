@@ -53,5 +53,8 @@
     "semantic-release": "docker/semantic-release.sh"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "config": {
+    "dockerWorkflowVersion": <%= conf.dockerWorkflowVersion %>
+  }
 }
