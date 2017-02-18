@@ -5,7 +5,8 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.js",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "license": "SEE LICENSE IN license.txt",
   "repository": {
