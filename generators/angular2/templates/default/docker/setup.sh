@@ -8,6 +8,6 @@ DOCKER_RUN_CMD="docker-compose -f docker/docker-compose.webpack.yml run -T <%= c
 echo "Updating package.json..."
 ${DOCKER_RUN_CMD} scripts/cat-package-json.sh > package.json
 echo "Updating tsconfig.json..."
-${DOCKER_RUN_CMD} cat tsconfig.webpack.json > tsconfig.json
+${DOCKER_RUN_CMD} cat tsconfig.dev.json > tsconfig.json
 echo "Updating tslint.json..."
 ${DOCKER_RUN_CMD} cat tslint.json > tslint.json

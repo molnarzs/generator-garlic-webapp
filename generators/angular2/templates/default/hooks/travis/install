@@ -5,5 +5,4 @@ set -e
 npm run travis install
 
 # ADD YOUR PARTS HERE
-npm run build:dev
-npm run build:prod
+

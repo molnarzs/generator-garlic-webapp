@@ -6,6 +6,7 @@ npm run travis script
 
 # ADD YOUR PARTS HERE
 npm run build:dev
+npm run setup
 npm run lint
 npm run unittest
 npm run build:prod
