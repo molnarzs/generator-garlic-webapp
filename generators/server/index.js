@@ -76,6 +76,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         "default": true,
         message: 'Create github repo?',
         store: true
+      }, {
+        type: 'input',
+        name: 'dockerWorkflowVersion',
+        "default": 22,
+        message: 'Docker workflow version?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -96,7 +102,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     },
     createConfig: function() {
       generatorLib.createConfig.bind(this)();
-      console.log("******", this.conf);
+      this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
       this.conf.dockerMachine = this.answers.dockerMachine;
       this.conf.dockerRepo = this.answers.dockerRepo != null ? this.answers.dockerRepo : "docker.garlictech.com";
       this.conf.workflowsServerType = this.answers.projectType === 'loopback' ? "workflows-loopback-server" : "workflows-server";

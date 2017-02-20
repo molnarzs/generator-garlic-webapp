@@ -12,4 +12,4 @@ docker run \
   -e CI \
   -e TRAVIS \
   -e TRAVIS_BRANCH \
-  <%= c.dockerRepo %>/workflows-common npm run semantic-release
+  <%= c.dockerRepo %>/workflows-common:<%= c.dockerWorkflowVersion %> npm run semantic-release

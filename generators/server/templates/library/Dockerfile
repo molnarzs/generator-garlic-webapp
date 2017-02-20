@@ -1,4 +1,4 @@
-FROM <%= c.dockerRepo %>/workflows-server
+FROM <%= c.dockerRepo %>/workflows-server:<%= c.dockerWorkflowVersion %>
 
 COPY package.json /app/
 

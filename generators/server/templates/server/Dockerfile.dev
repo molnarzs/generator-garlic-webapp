@@ -1,4 +1,4 @@
-FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>
+FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>:<%= c.dockerWorkflowVersion %>
 
 COPY package.json /app/package_project.json
 # install_dependencies will merge deps in the container

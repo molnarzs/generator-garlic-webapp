@@ -47,6 +47,7 @@
     "start:dev": "docker/start-dev.sh",
     "start:prod": "docker/start-prod.sh $@",
     "stop:dev": "docker/stop-devsh",
+    "lint": "docker/npm.sh lint",
     "unittest": "docker/unittest.sh unittest",
     "unittest:watch": "docker/unittest.sh unittest:watch",
     "e2etest": "docker/e2etest.sh",

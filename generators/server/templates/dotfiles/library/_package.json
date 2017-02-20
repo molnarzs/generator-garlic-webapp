@@ -39,6 +39,7 @@
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
-    }
+    },
+    "dockerWorkflowVersion": <%= c.dockerWorkflowVersion %>
   }
 }
