@@ -2,4 +2,4 @@ FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>:<%= c.dockerWorkflowVersio
 
 COPY package.json /app/package_project.json
 # install_dependencies will merge deps in the container
-RUN scripts/install_dependencies package_project.json
+RUN scripts/install-project-dependencies.sh package_project.json

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# ADD YOUR PARTS HERE
-set -e
-if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then  
+if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
   echo "Not releasing in pull request."
 else
   docker/semantic-release.sh
