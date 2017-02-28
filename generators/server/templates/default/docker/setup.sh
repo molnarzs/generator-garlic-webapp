@@ -1,8 +1,6 @@
 #! /usr/bin/env bash
 
 set -e
-echo "Generating .env..."
-cp docker/sample-env .env
 
 DOCKER_RUN_CMD="docker-compose -f docker/docker-compose.yml run -T <%= c.scope %>.<%= c.appNameKC %>.dev"
 # /app/package_project.json is the package.json in this project, copied into the container.

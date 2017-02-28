@@ -20,9 +20,9 @@ endif
 
 # Build the development services.
 build:
-	${DOCKER_COMPOSE} build
-	${DOCKER_RUN_NODEPS} gulp compile
-
+	-${DOCKER_COMPOSE} build
+	-${DOCKER_RUN_NODEPS} gulp compile
+	-npm run setup
 
 # Build the distribution package
 dist: clean build

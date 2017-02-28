@@ -40,7 +40,6 @@ logs/
 builds/
 project/dist/
 bin/
-.env
 *.bak
 .npmrc
 tokens.env
