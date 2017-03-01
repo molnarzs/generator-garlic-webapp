@@ -4,9 +4,10 @@ set -e
 if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
   echo "Not releasing in pull request."
 else
-  docker/semantic-release.sh
+  npm run travis release
+  make tag
   make push
 fi
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated after_success
+npm run travis after_success

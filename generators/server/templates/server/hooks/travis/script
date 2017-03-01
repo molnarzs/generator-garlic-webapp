@@ -5,8 +5,8 @@ set -e
 hooks/travis/hooks_base-generated script
 
 # ADD YOUR PARTS HERE
-make unittest
-make systemtest
+npm run travis unittest
+npm run travis systemtest
 make start-d
 make smoketest
 make kill-all

@@ -30,11 +30,25 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "setup": "docker/setup.sh",
+    "build:dev": "make build",
+    "build:dev:all": "make build-all",
+    "build:prod": "make dist",
+    "npm": "docker/npm.sh",
+    "clean": "make clean",
     "commit": "docker/commit.sh",
+    "release": "docker/semantic-release.sh",
     "start": "make start",
+    "start:dev": "make start",
+    "start:prod": "make start-prod",
+    "stop:dev": "make stop",
+    "lint": "make lint",
     "unittest": "make unittest",
-    "systemtest": "make systemtest"
+    "unittest:watch": "make unittest",
+    "e2etest": "docker/e2etest.sh",
+    "systemtest": "make systemtest",
+    "bash": "docker/bash.sh",
+    "travis": "docker/travis.sh $@",
+    "deploy": "docker/deploy.sh $@"
   },
   "files": ["dist"],
   "config": {

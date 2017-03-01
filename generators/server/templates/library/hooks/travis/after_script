@@ -2,7 +2,7 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated after_script
+npm run travis after_script
 
 # ADD YOUR PARTS HERE
 

@@ -24,6 +24,12 @@ build:
 	-${DOCKER_RUN_NODEPS} gulp compile
 	-npm run setup
 
+build-all:
+	-${DOCKER_COMPOSE} pull
+	-${DOCKER_COMPOSE} build
+	-${DOCKER_RUN_NODEPS} gulp compile
+	-npm run setup
+
 # Build the distribution package
 dist: clean build
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
@@ -120,7 +126,7 @@ login:
 
 
 # Push the distribution image to the registry
-push: login
+push:
 	docker push ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
 
 
@@ -145,7 +151,6 @@ debug:
 	${DOCKER_RUN} gulp debug
 
 
-# LATEST_VERSION=$(npm show @${SCOPE}/${PROJECT} version)
 # Tag the image after the latest npm tag
 tag:
 	scripts/tag-image.sh ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
