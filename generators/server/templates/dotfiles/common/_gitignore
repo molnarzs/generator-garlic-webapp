@@ -39,6 +39,7 @@ modules/views/
 logs/
 builds/
 project/dist/
+dist/
 bin/
 *.bak
 .npmrc

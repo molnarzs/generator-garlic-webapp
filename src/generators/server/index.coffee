@@ -64,7 +64,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'input'
         name    : 'dockerWorkflowVersion'
-        default : 24
+        default : 27
         message : 'Docker workflow version?'
         store   : true
       }
@@ -106,6 +106,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         @fs.copyTpl @templatePath('server/**/*'), @destinationPath("./"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/server/_package.json'), @destinationPath("./package.json"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/server/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_env'), @destinationPath("./.env"), {c: @conf}
         cb()
 
 
@@ -114,6 +115,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb = @async()
         @fs.copyTpl @templatePath('library/**/*'), @destinationPath("./"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/library/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/library/_env'), @destinationPath("./.env"), {c: @conf}
         cb()
 
 
@@ -157,12 +159,5 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
-
-
-  install:
-    setupEnvironment: ->
-      cb = @async()
-      generatorLib.execute "npm run setup"
-      cb()
 
 module.exports = GarlicWebappServerGenerator

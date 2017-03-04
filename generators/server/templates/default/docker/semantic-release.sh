@@ -15,4 +15,4 @@ docker run \
   -e GITHUB_TOKEN \
   -e GH_TOKEN \
   -e GH_USER \
-  <%= c.dockerRepo %>/workflows-common:<%= c.dockerWorkflowVersion %> npm run semantic-release
+  <%= c.dockerRepo %>/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run semantic-release

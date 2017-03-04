@@ -1,6 +1,6 @@
-FROM <%= c.dockerRepo %>/workflows-server:<%= c.dockerWorkflowVersion %>
+FROM <%= c.dockerRepo %>/workflows-library:<%= c.dockerWorkflowVersion %>
 
-COPY package.json /app/
+COPY ./package.json /app/package_project.json
 
-RUN npm install --silent && \
-  npm cache clear
+# install_dependencies will merge deps in the container
+RUN scripts/install-project-dependencies.sh package_project.json

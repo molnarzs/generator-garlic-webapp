@@ -79,7 +79,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'dockerWorkflowVersion',
-        "default": 24,
+        "default": 27,
         message: 'Docker workflow version?',
         store: true
       }
@@ -140,6 +140,9 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         this.fs.copyTpl(this.templatePath('dotfiles/server/_dockerignore'), this.destinationPath("./.dockerignore"), {
           c: this.conf
         });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_env'), this.destinationPath("./.env"), {
+          c: this.conf
+        });
         return cb();
       }
     },
@@ -151,6 +154,9 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
           c: this.conf
         });
         this.fs.copyTpl(this.templatePath('dotfiles/library/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/library/_env'), this.destinationPath("./.env"), {
           c: this.conf
         });
         return cb();
@@ -216,14 +222,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
-    }
-  },
-  install: {
-    setupEnvironment: function() {
-      var cb;
-      cb = this.async();
-      generatorLib.execute("npm run setup");
-      return cb();
     }
   }
 });

@@ -2,8 +2,8 @@
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
   "main": "dist/index.js",
+  "files": ["dist"],
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
@@ -28,12 +28,12 @@
     "node": ">=5.0.0"
   },
   "dependencies": {},
+  "devDependencies": {},
   "scripts": {
+    "build": "make build",
     "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
-    "start": "make start",
-    "unittest": "make unittest",
-    "systemtest": "make systemtest"
+    "unittest": "make unittest"
   },
   "files": ["dist"],
   "config": {

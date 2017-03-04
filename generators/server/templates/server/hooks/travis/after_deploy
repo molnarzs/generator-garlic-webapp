@@ -2,7 +2,4 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated install
-
-# ADD YOUR PARTS HERE
-npm run build
+npm run travis after_deploy
