@@ -33,7 +33,8 @@
     "build": "make build",
     "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
-    "unittest": "make unittest"
+    "unittest": "make unittest",
+    "travis": "docker/travis.sh $@"
   },
   "files": ["dist"],
   "config": {
