@@ -2,7 +2,9 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated install
+npm run travis install
 
 # ADD YOUR PARTS HERE
-make dist
+npm run build:dev
+npm run build:prod
+

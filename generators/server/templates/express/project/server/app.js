@@ -4,8 +4,6 @@ process.on('uncaughtException', function(err) {
   return console.log(err.stack);
 });
 
-require('./globals');
-
 passport = require("passport");
 
 app = (require('express'))();

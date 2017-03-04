@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: '<%= c.selector %>',
-  templateUrl: './ui.pug',
+  templateUrl: './ui.<%= c.templateType %>',
   styleUrls: ['./style.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })

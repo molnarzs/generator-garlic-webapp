@@ -33,6 +33,14 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
       name    : 'name'
       message : 'Component name without the component suffix (like foo-bar): '
       required: true
+    }, {
+      type    : 'list'
+      name    : 'templateType'
+      default : 'pug'
+      choices : ['pug', 'html']
+      store   : true
+      required: true
+      message : 'Template type: '
     }], cb.bind @
 
 
@@ -41,9 +49,15 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
       @conf.componentName = _.upperFirst _.camelCase "#{@answers.name}-component"
       @conf.selector = "app-#{@conf.scope}-#{@answers.name}"
+      @conf.templateType = @answers.templateType
+
 
     mainFiles: ->
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
+
+
+    templateFiles: ->
+      @fs.copyTpl @templatePath("#{@conf.templateType}/**/*"), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
 
 module.exports = GarlicWebappNg2ServiceGenerator

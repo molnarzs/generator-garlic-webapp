@@ -2,6 +2,6 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated after_success
+npm run travis after_success
 
 # ADD YOUR PARTS HERE

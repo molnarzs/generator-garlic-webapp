@@ -5,6 +5,6 @@ set -e
 cp hooks/travis/sample-env ${TRAVIS_BUILD_DIR}/.env
 cp hooks/travis/dummy_tokens.env ${TRAVIS_BUILD_DIR}/tokens.env
 make login
-hooks/travis/hooks_base-generated before_install
+npm run travis before_install
 
 # ADD YOUR PARTS HERE

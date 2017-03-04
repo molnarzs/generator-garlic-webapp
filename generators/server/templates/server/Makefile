@@ -4,7 +4,7 @@ export $(shell sed 's/=.*//' .env)
 
 SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
-DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml
+DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml -f docker/docker-compose.dependencies.yml
 DOCKER_COMPOSE_PROD = docker-compose -f docker/docker-compose.prod.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
@@ -20,9 +20,15 @@ endif
 
 # Build the development services.
 build:
-	${DOCKER_COMPOSE} build
-	${DOCKER_RUN_NODEPS} gulp compile
+	-${DOCKER_COMPOSE} build
+	-${DOCKER_RUN_NODEPS} gulp compile
+	-npm run setup
 
+build-all:
+	-${DOCKER_COMPOSE} pull
+	-${DOCKER_COMPOSE} build
+	-${DOCKER_RUN_NODEPS} gulp compile
+	-npm run setup
 
 # Build the distribution package
 dist: clean build
@@ -120,7 +126,7 @@ login:
 
 
 # Push the distribution image to the registry
-push: login
+push:
 	docker push ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
 
 
@@ -145,7 +151,6 @@ debug:
 	${DOCKER_RUN} gulp debug
 
 
-# LATEST_VERSION=$(npm show @${SCOPE}/${PROJECT} version)
 # Tag the image after the latest npm tag
 tag:
 	scripts/tag-image.sh ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}

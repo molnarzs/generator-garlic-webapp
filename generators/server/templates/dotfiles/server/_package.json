@@ -1,7 +1,7 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "project/dist/server/server.js",
+  "main": "dist/server.js",
   "license": "SEE LICENSE IN license.txt",
   "version": "0.0.0",
   "repository": {
@@ -27,21 +27,34 @@
     "npm": ">=3.0.0",
     "node": ">=5.0.0"
   },
-  "dependencies": {
-    "garlictech-common-server": "^0.0"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "setup": "scripts/setup.sh",
+    "build:dev": "make build",
+    "build:dev:all": "make build-all",
+    "build:prod": "make dist",
+    "npm": "docker/npm.sh",
+    "clean": "make clean",
     "commit": "docker/commit.sh",
+    "release": "docker/semantic-release.sh",
     "start": "make start",
+    "start:dev": "make start",
+    "start:prod": "make start-prod",
+    "stop:dev": "make stop",
+    "lint": "make lint",
     "unittest": "make unittest",
-    "systemtest": "make systemtest"
+    "unittest:watch": "make unittest",
+    "e2etest": "docker/e2etest.sh",
+    "systemtest": "make systemtest",
+    "bash": "docker/bash.sh",
+    "travis": "docker/travis.sh $@",
+    "deploy": "docker/deploy.sh $@"
   },
-  "files": ["project/dist"],
+  "files": ["dist"],
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
-    }
+    },
+    "dockerWorkflowVersion": <%= c.dockerWorkflowVersion %>
   }
 }

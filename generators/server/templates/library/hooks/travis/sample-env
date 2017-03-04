@@ -1,5 +1,4 @@
 DOCKER_REGISTRY=<%= c.dockerRepo %>
 PROJECT=<%= c.appNameKC %>
 SCOPE=<%= c.scope %>
-TARGET_IMAGE_NAME=<%= c.appNameKC %>_dev
 NODE_ENV=production

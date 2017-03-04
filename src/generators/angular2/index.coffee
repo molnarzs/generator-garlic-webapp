@@ -57,8 +57,15 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         default : true
         message : 'Configure travis.ci?'
         store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerWorkflowVersion'
+        default : 27
+        message : 'Docker workflow version?'
+        store   : true
       }
     ], cb.bind @
+
 
   writing:
     createConfig: ->
@@ -69,6 +76,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @conf.webpackServerName = "#{@conf.scope}.#{@conf.appNameKC}.webpack-server"
       @conf.distImageName = "#{@conf.dockerRepo}/#{@conf.appNameKC}"
       @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
+      @conf.dockerWorkflowVersion = @answers.dockerWorkflowVersion
 
       if @conf.projectType is 'module'
         @conf.selectorPrefix = "#{@conf.scope}-#{@conf.appNameKC}"
@@ -85,10 +93,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {conf: @conf}
-
-      if @conf.projectType is 'site'
-        @fs.copy @templatePath('default_assets/**/*'), @destinationPath("./src/")
-
       cb()
 
 

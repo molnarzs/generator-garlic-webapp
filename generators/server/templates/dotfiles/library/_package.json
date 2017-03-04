@@ -1,9 +1,9 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "project/dist/index.js",
+  "main": "dist/index.js",
+  "files": ["dist"],
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
@@ -28,17 +28,18 @@
     "node": ">=5.0.0"
   },
   "dependencies": {},
+  "devDependencies": {},
   "scripts": {
-    "setup": "scripts/setup.sh",
+    "build": "make build",
+    "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
-    "start": "make start",
-    "unittest": "make unittest",
-    "systemtest": "make systemtest"
+    "unittest": "make unittest"
   },
-  "files": ["project/dist"],
+  "files": ["dist"],
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
-    }
+    },
+    "dockerWorkflowVersion": <%= c.dockerWorkflowVersion %>
   }
 }

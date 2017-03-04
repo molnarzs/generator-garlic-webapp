@@ -28,20 +28,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     done = this.async();
     cb = (function(_this) {
       return function(answers) {
-        var workflowsServerType;
         _this.answers = answers;
         _this.config.set({
           scope: _this.answers.scope
         });
         _this.config.set({
-          type: _this.answers.type
-        });
-        workflowsServerType = _this.answers.type === 'loopback' ? "workflows-loopback-server" : "workflows-server";
-        _this.config.set({
-          workflowsType: _this.answers.workflowsServerType
-        });
-        _this.config.set({
-          type: _this.answers.type
+          projectType: _this.answers.projectType
         });
         return done();
       };
@@ -84,6 +76,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         "default": true,
         message: 'Create github repo?',
         store: true
+      }, {
+        type: 'input',
+        name: 'dockerWorkflowVersion',
+        "default": 27,
+        message: 'Docker workflow version?',
+        store: true
       }
     ], cb.bind(this));
   },
@@ -104,8 +102,10 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
     },
     createConfig: function() {
       generatorLib.createConfig.bind(this)();
+      this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
       this.conf.dockerMachine = this.answers.dockerMachine;
       this.conf.dockerRepo = this.answers.dockerRepo != null ? this.answers.dockerRepo : "docker.garlictech.com";
+      this.conf.workflowsServerType = this.answers.projectType === 'loopback' ? "workflows-loopback-server" : "workflows-server";
       if (this.answers.projectType === "express") {
         this.conf.type = "server-common";
       }
@@ -140,6 +140,9 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         this.fs.copyTpl(this.templatePath('dotfiles/server/_dockerignore'), this.destinationPath("./.dockerignore"), {
           c: this.conf
         });
+        this.fs.copyTpl(this.templatePath('dotfiles/server/_env'), this.destinationPath("./.env"), {
+          c: this.conf
+        });
         return cb();
       }
     },
@@ -151,6 +154,9 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
           c: this.conf
         });
         this.fs.copyTpl(this.templatePath('dotfiles/library/_package.json'), this.destinationPath("./package.json"), {
+          c: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/library/_env'), this.destinationPath("./.env"), {
           c: this.conf
         });
         return cb();
@@ -216,14 +222,6 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
         });
         return cb();
       }
-    }
-  },
-  install: {
-    setupEnvironment: function() {
-      var cb;
-      cb = this.async();
-      generatorLib.execute("npm run setup");
-      return cb();
     }
   }
 });

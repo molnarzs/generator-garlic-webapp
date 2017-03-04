@@ -12,4 +12,4 @@ docker run \
   -e TRAVIS_BRANCH \
   -e GH_TOKEN=$GITHUB_TOKEN \
   -e GH_USER=$GH_USER \
-  <%= c.dockerRepo %>/workflows-common npm run semantic-release
+  <%= c.dockerRepo %>/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run semantic-release

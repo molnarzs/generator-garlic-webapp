@@ -2,8 +2,6 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-hooks/travis/hooks_base-generated deploy
+npm run travis deploy
 
 # ADD YOUR PARTS HERE
-make tag
-make push

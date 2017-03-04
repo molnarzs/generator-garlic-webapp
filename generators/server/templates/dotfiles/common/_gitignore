@@ -39,8 +39,8 @@ modules/views/
 logs/
 builds/
 project/dist/
+dist/
 bin/
-.env
 *.bak
 .npmrc
 tokens.env

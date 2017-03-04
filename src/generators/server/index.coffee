@@ -20,12 +20,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
     cb = (answers) =>
       @answers = answers
       @config.set {scope: @answers.scope}
-      @config.set {type: @answers.type}
-
-      workflowsServerType = if @answers.type is 'loopback' then "workflows-loopback-server" else "workflows-server"
-      @config.set {workflowsType: @answers.workflowsServerType}
-
-      @config.set {type: @answers.type}
+      @config.set {projectType: @answers.projectType}
       done()
 
     dockerRepo = process.env.DOCKER_REPO
@@ -66,6 +61,12 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         default : true
         message : 'Create github repo?'
         store   : true
+      }, {
+        type    : 'input'
+        name    : 'dockerWorkflowVersion'
+        default : 27
+        message : 'Docker workflow version?'
+        store   : true
       }
     ], cb.bind @
 
@@ -82,8 +83,11 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
 
     createConfig: ->
       generatorLib.createConfig.bind(@)()
+      @conf.dockerWorkflowVersion = @answers.dockerWorkflowVersion
       @conf.dockerMachine = @answers.dockerMachine
       @conf.dockerRepo = if @answers.dockerRepo? then @answers.dockerRepo else "docker.garlictech.com"
+      @conf.workflowsServerType = if @answers.projectType is 'loopback' then "workflows-loopback-server" else "workflows-server"
+
       if @answers.projectType is "express" then @conf.type = "server-common"
       if @answers.projectType is "loopback" then @conf.type = "server-loopback"
 
@@ -102,6 +106,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         @fs.copyTpl @templatePath('server/**/*'), @destinationPath("./"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/server/_package.json'), @destinationPath("./package.json"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/server/_dockerignore'), @destinationPath("./.dockerignore"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/server/_env'), @destinationPath("./.env"), {c: @conf}
         cb()
 
 
@@ -110,6 +115,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb = @async()
         @fs.copyTpl @templatePath('library/**/*'), @destinationPath("./"), {c: @conf}
         @fs.copyTpl @templatePath('dotfiles/library/_package.json'), @destinationPath("./package.json"), {c: @conf}
+        @fs.copyTpl @templatePath('dotfiles/library/_env'), @destinationPath("./.env"), {c: @conf}
         cb()
 
 
@@ -153,12 +159,5 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
         cb = @async()
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
-
-
-  install:
-    setupEnvironment: ->
-      cb = @async()
-      generatorLib.execute "npm run setup"
-      cb()
 
 module.exports = GarlicWebappServerGenerator

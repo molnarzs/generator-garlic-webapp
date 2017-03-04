@@ -5,7 +5,8 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.js",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "license": "SEE LICENSE IN license.txt",
   "repository": {
@@ -34,38 +35,29 @@
     "node": ">=5.0.0"
   },
   "scripts": {
-    "unittest": "docker/unittest.sh",
-    "build:docker": "docker/build-dev.sh $@",
-    "build:docker:all": "docker/build-dev.sh --pull --no-cache",
+    "setup": "docker/setup.sh",
     "build:dev": "docker/build-dev.sh $@",
     "build:dev:all": "docker/build-dev.sh --pull --no-cache",
     "build:prod": "docker/build-prod.sh",
+    "npm": "docker/npm.sh",
     "clean": "docker/npm.sh clean",
-    "setup": "scripts/setup.sh",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
     "start": "docker/start-dev.sh",
     "start:dev": "docker/start-dev.sh",
     "start:prod": "docker/start-prod.sh $@",
     "stop:dev": "docker/stop-devsh",
+    "lint": "docker/unittest.sh lint",
+    "unittest": "docker/unittest.sh unittest",
+    "unittest:watch": "docker/unittest.sh unittest:watch",
     "e2etest": "docker/e2etest.sh",
-    "bash": "docker/bash.sh"
+    "bash": "docker/bash.sh",
+    "semantic-release": "docker/semantic-release.sh",
+    "travis": "docker/travis.sh $@"
   },
-  "dependencies": {
-    "@angular/common": "2.4.5",
-    "@angular/compiler": "2.4.5",
-    "@angular/core": "2.4.5",
-    "@angular/forms": "2.4.5",
-    "@angular/http": "2.4.5",
-    "@angular/platform-browser": "2.4.5",
-    "@angular/platform-browser-dynamic": "2.4.5",
-    "@angular/router": "3.4.5",
-    "rxjs": "^5.0.1"
-  },
-  "devDependencies": {
-    "@types/jasmine": "^2.5.36",
-    "codelyzer": "^2.0.0-beta.4",
-    "jasmine-core": "~2.5.2",
-    "@types/node": "6.0.51"
+  "dependencies": {},
+  "devDependencies": {},
+  "config": {
+    "dockerWorkflowVersion": <%= conf.dockerWorkflowVersion %>
   }
 }

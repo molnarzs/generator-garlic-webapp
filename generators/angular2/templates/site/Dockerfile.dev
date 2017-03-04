@@ -1,4 +1,4 @@
-FROM <%= conf.dockerRepo %>/angular2-webapp
+FROM <%= conf.dockerRepo %>/angular2-webapp:<%= conf.dockerWorkflowVersion %>
 
 COPY ./package.json /app/package_project.json
 COPY ./bower.json /app
@@ -7,10 +7,3 @@ COPY ./bower.json /app
 RUN scripts/install-project-dependencies.sh package_project.json
 
 #  bower install --silent --allow-root
-
-# Don't modify these lines - END
-COPY ./src/dll /app/config/dll
-RUN echo "APP_ENV=development" > /app/.env
-RUN npm run build:dll
-COPY ./tslint.json tsconfig.json /app/
-# Don't modify these lines - START :)

@@ -5,11 +5,11 @@ services:
     build:
       context: ..
     volumes:
-      - "../src:/app/project/src"
-      - "../hooks:/app/project/hooks"
+      - "../src:/app/src"
+      - "../dev-site:/app/dev-site"
+      - "../hooks:/app/hooks"
       - "../reports:/app/reports"
       - "../dist:/app/dist"
-      - "../dev-site:/app/project/dev-site"
     environment:
       - NODE_ENV
       - CI
