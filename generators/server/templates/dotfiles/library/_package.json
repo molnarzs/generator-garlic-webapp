@@ -2,7 +2,10 @@
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
@@ -34,9 +37,9 @@
     "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
     "unittest": "make unittest",
-    "travis": "docker/travis.sh $@"
+    "travis": "docker/travis.sh $@",
+    "release": "docker/semantic-release.sh"
   },
-  "files": ["dist"],
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"

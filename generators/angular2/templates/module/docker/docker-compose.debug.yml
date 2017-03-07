@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  <%= conf.webpackServerName %>:
+    ports:
+      - "5858:5858"
+    environment:
+      - DEBUG
