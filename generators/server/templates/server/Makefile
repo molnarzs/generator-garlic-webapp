@@ -29,6 +29,7 @@ build-all:
 	-${DOCKER_COMPOSE} pull
 	-${DOCKER_COMPOSE_BUILD} build
 	-${DOCKER_RUN_NODEPS} gulp compile
+	-docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
 	-npm run setup
 
 # Build the distribution package
