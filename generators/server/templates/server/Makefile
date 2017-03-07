@@ -5,6 +5,7 @@ export $(shell sed 's/=.*//' .env)
 SERVICE_NAME=${SCOPE}.${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml -f docker/docker-compose.dependencies.yml
+DOCKER_COMPOSE_BUILD = docker-compose -f docker/docker-compose.yml
 DOCKER_COMPOSE_PROD = docker-compose -f docker/docker-compose.prod.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
@@ -20,16 +21,18 @@ endif
 
 # Build the development services.
 build:
-	-${DOCKER_COMPOSE} build
+	-${DOCKER_COMPOSE_BUILD} build
 	-${DOCKER_RUN_NODEPS} gulp compile
+
 
 build-all:
 	-${DOCKER_COMPOSE} pull
-	-${DOCKER_COMPOSE} build
+	-${DOCKER_COMPOSE_BUILD} build
 	-${DOCKER_RUN_NODEPS} gulp compile
+	-npm run setup
 
 # Build the distribution package
-dist: clean build
+dist:
 	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
 
 
