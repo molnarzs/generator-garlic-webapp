@@ -22,13 +22,11 @@ endif
 build:
 	-${DOCKER_COMPOSE} build
 	-${DOCKER_RUN_NODEPS} gulp compile
-	-npm run setup
 
 build-all:
 	-${DOCKER_COMPOSE} pull
 	-${DOCKER_COMPOSE} build
 	-${DOCKER_RUN_NODEPS} gulp compile
-	-npm run setup
 
 # Build the distribution package
 dist: clean build

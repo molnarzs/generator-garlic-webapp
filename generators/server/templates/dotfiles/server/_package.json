@@ -3,7 +3,6 @@
   "description": "<%= c.appname %>",
   "main": "dist/server.js",
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
