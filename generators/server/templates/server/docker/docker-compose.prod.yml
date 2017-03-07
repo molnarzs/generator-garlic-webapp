@@ -8,3 +8,5 @@ services:
       - "./tokens.env"
     ports:
       - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/asset-manager
