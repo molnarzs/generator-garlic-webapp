@@ -52,7 +52,6 @@
     "unittest:watch": "docker/unittest.sh unittest:watch",
     "e2etest": "docker/e2etest.sh",
     "bash": "docker/bash.sh",
-    "semantic-release": "docker/semantic-release.sh",
     "travis": "docker/travis.sh $@"
   },
   "dependencies": {},
