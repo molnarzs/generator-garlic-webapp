@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
+# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
+npm run travis after_success
+
 if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
   echo "Not releasing in pull request."
 else
-  npm run travis release
   make tag
   make push
 fi
 
-# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-npm run travis after_success
+# ADD YOUR PARTS HERE
