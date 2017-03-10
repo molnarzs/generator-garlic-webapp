@@ -21,26 +21,17 @@ build:
 	${DOCKER_COMPOSE} build
 	${DOCKER_RUN_NODEPS} gulp compile
 
-
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
 start:
-	${DOCKER_RUN} gulp
-
+	${DOCKER_COMPOSE} up
 
 # Execute the unit tests
 unittest:
 	${DOCKER_RUN_NODEPS} gulp unittest
 
-
-# Execute the system tests
-systemtest: build
-	${DOCKER_RUN} scripts/systemtest.sh
-
-
 # Login to the docker registry of the project
 login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
-
 
 # Start bash in the development service
 bash:
