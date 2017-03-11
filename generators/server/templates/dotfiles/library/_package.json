@@ -36,8 +36,8 @@
     "build": "make build",
     "setup": "docker/setup.sh",
     "commit": "docker/commit.sh",
+    "start": "make start",
     "unittest": "make unittest",
-    "travis": "docker/travis.sh $@",
     "release": "docker/semantic-release.sh"
   },
   "config": {
