@@ -11,4 +11,4 @@ docker run -i -t \
   -e TRAVIS_COMMIT \
   -e GH_USER \
   -e GH_TOKEN \
-  <%= c.dockerRepo %>/workflows-library:${npm_package_config_dockerWorkflowVersion} npm run travis $1
+  <%= c.dockerRepo %>/workflows-library:${npm_package_config_dockerWorkflowVersion} npm run travis $@

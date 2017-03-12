@@ -38,12 +38,13 @@
     "commit": "docker/commit.sh",
     "start": "make start",
     "unittest": "make unittest",
-    "release": "docker/semantic-release.sh"
+    "release": "docker/semantic-release.sh",
+    "travis": "docker/travis.sh $@"
   },
   "config": {
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
     },
-    "dockerWorkflowVersion": <%= c.dockerWorkflowVersion %>
+    "dockerWorkflowVersion": "<%= c.dockerWorkflowVersion %>"
   }
 }
