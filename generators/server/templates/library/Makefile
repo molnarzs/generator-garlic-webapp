@@ -25,6 +25,10 @@ build:
 start:
 	${DOCKER_COMPOSE} up
 
+# Stop the development server and the defined services.
+stop:
+	${DOCKER_COMPOSE} kill
+
 # Execute the unit tests
 unittest:
 	${DOCKER_RUN_NODEPS} gulp unittest
