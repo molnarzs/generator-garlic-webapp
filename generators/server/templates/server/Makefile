@@ -104,7 +104,7 @@ systemtest:
 
 # Execute the smoke tests
 smoketest:
-	project/test/smoke/smoke_test.sh
+	test/smoke/smoke_test.sh
 
 
 # List the running processes related to the server
