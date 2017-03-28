@@ -29,6 +29,7 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
+    "setup": "docker/setup.sh",
     "build:dev": "make build",
     "build:dev:all": "make build-all",
     "build:prod": "make dist",
