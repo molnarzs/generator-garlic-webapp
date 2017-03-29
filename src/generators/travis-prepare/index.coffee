@@ -38,6 +38,10 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
       "Enter the github personal token:"
       true
 
+    generatorLib.pushToQuestions.bind(@) questions, 'npmToken', 'input', process.env["NPM_TOKEN_#{@conf.scopeCC}"],
+      "Enter the NPM token:"
+      true
+
     @prompt questions, cb.bind @
 
   writing:

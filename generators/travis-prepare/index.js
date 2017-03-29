@@ -34,6 +34,7 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     generatorLib.pushToQuestions.bind(this)(questions, 'dockerPassword', 'input', process.env.DOCKER_PASSWORD, "Docker private repo password: (we take the default from the environment variable DOCKER_PASSWORD):", true);
     generatorLib.pushToQuestions.bind(this)(questions, 'githubUser', 'input', process.env.GITHUB_USER, "Enter the github user:", true);
     generatorLib.pushToQuestions.bind(this)(questions, 'githubToken', 'input', process.env.GITHUB_TOKEN, "Enter the github personal token:", true);
+    generatorLib.pushToQuestions.bind(this)(questions, 'npmToken', 'input', process.env["NPM_TOKEN_" + this.conf.scopeCC], "Enter the NPM token:", true);
     return this.prompt(questions, cb.bind(this));
   },
   writing: {
