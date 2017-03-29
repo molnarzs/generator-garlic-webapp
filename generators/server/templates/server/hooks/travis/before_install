@@ -5,6 +5,7 @@ set -e
 cp hooks/travis/sample-env ${TRAVIS_BUILD_DIR}/.env
 cp hooks/travis/dummy_tokens.env ${TRAVIS_BUILD_DIR}/docker/tokens.env
 make login
+echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 npm run travis before_install
 
 # ADD YOUR PARTS HERE

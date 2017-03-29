@@ -8,7 +8,7 @@ while ! TEST_OUTPUT=`curl -s --fail http://localhost:3000/alive`;
 done
 
 ## Assert server response
-if [[ "$TEST_OUTPUT" == *"started"* ]]
+if [[ "$TEST_OUTPUT" == *"Success"* ]]
 then
   echo "Smoke test passed"
 else
