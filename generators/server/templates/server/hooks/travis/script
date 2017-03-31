@@ -8,4 +8,5 @@ npm run travis script
 npm run unittest
 make kill-all
 npm run systemtest
+make kill-all
 make smoketest

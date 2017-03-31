@@ -15,6 +15,7 @@ Dockerfile*
 test
 dist/**/test/*unit-tests.js
 dist/**/test/*.spec.js
+dist/test
 tokens.env
 secrets.tgz
 secrets.tgz.enc
