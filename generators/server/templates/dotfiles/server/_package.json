@@ -1,7 +1,7 @@
 {
   "name": "@<%= c.scope %>/<%= c.appNameKC %>",
   "description": "<%= c.appname %>",
-  "main": "dist/server.js",
+  "main": "dist/server/server.js",
   "license": "SEE LICENSE IN license.txt",
   "repository": {
     "type": "git",
