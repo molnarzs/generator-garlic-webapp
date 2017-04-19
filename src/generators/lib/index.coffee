@@ -8,7 +8,7 @@ Methods =
     scopecC = _.camelCase conf.scope
     scopeCC = _.upperFirst scopecC
     appNameAsIs = "#{conf.appname}"
-    appNameKC = _.kebabCase conf.appname
+    appNameKC = _.kebabCase(conf.appname).replace('ng-2', 'ng2')
     appNameFQ = _.kebabCase appNameAsIs
     appNameFQcC = _.camelCase appNameFQ
 
