@@ -57,6 +57,6 @@
   "dependencies": {},
   "devDependencies": {},
   "config": {
-    "dockerWorkflowVersion": <%= conf.dockerWorkflowVersion %>
+    "dockerWorkflowVersion": "<%= conf.dockerWorkflowVersion %>"
   }
 }
