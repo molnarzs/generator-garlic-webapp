@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <title></title>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimum-scale=1.0">
+  <% if (webpackConfig.htmlElements.headTags) { %>
+    <!-- Configured Head Tags  -->
+    <%= webpackConfig.htmlElements.headTags %>
+      <% } %>
+
+        <!-- base url -->
+        <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+</head>
+
+<body>
+  <app-main>
+    <i class="center-fix main-spinner fa fa-spin fa-spinner"></i>
+  </app-main>
+
+  <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+    <!-- Webpack Dev Server reload -->
+    <script src="/webpack-dev-server.js"></script>
+    <% } %>
+
+</body>
+
+</html>
