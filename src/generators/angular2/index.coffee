@@ -60,7 +60,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'input'
         name    : 'dockerWorkflowVersion'
-        default : 'v1.17.32'
+        default : 'v1.18.11'
         message : 'Docker workflow version?'
         store   : true
       }
