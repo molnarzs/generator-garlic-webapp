@@ -78,7 +78,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'dockerWorkflowVersion',
-        "default": 'v1.18.11',
+        "default": 'v1.19.0',
         message: 'Docker workflow version?',
         store: true
       }
@@ -92,6 +92,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       appname = match ? match[1] : this.appname;
       this.conf.dockerRepo = this.answers.dockerRepo;
       this.conf.webpackServerName = this.conf.scope + "." + this.conf.appNameKC + ".webpack-server";
+      this.conf.backendServerName = this.conf.scope + "." + this.conf.appNameKC + ".backend";
       this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
       this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
       this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
@@ -110,9 +111,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
         conf: this.conf
       });
-      this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
-        conf: this.conf
-      });
       this.fs.copyTpl(this.templatePath('dotfiles/_npmignore'), this.destinationPath("./.npmignore"), {
         conf: this.conf
       });
@@ -123,10 +121,19 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
     },
     projectTypeFiles: function() {
       if (this.conf.projectType === 'module') {
-        return this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
+        this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
+          conf: this.conf
+        });
+        this.fs.copyTpl(this.templatePath('dotfiles/module/_env'), this.destinationPath("./.env"), {
+          conf: this.conf
+        });
+        return this.fs.copyTpl(this.templatePath('dotfiles/module/_package.json'), this.destinationPath("./package.json"), {
           conf: this.conf
         });
       } else {
+        this.fs.copyTpl(this.templatePath('dotfiles/site/_package.json'), this.destinationPath("./package.json"), {
+          conf: this.conf
+        });
         return this.fs.copyTpl(this.templatePath('site/**/*'), this.destinationPath("./"), {
           conf: this.conf
         });

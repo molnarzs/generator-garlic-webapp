@@ -4,10 +4,11 @@ services:
   <%= conf.webpackServerName %>:
     build:
       context: ..
+      dockerfile: Dockerfile.ngx
     volumes:
-      - "../src:/app/src"
+      - "../src:/app/src/"
       - "../dev-site:/app/dev-site"
-      - "../hooks:/app/hooks"
+      - "./hooks:/app/hooks"
       - "../reports:/app/reports"
       - "../dist:/app/dist"
     environment:

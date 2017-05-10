@@ -60,7 +60,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'input'
         name    : 'dockerWorkflowVersion'
-        default : 'v1.18.11'
+        default : 'v1.19.0'
         message : 'Docker workflow version?'
         store   : true
       }
@@ -74,6 +74,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       appname = if match then match[1] else @appname
       @conf.dockerRepo = @answers.dockerRepo
       @conf.webpackServerName = "#{@conf.scope}.#{@conf.appNameKC}.webpack-server"
+      @conf.backendServerName = "#{@conf.scope}.#{@conf.appNameKC}.backend"
       @conf.distImageName = "#{@conf.dockerRepo}/#{@conf.appNameKC}"
       @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
       @conf.dockerWorkflowVersion = @answers.dockerWorkflowVersion
@@ -90,7 +91,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     mainFiles: ->
       cb = @async()
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {conf: @conf}
-      @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {conf: @conf}
       cb()
@@ -99,7 +99,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
     projectTypeFiles: ->
       if @conf.projectType is 'module'
         @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
+        @fs.copyTpl @templatePath('dotfiles/module/_env'), @destinationPath("./.env"), {conf: @conf}
+        @fs.copyTpl @templatePath('dotfiles/module/_package.json'), @destinationPath("./package.json"), {conf: @conf}
       else
+        @fs.copyTpl @templatePath('dotfiles/site/_package.json'), @destinationPath("./package.json"), {conf: @conf}
         @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
 
 

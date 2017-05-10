@@ -1,0 +1,66 @@
+{
+  "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+  "description": "<%= conf.appNameAsIs %>",
+  "main": "dist/main.bundle.js",
+  "module": "dist/lib/index.js",
+  "typings": "dist/lib/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "license": "SEE LICENSE IN license.txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>.git"
+  },
+  "author": {
+    "name": "<%= conf.scopeCC %>",
+    "email": "contact@<%= conf.scope %>.com",
+    "url": "http://www.<%= conf.scope %>.com"
+  },
+  "contributors": [
+    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+  ],
+  "keywords": [
+    "<%= conf.appName %>",
+    "<%= conf.appNameKC %>",
+    "<%= conf.scope %>"
+  ],
+  "bugs": {
+    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
+  },
+  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
+  "engines": {
+    "npm": ">=3.0.0",
+    "node": ">=5.0.0"
+  },
+  "scripts": {
+    "setup": "docker/setup.sh",
+    "ngx:build:dev": "docker/build-dev.sh $@",
+    "ngx:build:dev:all": "docker/build-dev.sh --pull --no-cache",
+    "ngx:build:prod": "docker/build-prod.sh",
+    "ngx:start:dev": "docker/start-dev.sh",
+    "ngx:start:prod": "docker/start-prod.sh $@",
+    "ngx:stop:dev": "docker/stop-devsh",
+    "ngx:unittest": "docker/unittest.sh unittest",
+    "ngx:unittest:watch": "docker/unittest.sh unittest:watch",
+    "npm": "docker/npm.sh",
+    "clean": "docker/npm.sh clean",
+    "commit": "docker/commit.sh",
+    "release": "docker/semantic-release.sh",
+    "start": "docker/start-dev.sh",
+    "lint": "docker/unittest.sh lint",
+    "e2etest": "docker/e2etest.sh",
+    "bash": "docker/bash.sh",
+    "travis": "docker/travis.sh $@",
+    "semantic-release": "docker/semantic-release.sh",
+    "backend:start": "make start",
+    "backend:build": "make build",
+    "backend:unittest": "make unittest"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "config": {
+    "dockerWorkflowVersion": "<%= conf.dockerWorkflowVersion %>"
+  }
+}
