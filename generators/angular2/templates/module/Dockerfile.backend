@@ -1,4 +1,4 @@
-FROM <%= conf.dockerRepo %>/workflows-library:<%= conf.dockerWorkflowVersion %>
+FROM garlictech2/workflows-library:<%= conf.dockerWorkflowVersion %>
 
 # install_dependencies will merge deps in the container
 COPY ./package.json /app/package_project.json

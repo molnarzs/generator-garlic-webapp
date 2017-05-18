@@ -1,9 +1,9 @@
-FROM <%= conf.dockerRepo %>/angular2-webapp:<%= conf.dockerWorkflowVersion %>
+FROM garlictech2/angular2-webapp:<%= conf.dockerWorkflowVersion %>
 
+ARG NPM_TOKEN
 COPY ./package.json /app/package_project.json
-COPY ./bower.json /app
 
 # install_dependencies will merge deps in the container
-RUN scripts/install-project-dependencies.sh package_project.json
+RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
+  scripts/install-project-dependencies.sh package_project.json
 
-#  bower install --silent --allow-root

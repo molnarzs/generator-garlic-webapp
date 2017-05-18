@@ -12,4 +12,4 @@ docker run \
   -e TRAVIS_BRANCH \
   -e GH_TOKEN \
   -e GH_USER \
-  <%= c.dockerRepo %>/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run semantic-release
+  garlictech2/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run semantic-release

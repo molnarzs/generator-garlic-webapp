@@ -1,4 +1,12 @@
-node_modules
-.vscode
+.git
+.gitignore
+README.md
+docker-compose.*
 docker
-hooks
+e2e
+Dockerfile
+node_modules
+.travis.yml
+gulpfile.coffee
+npm-debug.log
+README.md

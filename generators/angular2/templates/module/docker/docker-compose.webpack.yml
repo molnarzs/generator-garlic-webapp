@@ -5,6 +5,8 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile.ngx
+      args:
+        NPM_TOKEN: $NPM_TOKEN_<%= conf.scopeCC %>
     volumes:
       - "../src:/app/src/"
       - "../dev-site:/app/dev-site"
