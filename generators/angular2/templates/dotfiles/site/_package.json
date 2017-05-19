@@ -26,10 +26,6 @@
     "<%= conf.appNameKC %>",
     "<%= conf.scope %>"
   ],
-  "bugs": {
-    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
-  },
-  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
   "engines": {
     "npm": ">=3.0.0",
     "node": ">=5.0.0"

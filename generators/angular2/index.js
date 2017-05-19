@@ -78,7 +78,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'dockerWorkflowVersion',
-        "default": 'v1.19.3',
+        "default": 'v1.19.4',
         message: 'Docker workflow version?',
         store: true
       }
@@ -91,8 +91,8 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       match = /(.*) angular/.exec(this.appname);
       appname = match ? match[1] : this.appname;
       this.conf.dockerRepo = this.answers.dockerRepo;
-      this.conf.webpackServerName = this.conf.scope + "." + this.conf.appNameKC + ".webpack-server";
-      this.conf.backendServerName = this.conf.scope + "." + this.conf.appNameKC + ".backend";
+      this.conf.webpackServerName = this.conf.appNameKC + ".webpack-server";
+      this.conf.backendServerName = this.conf.appNameKC + ".backend";
       this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
       this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
       this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
@@ -117,14 +117,14 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/_gitignore'), this.destinationPath("./.gitignore"), {
         conf: this.conf
       });
+      this.fs.copyTpl(this.templatePath('dotfiles/_env'), this.destinationPath("./.env"), {
+        conf: this.conf
+      });
       return cb();
     },
     projectTypeFiles: function() {
       if (this.conf.projectType === 'module') {
         this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
-          conf: this.conf
-        });
-        this.fs.copyTpl(this.templatePath('dotfiles/module/_env'), this.destinationPath("./.env"), {
           conf: this.conf
         });
         return this.fs.copyTpl(this.templatePath('dotfiles/module/_package.json'), this.destinationPath("./package.json"), {

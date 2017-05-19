@@ -2,7 +2,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-DEV_SERVICE_NAME=${SCOPE}.${PROJECT}.backend
+DEV_SERVICE_NAME=${PROJECT}.backend
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.backend.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
@@ -19,6 +19,11 @@ endif
 # Build the development services.
 build:
 	${DOCKER_COMPOSE} build
+	${DOCKER_RUN_NODEPS} gulp compile
+
+# Build the all development services.
+build-all:
+	${DOCKER_COMPOSE} build --no-cache --pull
 	${DOCKER_RUN_NODEPS} gulp compile
 
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.

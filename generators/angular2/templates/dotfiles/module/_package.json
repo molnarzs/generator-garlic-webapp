@@ -26,10 +26,6 @@
     "<%= conf.appNameKC %>",
     "<%= conf.scope %>"
   ],
-  "bugs": {
-    "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/issues"
-  },
-  "homepage": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>/wiki/Home",
   "engines": {
     "npm": ">=3.0.0",
     "node": ">=5.0.0"
@@ -40,23 +36,22 @@
     "ngx:build:dev:all": "docker/build-dev.sh --pull --no-cache",
     "ngx:build:prod": "docker/build-prod.sh",
     "ngx:start:dev": "docker/start-dev.sh",
-    "ngx:start:prod": "docker/start-prod.sh $@",
     "ngx:stop:dev": "docker/stop-devsh",
     "ngx:unittest": "docker/unittest.sh unittest",
     "ngx:unittest:watch": "docker/unittest.sh unittest:watch",
-    "npm": "docker/npm.sh",
+    "backend:build": "make build",
+    "backend:build:all": "make build-all",
+    "backend:start:dev": "make start",
+    "backend:stop:dev": "make stop",
+    "backend:unittest": "make unittest",
+    "lint": "docker/unittest.sh lint",
+    "bash": "docker/bash.sh",
     "clean": "docker/npm.sh clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
     "start": "docker/start-dev.sh",
-    "lint": "docker/unittest.sh lint",
-    "e2etest": "docker/e2etest.sh",
-    "bash": "docker/bash.sh",
-    "travis": "docker/travis.sh $@",
-    "semantic-release": "docker/semantic-release.sh",
-    "backend:start": "make start",
-    "backend:build": "make build",
-    "backend:unittest": "make unittest"
+    "npm": "docker/npm.sh",
+    "travis": "docker/travis.sh $@"
   },
   "dependencies": {},
   "devDependencies": {},
