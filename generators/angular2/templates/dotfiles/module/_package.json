@@ -1,9 +1,9 @@
 {
   "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+  "version": "0.0.0",
   "description": "<%= conf.appNameAsIs %>",
-  "main": "dist/main.bundle.js",
-  "module": "dist/lib/index.js",
-  "typings": "dist/lib/index.d.ts",
+  "main": "dist/ngx/main.bundle.js",
+  "typings": "dist/ngx/lib/ngx/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -45,7 +45,8 @@
     "backend:stop:dev": "make stop",
     "backend:unittest": "make unittest",
     "lint": "docker/unittest.sh lint",
-    "bash": "docker/bash.sh",
+    "ngx:bash": "docker/bash-ngx.sh",
+    "backend:bash": "docker/bash-backend.sh",
     "clean": "docker/npm.sh clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",

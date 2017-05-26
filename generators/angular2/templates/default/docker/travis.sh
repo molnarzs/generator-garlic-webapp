@@ -9,6 +9,8 @@ docker run -i -t \
   -e TRAVIS_EVENT_TYPE \
   -e TRAVIS_REPO_SLUG \
   -e TRAVIS_COMMIT \
-  -e GH_USER \
+  -e GH_USER="$(git config --get user.name)" \
+  -e GH_EMAIL="$(git config --get user.email)" \
   -e GH_TOKEN \
-  <%= conf.dockerRepo %>/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run travis $1
+  -e NPM_TOKEN \
+  garlictech2/workflows-common:${npm_package_config_dockerWorkflowVersion} npm run travis $1
