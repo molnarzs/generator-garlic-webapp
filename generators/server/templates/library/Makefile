@@ -21,6 +21,10 @@ build:
 	${DOCKER_COMPOSE} build
 	${DOCKER_RUN_NODEPS} gulp compile
 
+build-all:
+	${DOCKER_COMPOSE} build --no-cache
+	${DOCKER_RUN_NODEPS} gulp compile
+
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
 start:
 	${DOCKER_COMPOSE} up

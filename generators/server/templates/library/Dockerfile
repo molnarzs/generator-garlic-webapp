@@ -1,6 +1,5 @@
 FROM <%= c.dockerRepo %>/workflows-library:<%= c.dockerWorkflowVersion %>
 
-COPY ./package.json /app/package_project.json
-
-# install_dependencies will merge deps in the container
-RUN scripts/install-project-dependencies.sh package_project.json
+# These two lines should not be changed!
+COPY ./package.json /app/package.project.json
+RUN scripts/install_dependencies

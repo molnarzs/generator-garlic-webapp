@@ -8,3 +8,5 @@ echo "Updating package.json..."
 ${DOCKER_RUN_CMD} scripts/cat-package-json.sh > package.json
 echo "Updating tslint.json..."
 ${DOCKER_RUN_CMD} cat tslint.json > tslint.json
+echo "Updating tsconfig.json..."
+${DOCKER_RUN_CMD} cat tsconfig.json > tsconfig.json
