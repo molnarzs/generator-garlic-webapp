@@ -1,8 +1,6 @@
 FROM garlictech2/angular2-module:<%= conf.dockerWorkflowVersion %>
 
+# These lines should not be changed
 ARG NPM_TOKEN
 COPY ./package.json /app/package_project.json
-
-# install_dependencies will merge deps in the container
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
-  scripts/install-project-dependencies.sh package_project.json
+RUN scripts/install_dependencies
