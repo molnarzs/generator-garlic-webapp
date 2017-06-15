@@ -37,7 +37,6 @@ logs/
 dist/
 *.bak
 credentials.json
-.env
 e2e/src/.pki
 e2e/src/supervisord.log
 .npmrc

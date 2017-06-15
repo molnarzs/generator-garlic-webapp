@@ -4,3 +4,4 @@ FROM garlictech2/angular2-module:<%= conf.dockerWorkflowVersion %>
 ARG NPM_TOKEN
 COPY ./package.json /app/package_project.json
 RUN scripts/install_dependencies
+COPY src /app/src/

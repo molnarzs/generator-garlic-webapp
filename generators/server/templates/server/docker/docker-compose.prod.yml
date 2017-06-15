@@ -1,12 +1,10 @@
 version: '2'
 
 services:
-  <%= c.scope %>.<%= c.appNameKC %>.prod:
+  <%= c.appNameKC %>.prod:
     image: <%= c.dockerRepo %>/<%= c.appNameKC %>:latest
     env_file:
       - "./service.env"
       - "./tokens.env"
     ports:
       - "3000:3000"
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/asset-manager

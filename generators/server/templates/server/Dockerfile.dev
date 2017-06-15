@@ -1,5 +1,7 @@
-FROM <%= c.dockerRepo %>/<%= c.workflowsServerType %>:<%= c.dockerWorkflowVersion %>
+FROM garlictech2/<%= c.workflowsServerType %>:<%= c.dockerWorkflowVersion %>
 
-COPY package.json /app/package_project.json
-# install_dependencies will merge deps in the container
-RUN scripts/install-project-dependencies.sh package_project.json
+# These lines should not be changed
+ARG NPM_TOKEN
+COPY ./package.json /app/package_project.json
+RUN scripts/install_dependencies
+COPY src /app/src/
