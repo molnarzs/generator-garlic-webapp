@@ -6,3 +6,4 @@ npm run travis script
 
 # ADD YOUR PARTS HERE
 npm run unittest
+npm run systemtest
