@@ -1,51 +1,54 @@
 {
-  "name": "@<%= c.scope %>/<%= c.appNameKC %>",
-  "description": "<%= c.appname %>",
-  "main": "dist/index.js",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "license": "SEE LICENSE IN license.txt",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
-  },
-  "author": {
-    "name": "<%= c.scopeCC %>",
-    "email": "contact@<%= c.scope %>.com",
-    "url": "http://www.<%= c.scope %>.com"
-  },
-  "contributors": [
-    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-  ],
-  "keywords": [
-    "<%= c.scope %>"
-  ],
-  "bugs": {
-    "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
-  },
-  "homepage": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/wiki/Home",
-  "engines": {
-    "npm": ">=3.0.0",
-    "node": ">=5.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "build": "make build",
-    "build:all": "make build-all",
-    "setup": "docker/setup.sh",
-    "commit": "docker/commit.sh",
-    "start": "make start",
-    "unittest": "make unittest",
-    "release": "docker/semantic-release.sh",
-    "travis": "docker/travis.sh $@"
-  },
-  "config": {
-    "commitizen": {
-      "path": "/app/node_modules/cz-conventional-changelog"
+    "name": "@<%= c.scope %>/<%= c.appNameKC %>",
+    "description": "<%= c.appname %>",
+    "main": "dist/index.js",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "license": "SEE LICENSE IN license.txt",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
     },
-    "dockerWorkflowVersion": "<%= c.dockerWorkflowVersion %>"
-  }
+    "author": {
+        "name": "<%= c.scopeCC %>",
+        "email": "contact@<%= c.scope %>.com",
+        "url": "http://www.<%= c.scope %>.com"
+    },
+    "contributors": [
+        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+    ],
+    "keywords": [
+        "<%= c.scope %>"
+    ],
+    "bugs": {
+        "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
+    },
+    "homepage": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/wiki/Home",
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "build": "make build",
+        "build:all": "make build-all",
+        "setup": "docker/setup.sh",
+        "commit": "docker/commit.sh",
+        "start": "make start",
+        "stop": "make stop",
+        "unittest": "make unittest",
+        "systemtest": "make systemtest",
+        "release": "docker/semantic-release.sh",
+        "travis": "docker/travis.sh $@",
+        "bash": "make bash"
+    },
+    "config": {
+        "commitizen": {
+            "path": "/app/node_modules/cz-conventional-changelog"
+        },
+        "dockerWorkflowVersion": "<%= c.dockerWorkflowVersion %>"
+    }
 }
