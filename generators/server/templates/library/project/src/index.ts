@@ -1,1 +1,2 @@
-console.log("This is a library.");
+require('source-map-support').install()
+console.log("This is a library.")

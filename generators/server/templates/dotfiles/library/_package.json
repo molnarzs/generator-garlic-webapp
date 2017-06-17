@@ -1,7 +1,8 @@
 {
     "name": "@<%= c.scope %>/<%= c.appNameKC %>",
     "description": "<%= c.appname %>",
-    "main": "dist/index.js",
+    "main": "dist/src/index.js",
+    "version": "0.0.0-local",
     "files": [
         "dist",
         "src"
@@ -30,7 +31,9 @@
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "source-map-support": "^0.4.15"
+    },
     "devDependencies": {},
     "scripts": {
         "build": "make build",

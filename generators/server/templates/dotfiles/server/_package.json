@@ -2,6 +2,7 @@
     "name": "@<%= c.scope %>/<%= c.appNameKC %>",
     "description": "<%= c.appname %>",
     "main": "dist/server/server.js",
+    "version": "0.0.0-local",
     "license": "SEE LICENSE IN license.txt",
     "repository": {
         "type": "git",
@@ -26,7 +27,9 @@
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "source-map-support": "^0.4.15"
+    },
     "devDependencies": {},
     "scripts": {
         "setup": "docker/setup.sh",
