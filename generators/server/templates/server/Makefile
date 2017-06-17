@@ -2,7 +2,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-SERVICE_NAME=${SCOPE}.${PROJECT}
+SERVICE_NAME=${PROJECT}
 DEV_SERVICE_NAME=${SERVICE_NAME}.dev
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.net.yml -f docker/docker-compose.dependencies.yml
 DOCKER_COMPOSE_BUILD = docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dependencies.yml

@@ -2,7 +2,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-DEV_SERVICE_NAME=${SCOPE}.${PROJECT}.dev
+DEV_SERVICE_NAME=${PROJECT}.dev
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
@@ -17,8 +17,12 @@ endif
 .PHONY: build dist start unittest systemtest login bash
 
 # Build the development services.
-build:
+build: clean
 	${DOCKER_COMPOSE} build
+	${DOCKER_RUN_NODEPS} gulp compile
+
+build-all:
+	${DOCKER_COMPOSE} build --no-cache
 	${DOCKER_RUN_NODEPS} gulp compile
 
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
@@ -33,6 +37,10 @@ stop:
 unittest:
 	${DOCKER_RUN_NODEPS} gulp unittest
 
+# Execute the system tests
+systemtest:
+	${DOCKER_RUN_NODEPS} scripts/systemtest.sh
+
 # Login to the docker registry of the project
 login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
@@ -40,3 +48,6 @@ login:
 # Start bash in the development service
 bash:
 	${DOCKER_RUN_NODEPS} /bin/bash
+
+clean:
+	rm -rf dist/*

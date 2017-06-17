@@ -1,5 +1,7 @@
 FROM garlictech2/workflows-library:<%= conf.dockerWorkflowVersion %>
 
-# install_dependencies will merge deps in the container
+# These lines should not be changed
+ARG NPM_TOKEN
 COPY ./package.json /app/package_project.json
-RUN scripts/install-project-dependencies.sh package_project.json
+RUN scripts/install_dependencies
+COPY src /app/src/

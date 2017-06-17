@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 set -e
-echo "Generating .env..."
-echo "NODE_ENV=development" >> .env
 
 DOCKER_RUN_CMD="docker-compose -f docker/docker-compose.webpack.yml run -T <%= conf.webpackServerName %>"
 # /app/package_project.json is the package.json in this project, copied into the container.

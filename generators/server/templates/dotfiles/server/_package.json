@@ -1,60 +1,61 @@
 {
-  "name": "@<%= c.scope %>/<%= c.appNameKC %>",
-  "description": "<%= c.appname %>",
-  "main": "dist/server/server.js",
-  "license": "SEE LICENSE IN license.txt",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
-  },
-  "author": {
-    "name": "<%= c.scopeCC %>",
-    "email": "contact@<%= c.scope %>.com",
-    "url": "http://www.<%= c.scope %>.com"
-  },
-  "contributors": [
-    "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-  ],
-  "keywords": [
-    "<%= c.scope %>"
-  ],
-  "bugs": {
-    "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
-  },
-  "homepage": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/wiki/Home",
-  "engines": {
-    "npm": ">=3.0.0",
-    "node": ">=5.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "setup": "docker/setup.sh",
-    "build:dev": "make build",
-    "build:dev:all": "make build-all",
-    "build:prod": "make dist",
-    "npm": "docker/npm.sh",
-    "clean": "make clean",
-    "commit": "docker/commit.sh",
-    "release": "docker/semantic-release.sh",
-    "start": "make start",
-    "start:dev": "make start",
-    "start:prod": "make start-prod",
-    "stop:dev": "make stop",
-    "lint": "make lint",
-    "unittest": "make unittest",
-    "unittest:watch": "make unittest",
-    "e2etest": "docker/e2etest.sh",
-    "systemtest": "make systemtest",
-    "bash": "docker/bash.sh",
-    "travis": "docker/travis.sh $@",
-    "deploy": "docker/deploy.sh $@"
-  },
-  "files": ["dist"],
-  "config": {
-    "commitizen": {
-      "path": "/app/node_modules/cz-conventional-changelog"
+    "name": "@<%= c.scope %>/<%= c.appNameKC %>",
+    "description": "<%= c.appname %>",
+    "main": "dist/server/server.js",
+    "version": "0.0.0-local",
+    "license": "SEE LICENSE IN license.txt",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>.git"
     },
-    "dockerWorkflowVersion": "<%= c.dockerWorkflowVersion %>"
-  }
+    "author": {
+        "name": "<%= c.scopeCC %>",
+        "email": "contact@<%= c.scope %>.com",
+        "url": "http://www.<%= c.scope %>.com"
+    },
+    "contributors": [
+        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+    ],
+    "keywords": [
+        "<%= c.scope %>"
+    ],
+    "bugs": {
+        "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
+    },
+    "homepage": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/wiki/Home",
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "dependencies": {
+        "source-map-support": "^0.4.15"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "setup": "docker/setup.sh",
+        "build:dev": "make build",
+        "build:dev:all": "make build-all",
+        "build:prod": "make dist",
+        "npm": "docker/npm.sh",
+        "clean": "make clean",
+        "commit": "docker/commit.sh",
+        "release": "docker/semantic-release.sh",
+        "start": "make start",
+        "start:dev": "make start",
+        "start:prod": "make start-prod",
+        "stop:dev": "make stop",
+        "unittest": "make unittest",
+        "unittest:watch": "make unittest",
+        "systemtest": "make systemtest",
+        "bash": "docker/bash.sh",
+        "travis": "docker/travis.sh $@",
+        "deploy": "docker/deploy.sh $@"
+    },
+    "files": ["dist"],
+    "config": {
+        "commitizen": {
+            "path": "/app/node_modules/cz-conventional-changelog"
+        },
+        "dockerWorkflowVersion": "<%= c.dockerWorkflowVersion %>"
+    }
 }

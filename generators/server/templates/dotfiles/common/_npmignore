@@ -1,5 +1,4 @@
-server
-client
+project
 .editorconfig
 .jshintrc
 .travis.yml
