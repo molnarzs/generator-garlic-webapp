@@ -1,5 +1,6 @@
 FROM <%= c.dockerRepo %>/workflows-library:<%= c.dockerWorkflowVersion %>
 
-# These two lines should not be changed!
+ARG NPM_TOKEN
 COPY ./package.json /app/package.project.json
-RUN scripts/install_dependencies
+RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
+  scripts/install_dependencies

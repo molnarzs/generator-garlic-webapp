@@ -1,7 +1,6 @@
 FROM garlictech2/<%= c.workflowsServerType %>:<%= c.dockerWorkflowVersion %>
 
-# These lines should not be changed
 ARG NPM_TOKEN
-COPY ./package.json /app/package_project.json
-RUN scripts/install_dependencies
-COPY src /app/src/
+COPY ./package.json /app/package.project.json
+RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
+  scripts/install_dependencies
