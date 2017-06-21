@@ -10,3 +10,4 @@ node_modules
 gulpfile.coffee
 npm-debug.log
 README.md
+reports
