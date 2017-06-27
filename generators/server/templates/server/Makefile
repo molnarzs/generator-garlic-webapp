@@ -123,12 +123,12 @@ logs-all:
 
 
 # Login to the docker registry of the project
-login:
+docker-login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 
 # Push the distribution image to the registry
-push:
+docker-push:
 	docker push ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
 
 
@@ -154,5 +154,5 @@ debug:
 
 
 # Tag the image after the latest npm tag
-tag:
+docker-tag:
 	scripts/tag-image.sh ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}

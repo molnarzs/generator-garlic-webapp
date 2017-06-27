@@ -2,11 +2,7 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-cp hooks/travis/sample-env ${TRAVIS_BUILD_DIR}/.env
-cp hooks/travis/dummy_tokens.env ${TRAVIS_BUILD_DIR}/docker/tokens.env
-make login
-echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-hooks/travis/setup-docker.sh
+hooks/travis/update-docker.sh
 npm run travis before_install
 
 # ADD YOUR PARTS HERE

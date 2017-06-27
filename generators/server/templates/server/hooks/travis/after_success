@@ -7,8 +7,9 @@ npm run travis after_success
 if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
   echo "Not releasing in pull request."
 else
-  make tag
-  make push
+  make docker-login
+  make docker-tag
+  make docker-push
 fi
 
 # ADD YOUR PARTS HERE
