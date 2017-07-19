@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  <%= c.scope %>.<%= c.appNameKC %>.dev:
+  <%= c.appNameKC %>.dev:
     build:
       context: ../
       dockerfile: Dockerfile

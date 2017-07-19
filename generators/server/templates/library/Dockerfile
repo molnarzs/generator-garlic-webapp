@@ -1,4 +1,4 @@
-FROM <%= c.dockerRepo %>/workflows-library:<%= c.dockerWorkflowVersion %>
+FROM garlictech2/workflows-library:<%= c.dockerWorkflowVersion %>
 
 ARG NPM_TOKEN
 COPY ./package.json /app/package.project.json
