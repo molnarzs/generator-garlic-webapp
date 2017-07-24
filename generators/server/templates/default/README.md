@@ -8,3 +8,14 @@
 
 We use [Garlictech workflow manager](https://github.com/Garlictech/workflows) to control development, build, deployment. 
 See the appropriate sections there, It is * important *. For the description of `npm run`, `make`, etc. commands, consult the page.
+
+To start development:
+
+```
+npm run build
+npm run setup
+npm install
+npm start
+```
+
+Mind, that these commands are just proxies to make commands. For a full set of development commands, check the `Makefile`.

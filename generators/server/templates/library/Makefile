@@ -41,13 +41,24 @@ unittest:
 systemtest:
 	${DOCKER_RUN_NODEPS} scripts/systemtest.sh
 
-# Login to the docker registry of the project
-login:
-	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
-
 # Start bash in the development service
 bash:
 	${DOCKER_RUN_NODEPS} /bin/bash
 
 clean:
 	rm -rf dist/*
+
+# Push the distribution image to the registry
+docker-push:
+	docker push ${DOCKER_REGISTRY}/${PROJECT}
+
+docker-pull:
+	${DOCKER_COMPOSE_PROD} pull
+
+# Tag the image after the latest npm tag
+docker-tag:
+	scripts/tag-image.sh ${DOCKER_REGISTRY}/${PROJECT}
+
+# Login to the docker registry of the project
+docker-login:
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}

@@ -14,5 +14,5 @@ services:
     volumes:
       - "../project:/app/project"
       - "../dist:/app/dist"
-      - "../hooks:/app/hooks"
+      - "./hooks:/app/hooks"
     command: "gulp"
