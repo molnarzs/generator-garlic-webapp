@@ -3,7 +3,7 @@ p = require('gulp-load-plugins')()
 
 gulpConfig = (_gulp, config) ->
   GULP = require('gulp-help') _gulp
-  require('garlictech-workflows-common/dist/gulp')(GULP, config)
+  require('./gulp')(GULP, config)
   return GULP
 
 
