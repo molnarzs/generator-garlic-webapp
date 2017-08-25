@@ -167,4 +167,4 @@ docker-tag:
 	scripts/tag-image.sh ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}
 
 lint:
-	tslint --project .
+	${DOCKER_RUN_NODEPS} npm run lint

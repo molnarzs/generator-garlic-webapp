@@ -13,12 +13,8 @@
         "email": "contact@<%= c.scope %>.com",
         "url": "http://www.<%= c.scope %>.com"
     },
-    "contributors": [
-        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-    ],
-    "keywords": [
-        "<%= c.scope %>"
-    ],
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+    "keywords": ["<%= c.scope %>"],
     "bugs": {
         "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
     },
@@ -49,7 +45,8 @@
         "systemtest": "make systemtest",
         "bash": "docker/bash.sh",
         "travis": "docker/travis.sh $@",
-        "deploy": "docker/deploy.sh $@"
+        "deploy": "docker/deploy.sh $@",
+        "lint": "make lint"
     },
     "files": ["dist"],
     "config": {

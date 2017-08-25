@@ -73,4 +73,4 @@ docker-login:
 	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
 
 lint:
-	tslint --project .
+	${DOCKER_RUN_NODEPS} npm run lint

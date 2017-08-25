@@ -3,10 +3,7 @@
     "description": "<%= c.appname %>",
     "main": "dist/src/index.js",
     "version": "0.0.0-local",
-    "files": [
-        "dist",
-        "src"
-    ],
+    "files": ["dist", "src"],
     "license": "SEE LICENSE IN license.txt",
     "repository": {
         "type": "git",
@@ -17,12 +14,8 @@
         "email": "contact@<%= c.scope %>.com",
         "url": "http://www.<%= c.scope %>.com"
     },
-    "contributors": [
-        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-    ],
-    "keywords": [
-        "<%= c.scope %>"
-    ],
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+    "keywords": ["<%= c.scope %>"],
     "bugs": {
         "url": "https://github.com/<%= c.scope %>/<%= c.appNameKC %>/issues"
     },
@@ -38,15 +31,21 @@
     "scripts": {
         "build": "make build",
         "build:all": "make build-all",
+        "build:prod": "make build-prod",
         "setup": "docker/setup.sh",
         "commit": "docker/commit.sh",
         "start": "make start",
+        "start:deps": "make start-deps",
+        "start:server": "make start-server",
+        "start:prod": "make start-prod",
         "stop": "make stop",
+        "stop:prod": "make stop-prod",
         "unittest": "make unittest",
         "systemtest": "make systemtest",
         "release": "docker/semantic-release.sh",
         "travis": "docker/travis.sh $@",
-        "bash": "make bash"
+        "bash": "make bash",
+        "lint": "make lint"
     },
     "config": {
         "commitizen": {
