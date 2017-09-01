@@ -40,6 +40,7 @@
         "start:dev": "make start",
         "start:prod": "make start-prod",
         "stop:dev": "make stop",
+        "stop:prod": "make stop-prod",
         "unittest": "make unittest",
         "unittest:watch": "make unittest",
         "systemtest": "make systemtest",
