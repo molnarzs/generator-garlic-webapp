@@ -16,23 +16,25 @@ DOCKER_COMPOSE_SYSTEMTEST = docker-compose -f docker/docker-compose.systemtest.y
 .PHONY: build dist test up stop rm-volumes rm destroy ps logs
 
 # Build the development services.
-build:
-	-${DOCKER_COMPOSE_BUILD} build
-	-${DOCKER_RUN_NODEPS} gulp compile
+build-common:
+	${DOCKER_COMPOSE_BUILD} build
+	${DOCKER_RUN_NODEPS} gulp compile
 
+build: clean build-common
 
 build-all:
+	-${DOCKER_COMPOSE} rm -f -v
+	-docker rmi ${DOCKER_REGISTRY}/${PROJECT}
+	-docker rmi ${DEV_SERVICE_NAME}
 	-${DOCKER_COMPOSE} pull
-	-${DOCKER_COMPOSE_BUILD} build
-	-${DOCKER_RUN_NODEPS} gulp compile
-	-docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
-	-npm run setup
+	${DOCKER_COMPOSE_BASE} build --no-cache
+	${DOCKER_RUN_NODEPS} gulp compile
 
+build-prod: build-common
+	docker build -t ${DOCKER_REGISTRY}/${PROJECT} -f Dockerfile.prod .
 
 # Build the distribution package
-dist:
-	docker build -t ${DOCKER_REGISTRY}/${TARGET_IMAGE_NAME} .
-
+dist: build-prod
 
 # Start the development server and the defined services. It also watches for file changes. In this case, it re-runs the unit tests and restarts the server.
 start:

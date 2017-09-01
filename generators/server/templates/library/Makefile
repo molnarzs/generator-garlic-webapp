@@ -18,6 +18,10 @@ build: clean
 	${DOCKER_RUN_NODEPS} gulp compile
 
 build-all:
+	-${DOCKER_COMPOSE} rm -f -v
+	-docker rmi ${DOCKER_REGISTRY}/${PROJECT}
+	-docker rmi ${DEV_SERVICE_NAME}
+	-${DOCKER_COMPOSE} pull
 	${DOCKER_COMPOSE} build --no-cache
 	${DOCKER_RUN_NODEPS} gulp compile
 
