@@ -37,7 +37,6 @@ stop:
 unittest:
 	${DOCKER_RUN_NODEPS} gulp unittest
 
-
 # Execute the system tests
 systemtest-build:
 	 ${DOCKER_COMPOSE_SYSTEMTEST} pull
@@ -46,13 +45,15 @@ systemtest-build:
 systemtest-compile:
 	 ${DOCKER_COMPOSE_SYSTEMTEST} build
 
-# The system test runner spins up all the dependencies, executes the system tests once, and exits. There are no logs of the dependencies displayed. If you want to see the whole picture, use:
-# systemtest-run:
-# 	 ${DOCKER_COMPOSE_SYSTEMTEST} up
-#
-# Don't check this change to github, because with this, Travis will fail!!! As it never stops...
 systemtest-run: systemtest-compile
-	 ${DOCKER_RUN_SYSTEMTEST}
+	${DOCKER_RUN_SYSTEMTEST}
+
+# The system test runner spins up all the dependencies, executes the system tests once, and exits. There are no logs of the dependencies displayed. If you want to see the whole picture, use:.
+systemtest-run-d: systemtest-compile
+	 ${DOCKER_COMPOSE_SYSTEMTEST} up
+
+systemtest: systemtest-build
+	${DOCKER_RUN_SYSTEMTEST}
 
 # Start bash in the development service
 bash:
@@ -78,3 +79,6 @@ docker-login:
 
 lint:
 	${DOCKER_RUN_NODEPS} npm run lint
+
+prettier:
+	${DOCKER_RUN_NODEPS} npm run prettier

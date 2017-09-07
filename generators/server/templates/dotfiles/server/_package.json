@@ -44,10 +44,13 @@
         "unittest": "make unittest",
         "unittest:watch": "make unittest",
         "systemtest": "make systemtest",
+        "smotetest": "make smoketest",
         "bash": "docker/bash.sh",
         "travis": "docker/travis.sh $@",
         "deploy": "docker/deploy.sh $@",
-        "lint": "make lint"
+        "lint": "make lint",
+        "prettier": "make prettier"
+
     },
     "files": ["dist"],
     "config": {

@@ -45,7 +45,8 @@
         "release": "docker/semantic-release.sh",
         "travis": "docker/travis.sh $@",
         "bash": "make bash",
-        "lint": "make lint"
+        "lint": "make lint",
+        "prettier": "make prettier"
     },
     "config": {
         "commitizen": {

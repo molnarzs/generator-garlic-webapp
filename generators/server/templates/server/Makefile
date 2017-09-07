@@ -170,3 +170,6 @@ docker-tag:
 
 lint:
 	${DOCKER_RUN_NODEPS} npm run lint
+
+prettier:
+	${DOCKER_RUN_NODEPS} npm run prettier
