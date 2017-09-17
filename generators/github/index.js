@@ -80,8 +80,14 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
     ], cb.bind(this));
   },
   writing: {
+    mainFiles: function() {
+      this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./"), {
+        c: this.conf
+      });
+      return this.fs.copyTpl;
+    },
     runRemoteGit: function() {
-      var done, repoCreateCmd, webhook, webhookCreateCmd;
+      var done, repoCreateCmd, webhook;
       done = this.async();
       console.log(chalk.blue("\nCreating GitHub repo...\n"));
       repoCreateCmd = "curl https://api.github.com/orgs/" + this.conf.scope + "/repos -u " + this.answers.githubToken + ":x-oauth-basic -d \'{\"name\":\"" + this.conf.appNameKC + "\", \"private\": " + this.answers.isPrivate + ", \"team_id\": " + this.answers.devTeam + "}\'";
@@ -98,9 +104,16 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend({
         active: true,
         events: ['issues', 'issue_comment', 'member', 'pull_request', 'pull_request_review_comment', 'deployment']
       };
-      webhookCreateCmd = "curl https://api.github.com/repos/" + this.conf.scope + "/" + this.conf.appNameKC + "/hooks -u " + this.answers.githubToken + ":x-oauth-basic -d \'" + (JSON.stringify(webhook)) + "\'";
-      generatorLib.execute(webhookCreateCmd);
       console.log(chalk.blue("\nRepo is created. Nothing is committed yet!\n"));
+      return done();
+    }
+  },
+  end: {
+    executeLabelCreation: function() {
+      var done;
+      done = this.async();
+      generatorLib.execute(". ./github-prepare.sh");
+      generatorLib.execute("rm ./github-prepare.sh");
       return done();
     }
   }
