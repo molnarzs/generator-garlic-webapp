@@ -2,4 +2,5 @@ export NODE_ENV=development
 export DOCKER_REGISTRY=<%= c.dockerRepo %>
 export PROJECT=<%= c.appNameKC %>
 export TARGET_IMAGE_NAME=<%= c.appNameKC %>
+export DOCKER_IMAGE_SCOPE=prod
 export SCOPE=<%= c.scope %>

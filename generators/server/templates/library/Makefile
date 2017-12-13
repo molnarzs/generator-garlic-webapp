@@ -3,6 +3,7 @@ include .env
 export $(shell sed 's/=.*//' .env)
 
 DEV_SERVICE_NAME=${PROJECT}.dev
+SYSTEMTEST_SERVICE_NAME=${PROJECT}.systemtest.runner
 DOCKER_COMPOSE_BASE = docker-compose -f docker/docker-compose.yml
 DOCKER_COMPOSE = ${DOCKER_COMPOSE_BASE}
 DOCKER_RUN = ${DOCKER_COMPOSE} run --rm ${DEV_SERVICE_NAME}
@@ -17,9 +18,12 @@ build: clean
 	${DOCKER_COMPOSE} build
 	${DOCKER_RUN_NODEPS} gulp compile
 
+build-prod:
+	docker build --build-arg NPM_TOKEN=${NPM_TOKEN_PioneerWst} -t ${DOCKER_IMAGE} -f Dockerfile .
+
 build-all:
 	-${DOCKER_COMPOSE} rm -f -v
-	-docker rmi ${DOCKER_REGISTRY}/${PROJECT}
+	-docker rmi ${DOCKER_IMAGE}
 	-docker rmi ${DEV_SERVICE_NAME}
 	-${DOCKER_COMPOSE} pull
 	${DOCKER_COMPOSE} build --no-cache
@@ -64,18 +68,18 @@ clean:
 
 # Push the distribution image to the registry
 docker-push:
-	docker push ${DOCKER_REGISTRY}/${PROJECT}
+	docker push ${DOCKER_IMAGE}
 
 docker-pull:
 	${DOCKER_COMPOSE_PROD} pull
 
 # Tag the image after the latest npm tag
 docker-tag:
-	scripts/tag-image.sh ${DOCKER_REGISTRY}/${PROJECT}
+	scripts/tag-image.sh ${DOCKER_IMAGE}
 
 # Login to the docker registry of the project
 docker-login:
-	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} http://${DOCKER_REGISTRY}
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} https://${DOCKER_REGISTRY}
 
 lint:
 	${DOCKER_RUN_NODEPS} npm run lint
