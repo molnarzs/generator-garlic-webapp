@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/workflows-scripts.git
+	branch = master
+	commit = afb9ebe10df9364ba340534fb5bb26c8124387eb
+	parent = 296e72986f1c97d8463f25e138e1a3ae7f0707d2
+	method = merge
+	cmdver = 0.3.1
