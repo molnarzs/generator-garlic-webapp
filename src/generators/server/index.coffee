@@ -97,6 +97,7 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/common/_npmignore'), @destinationPath("./.npmignore"), {c: @conf}
       @fs.copyTpl @templatePath('dotfiles/common/_gitignore'), @destinationPath("./.gitignore"), {c: @conf}
+      @fs.copyTpl @templatePath('default/workflow-scripts/.gitrepo'), @destinationPath("./workflow-scripts/.gitrepo"), {c: @conf}
       cb()
 
 

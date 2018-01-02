@@ -125,6 +125,9 @@ GarlicWebappServerGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/common/_gitignore'), this.destinationPath("./.gitignore"), {
         c: this.conf
       });
+      this.fs.copyTpl(this.templatePath('default/workflow-scripts/.gitrepo'), this.destinationPath("./workflow-scripts/.gitrepo"), {
+        c: this.conf
+      });
       return cb();
     },
     serverFiles: function() {
