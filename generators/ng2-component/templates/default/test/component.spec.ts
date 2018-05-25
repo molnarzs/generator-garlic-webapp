@@ -1,9 +1,17 @@
-/* tslint:disable:no-unused-variable */
+import { Pipe, PipeTransform } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { StoreModule, Store } from '@ngrx/store';
 
 import { <%= c.componentName %> } from '../';
+
+@Pipe({ name: 'translate' })
+class MockTranslatePipe implements PipeTransform {
+  transform(value: string): string {
+    return `translated: ${value}`;
+  }
+}
 
 describe('<%= c.componentName %>', () => {
   let component: <%= c.componentName %>;
@@ -11,7 +19,8 @@ describe('<%= c.componentName %>', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ <%= c.componentName %> ],
+      imports: [StoreModule.forRoot(reducer)],
+      declarations: [<%= c.componentName %>, MockTranslatePipe],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
