@@ -31,7 +31,7 @@ describe('<%= c.componentName %>', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('it should be created', () => {
     expect(component).toBeTruthy();
   });
 });
