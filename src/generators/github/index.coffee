@@ -94,8 +94,8 @@ GarlicWebappGithubGenerator = yeoman.generators.Base.extend
         active: true
         events: ['issues', 'issue_comment', 'member', 'pull_request', 'pull_request_review_comment', 'deployment']
 
-      # webhookCreateCmd = "curl https://api.github.com/repos/#{@conf.scope}/#{@conf.appNameKC}/hooks -u #{@answers.githubToken}:x-oauth-basic -d \'#{JSON.stringify webhook}\'"
-      # generatorLib.execute webhookCreateCmd
+      webhookCreateCmd = "curl https://api.github.com/repos/#{@conf.scope}/#{@conf.appNameKC}/hooks -u #{@answers.githubToken}:x-oauth-basic -d \'#{JSON.stringify webhook}\'"
+      generatorLib.execute webhookCreateCmd
       console.log chalk.blue "\nRepo is created. Nothing is committed yet!\n"
       done()
 
