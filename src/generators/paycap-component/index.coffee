@@ -48,6 +48,7 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
     createConfig: ->
       @conf = _.assign @conf, generatorLib.createConfig.bind(@)()
       @conf.componentName = _.upperFirst _.camelCase "#{@answers.name}-component"
+      @conf.moduleName = _.upperFirst _.camelCase "#{@answers.name}-module"
       @conf.selector = "pay-#{@answers.project}-#{@answers.name}"
       @conf.templateType = 'pug'
 

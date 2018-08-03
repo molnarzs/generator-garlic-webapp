@@ -62,6 +62,7 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
     createConfig: function() {
       this.conf = _.assign(this.conf, generatorLib.createConfig.bind(this)());
       this.conf.componentName = _.upperFirst(_.camelCase(this.answers.name + "-component"));
+      this.conf.moduleName = _.upperFirst(_.camelCase(this.answers.name + "-module"));
       this.conf.selector = "pay-" + this.answers.project + "-" + this.answers.name;
       return this.conf.templateType = 'pug';
     },
