@@ -8,7 +8,7 @@ fs = require 'fs'
 path = require 'path'
 generatorLib = require '../lib'
 
-GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
+GarlicWebappPaycapSharedComponentGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()
@@ -32,8 +32,8 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
     }, {
       type    : 'input'
       name    : 'baseFolder'
-      default : 'src/app'
-      message : 'Base folder relative to the app root (like src/app): '
+      default : ''
+      message : 'Base folder relative to src/app: '
       required: true
       store   : true
     }, {
@@ -51,15 +51,18 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
       @conf.baseFolder = @answers.baseFolder
       @conf.moduleName = _.upperFirst _.camelCase "#{@answers.name}-module"
       @conf.selector = "pay-#{@answers.project}-#{@answers.name}"
+      @conf.componentSlug = "#{@answers.name}"
       @conf.templateType = 'pug'
 
 
-    mainFiles: ->
-      @fs.copyTpl @templatePath('default/**/*'), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
+    sharedFiles: ->
+      @fs.copyTpl @templatePath('shared/**/*'), @destinationPath("./src/common/native/#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
+    appFiles: ->
+      @fs.copyTpl @templatePath('app/**/*'), @destinationPath("./src/app/#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
     templateFiles: ->
-      @fs.copyTpl @templatePath("#{@conf.templateType}/**/*"), @destinationPath("./#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
+      @fs.copyTpl @templatePath("#{@conf.templateType}/**/*"), @destinationPath("./src/app/#{@answers.baseFolder}/#{@answers.name}"), {c: @conf}
 
 
-module.exports = GarlicWebappPaycapComponentGenerator
+module.exports = GarlicWebappPaycapSharedComponentGenerator

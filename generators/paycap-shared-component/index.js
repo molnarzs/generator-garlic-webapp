@@ -1,4 +1,4 @@
-var GarlicWebappNg2ServiceGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
+var GarlicWebappPaycapSharedComponentGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -18,7 +18,7 @@ path = require('path');
 
 generatorLib = require('../lib');
 
-GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
+GarlicWebappPaycapSharedComponentGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
@@ -46,8 +46,8 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'baseFolder',
-        "default": 'src/app',
-        message: 'Base folder relative to the app root (like src/app): ',
+        "default": '',
+        message: 'Base folder relative to src/app: ',
         required: true,
         store: true
       }, {
@@ -65,19 +65,25 @@ GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
       this.conf.baseFolder = this.answers.baseFolder;
       this.conf.moduleName = _.upperFirst(_.camelCase(this.answers.name + "-module"));
       this.conf.selector = "pay-" + this.answers.project + "-" + this.answers.name;
+      this.conf.componentSlug = "" + this.answers.name;
       return this.conf.templateType = 'pug';
     },
-    mainFiles: function() {
-      return this.fs.copyTpl(this.templatePath('default/**/*'), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
+    sharedFiles: function() {
+      return this.fs.copyTpl(this.templatePath('shared/**/*'), this.destinationPath("./src/common/native/" + this.answers.baseFolder + "/" + this.answers.name), {
+        c: this.conf
+      });
+    },
+    appFiles: function() {
+      return this.fs.copyTpl(this.templatePath('app/**/*'), this.destinationPath("./src/app/" + this.answers.baseFolder + "/" + this.answers.name), {
         c: this.conf
       });
     },
     templateFiles: function() {
-      return this.fs.copyTpl(this.templatePath(this.conf.templateType + "/**/*"), this.destinationPath("./" + this.answers.baseFolder + "/" + this.answers.name), {
+      return this.fs.copyTpl(this.templatePath(this.conf.templateType + "/**/*"), this.destinationPath("./src/app/" + this.answers.baseFolder + "/" + this.answers.name), {
         c: this.conf
       });
     }
   }
 });
 
-module.exports = GarlicWebappPaycapComponentGenerator;
+module.exports = GarlicWebappPaycapSharedComponentGenerator;
