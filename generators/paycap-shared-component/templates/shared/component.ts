@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { Store } from '@ngrx/store'
 
 @Component({
-  selector: '<%= c.selector %>',
+  selector: '<%= c.nativeSelector %>',
   template: ''
 })
 export class <%= c.componentName %> implements OnInit {
+  protected _store: Store < any >
 
-  constructor(private _store: Store<any>) { /* EMPTY */ }
+  constructor(private _injector: Injector) { /* EMPTY */ }
 
-  ngOnInit() { /* EMPTY */ }
+  ngOnInit() {
+    this._store = this._injector.get<Store<any>>(Store);
+  }
 
 }

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-import { <%= c.componentName %> as NativeComponent } from 'common/native/<%= c.baseFolder %>/components/<%= c.componentSlug %>';
+import { <%= c.componentName %> as NativeComponent } from 'common/native/<%= c.baseFolder %>/<%= c.componentSlug %>';
 
 @Component({
   selector: '<%= c.selector %>',
