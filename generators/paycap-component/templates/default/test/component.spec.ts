@@ -25,6 +25,10 @@ describe('<%= c.componentName %>', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('it should be created', () => {
     expect(component).toBeTruthy();
   });
