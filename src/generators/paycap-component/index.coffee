@@ -8,7 +8,7 @@ fs = require 'fs'
 path = require 'path'
 generatorLib = require '../lib'
 
-GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend
+GarlicWebappPaycapComponentGenerator = yeoman.generators.Base.extend
   initializing:
     init: ->
       @conf = @config.getAll()

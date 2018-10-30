@@ -1,4 +1,4 @@
-var GarlicWebappNg2ServiceGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
+var GarlicWebappPaycapComponentGenerator, _, chalk, fs, generatorLib, path, spawn, util, yeoman;
 
 util = require('util');
 
@@ -18,7 +18,7 @@ path = require('path');
 
 generatorLib = require('../lib');
 
-GarlicWebappNg2ServiceGenerator = yeoman.generators.Base.extend({
+GarlicWebappPaycapComponentGenerator = yeoman.generators.Base.extend({
   initializing: {
     init: function() {
       this.conf = this.config.getAll();
