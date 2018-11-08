@@ -3,3 +3,4 @@ export DOCKER_REGISTRY=<%= conf.dockerRepo %>
 export PROJECT=<%= conf.appNameKC %>
 export SCOPE=<%= conf.scope %>
 export SCOPECC=<%= conf.scopeCC %>
+export PROJECT_CONFIG=${PROJECT_CONFIG:-default}

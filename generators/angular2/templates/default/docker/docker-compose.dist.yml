@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  <%= conf.appNameKC %>.dist:
+    build:
+      context: ..
+      dockerfile: Dockerfile.dist
+    environment:
+      - NODE_ENV
+      - CI
+    ports:
+      - '9081:80'

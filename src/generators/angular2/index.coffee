@@ -33,13 +33,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         message : 'Project scope (company github team):'
         store   : true
       }, {
-        type    : 'list'
-        name    : 'projectType'
-        default : 'module'
-        choices : ['module', 'site']
-        message : 'Project type:'
-        store   : true
-      }, {
         type    : 'input'
         name    : 'dockerRepo'
         default : 'docker.io'
@@ -60,7 +53,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       }, {
         type    : 'input'
         name    : 'dockerWorkflowVersion'
-        default : 'v5.0.1'
+        default : 'v11.0.2'
         message : 'Docker workflow version?'
         store   : true
       }
@@ -72,17 +65,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       generatorLib.createConfig.bind(@)()
       match = /(.*) angular/.exec @appname
       appname = if match then match[1] else @appname
+      @conf.appname = @answers.appname
       @conf.dockerRepo = @answers.dockerRepo
-      @conf.webpackServerName = "#{@conf.appNameKC}.webpack-server"
-      @conf.backendServerName = "#{@conf.appNameKC}.backend"
       @conf.distImageName = "#{@conf.dockerRepo}/#{@conf.appNameKC}"
       @conf.e2eTesterName = "#{@conf.scope}.#{@conf.appNameKC}.e2e-tester"
       @conf.dockerWorkflowVersion = @answers.dockerWorkflowVersion
-
-      if @conf.projectType is 'module'
-        @conf.selectorPrefix = "#{@conf.scope}-#{@conf.appNameKC}"
-      else
-        @conf.selectorPrefix = "app"
+      @conf.selectorPrefix = "app"
 
       @config.set
         scope: @answers.scope
@@ -94,20 +82,8 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
       @fs.copyTpl @templatePath('dotfiles/_npmignore'), @destinationPath("./.npmignore"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_gitignore'), @destinationPath("./.gitignore"), {conf: @conf}
       @fs.copyTpl @templatePath('dotfiles/_env'), @destinationPath("./.env"), {conf: @conf}
+      @fs.copyTpl @templatePath('dotfiles/_package.json'), @destinationPath("./package.json"), {conf: @conf}
       cb()
-
-
-    projectTypeFiles: ->
-      if @conf.projectType is 'module'
-        @fs.copyTpl @templatePath('module/**/*'), @destinationPath("./"), {conf: @conf}
-        @fs.copyTpl @templatePath('dotfiles/module/_package.json'), @destinationPath("./package.json"), {conf: @conf}
-      else
-        @fs.copyTpl @templatePath('dotfiles/site/_package.json'), @destinationPath("./package.json"), {conf: @conf}
-        @fs.copyTpl @templatePath('site/**/*'), @destinationPath("./"), {conf: @conf}
-
-
-    dotfiles: ->
-      @fs.copy @templatePath('default/.*'), @destinationPath("./")
 
 
   end:
@@ -127,16 +103,25 @@ GarlicWebappGenerator = yeoman.generators.Base.extend
         @composeWith 'garlic-webapp:travis', options: {answers: @answers}
         cb()
 
-    commitizen: ->
-      cb = @async()
-      @composeWith 'garlic-webapp:commitizen', options: {answers: @answers}
-      cb()
+    "subrepos": ->
+      done = @async()
+      generatorLib.execute "git add ."
+      generatorLib.execute "git commit -m 'Initial commit'"
+      generatorLib.execute "git checkout -b staging"
+      generatorLib.execute "git subrepo clone git@github.com:garlictech/workflows-scripts.git workflows-scripts"
+      generatorLib.execute "git subrepo clone git@github.com:garlictech/forms-ngx.git  src/subrepos/forms-ngx"
+      generatorLib.execute "git subrepo clone git@github.com:garlictech/localize-ngx.git  src/subrepos/localize-ngx"
+      generatorLib.execute "pushd docker; ln -sf ../workflows-scripts/webclient/docker/* .; popd"
+      generatorLib.execute "mkdir -p hooks/travis; pushd hooks/travis; ln -sf ../workflows-scripts/webclient/hooks/travis/* .; popd"
+      done()
 
-
-    "semantic-release": ->
-      cb = @async()
-      @composeWith 'garlic-webapp:semantic-release', options: {answers: @answers}
-      cb()
+    "build": ->
+      done = @async()
+      generatorLib.execute "npm install"
+      generatorLib.execute "npm run build"
+      generatorLib.execute "npm run setup"
+      generatorLib.execute "npm install"
+      done()
 
 
 module.exports = GarlicWebappGenerator

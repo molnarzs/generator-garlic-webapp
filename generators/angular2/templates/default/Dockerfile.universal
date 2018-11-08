@@ -1,0 +1,3 @@
+FROM garlictech2/server-common:<%= conf.dockerWorkflowVersion %>
+COPY artifacts/dist/ /app
+CMD ["node", "/app/server.js"]

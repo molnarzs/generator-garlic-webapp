@@ -1,0 +1,7 @@
+FROM garlictech2/workflows-angular:<%= conf.dockerWorkflowVersion %>
+
+ENV NO_UPDATE_NOTIFIER 1
+
+COPY package.json /app/package.project.json
+
+RUN scripts/install_dependencies

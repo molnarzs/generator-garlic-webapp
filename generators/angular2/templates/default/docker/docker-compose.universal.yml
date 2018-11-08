@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  <%= conf.appNameKC %>.universal-server:
+    build:
+      context: ..
+      dockerfile: Dockerfile.universal
+    environment:
+      - NODE_ENV
+      - CI
+    ports:
+      - '4000:4000'

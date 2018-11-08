@@ -32,7 +32,7 @@ GarlicWebappPaycapComponentGenerator = yeoman.generators.Base.extend
     }, {
       type    : 'input'
       name    : 'baseFolder'
-      default : 'src/app'
+      default : ''
       message : 'Base folder relative to the app root (like src/app): '
       required: true
       store   : true

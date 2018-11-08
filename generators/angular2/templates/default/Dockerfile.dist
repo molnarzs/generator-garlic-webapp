@@ -1,0 +1,2 @@
+FROM garlictech2/angular2-app-server:<%= conf.dockerWorkflowVersion %>
+COPY artifacts/dist/browser /usr/share/nginx/html

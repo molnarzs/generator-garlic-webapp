@@ -1,0 +1,81 @@
+{
+    "name": "@<%= conf.scope %>/<%= conf.appNameKC %>",
+    "description": "<%= conf.appNameAsIs %>",
+    "main": "dist/main.bundle.js",
+    "module": "dist/lib/index.js",
+    "typings": "dist/lib/index.d.ts",
+    "files": ["dist", "src"],
+    "license": "SEE LICENSE IN license.txt",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/<%= conf.scope %>/<%= conf.appNameKC %>.git"
+    },
+    "author": {
+        "name": "<%= conf.scopeCC %>",
+        "email": "contact@<%= conf.scope %>.com",
+        "url": "http://www.<%= conf.scope %>.com"
+    },
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+    "keywords": ["<%= conf.appName %>", "<%= conf.appNameKC %>", "<%= conf.scope %>"],
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "scripts": {
+        "setup": "docker/setup.sh",
+        "build": "docker/build-dev.sh $@",
+        "build:dev": "npm run build $@",
+        "build:dev:all": "docker/build-dev-all.sh $@",
+        "build:prod": "npm run npm build:prod",
+        "build:prod:debug": "npm run npm build:prod:debug",
+        "build:universal": "npm run npm build:universal",
+        "build:prod:stat": "npm run npm build:prod:stat",
+        "npm": "docker/cmd.sh npm run $@",
+        "ng": "docker/cmd.sh ng $@",
+        "clean": "npm run npm clean",
+        "commit": "docker/commit.sh",
+        "release": "docker/semantic-release.sh",
+        "start": "npm run start:jit",
+        "start:poll": "docker/cmd-with-deps.sh npm run start:poll",
+        "start:dev": "npm run start:jit",
+        "start:jit": "docker/cmd-with-deps.sh npm start",
+        "start:aot": "docker/cmd-with-deps.sh npm run start:aot",
+        "start:prod": "docker/cmd-with-deps.sh npm run start:prod",
+        "start:dist": "docker/start-dist.sh",
+        "start:universal:debug": "docker/cmd-with-deps.sh npm run start:universal:debug",
+        "start:universal": "docker/start-universal.sh",
+        "stop:dev": "docker/stop-dev.sh",
+        "stop:dist": "docker/stop-dist.sh",
+        "stop:universal": "docker/stop-universal.sh",
+        "lint": "npm run npm lint",
+        "lint:fix": "npm run npm lint:fix",
+        "unittest": "npm run npm unittest",
+        "unittest:watch": "npm run npm unittest:watch",
+        "e2e": "docker/e2etest.sh",
+        "e2e:full": "docker/e2etest.sh full",
+        "e2e:prod": "docker/e2etest.sh prod",
+        "bash": "docker/bash.sh",
+        "travis": "docker/travis.sh $@",
+        "semantic-release": "docker/semantic-release.sh",
+        "deploy": "docker/deploy.sh $@",
+        "doc:build": "npm run npm doc:build",
+        "doc:serve": "npm run npm doc:serve",
+        "doc:buildandserve": "npm run npm doc:buildandserve",
+        "prettier": "npm run npm prettier",
+        "cypress": "cypress open",
+        "cypress:all": "cypress run",
+        "bundle-report": "docker/cmd-ports.sh npm run bundle-report"
+    },
+    "config": {
+        "commitizen": {
+            "path": "/app/node_modules/cz-conventional-changelog"
+        },
+        "dockerWorkflowVersion": "<%= conf.dockerWorkflowVersion %>"
+    },
+    "optionalDependencies": {},
+    "peerDependencies": {},
+    "release": {
+        "branch": "staging"
+    },
+    "browserslist": "last 2 versions"
+}

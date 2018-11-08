@@ -1,30 +1,31 @@
 language: node_js
 node_js:
-- '6'
+  - '6'
 cache:
   directories:
-  - node_modules
+    - node_modules
 sudo: required
 services:
-- docker
+  - docker
 before_install:
-- hooks/travis/before_install
+  - hooks/travis/before_install
 install:
-- hooks/travis/install
+  - hooks/travis/install
 script:
-- hooks/travis/script
+  - hooks/travis/script
 branches:
   only:
-  - master
-  - stable
+    - master
+    - stable
 deploy:
   provider: script
   script: hooks/travis/deploy
   skip_cleanup: true
   'on':
     repo: <%= c.scope %>/<%= c.appNameKC %>
-    branch: master
+    all_branches: true
+    condition: '$TRAVIS_BRANCH == master || $TRAVIS_BRANCH == staging'
 after_success:
-- hooks/travis/after_success
+  - hooks/travis/after_success
 after_deploy:
-- hooks/travis/after_deploy
+  - hooks/travis/after_deploy

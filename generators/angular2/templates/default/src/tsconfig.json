@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "types": ["node", "jest"],
+    "baseUrl": "./",
+    "paths": {
+      "fs": ["./global-shims"],
+      "path": ["./global-shims"]
+    }
+  }
+}

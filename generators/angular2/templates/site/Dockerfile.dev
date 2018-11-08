@@ -1,8 +1,0 @@
-FROM garlictech2/angular2-webapp:<%= conf.dockerWorkflowVersion %>
-
-ARG NPM_TOKEN
-RUN mkdir -p /app/src/subrepos /app/src/assets
-
-COPY ./package.json /app/package.project.json
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
-  scripts/install_dependencies

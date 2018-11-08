@@ -15,7 +15,7 @@ Thumbs.db
 # --------------------
 .nodemonignore
 npm-debug.log
-/node_modules
+node_modules
 coverage/
 
 # --------------------
@@ -35,6 +35,7 @@ bower_components
 .tmp/
 logs/
 dist/
+e2e/dist
 *.bak
 credentials.json
 e2e/src/.pki
@@ -63,9 +64,6 @@ e2e/src/supervisord.log
 /.awcache
 .webpack.json
 
-# Doc #
-/doc/
-
 # IDE #
 .idea/
 *.swp
@@ -73,3 +71,10 @@ e2e/src/supervisord.log
 tokens.env
 secrets.tgz
 .vscode
+firebase-debug.log
+.setup.sh
+e2e/reports
+cypress/videos
+reports
+artifacts
+workflows-angular

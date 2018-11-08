@@ -51,13 +51,6 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         message: 'Project scope (company github team):',
         store: true
       }, {
-        type: 'list',
-        name: 'projectType',
-        "default": 'module',
-        choices: ['module', 'site'],
-        message: 'Project type:',
-        store: true
-      }, {
         type: 'input',
         name: 'dockerRepo',
         "default": 'docker.io',
@@ -78,7 +71,7 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       }, {
         type: 'input',
         name: 'dockerWorkflowVersion',
-        "default": 'v5.0.1',
+        "default": 'v11.0.2',
         message: 'Docker workflow version?',
         store: true
       }
@@ -90,17 +83,12 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       generatorLib.createConfig.bind(this)();
       match = /(.*) angular/.exec(this.appname);
       appname = match ? match[1] : this.appname;
+      this.conf.appname = this.answers.appname;
       this.conf.dockerRepo = this.answers.dockerRepo;
-      this.conf.webpackServerName = this.conf.appNameKC + ".webpack-server";
-      this.conf.backendServerName = this.conf.appNameKC + ".backend";
       this.conf.distImageName = this.conf.dockerRepo + "/" + this.conf.appNameKC;
       this.conf.e2eTesterName = this.conf.scope + "." + this.conf.appNameKC + ".e2e-tester";
       this.conf.dockerWorkflowVersion = this.answers.dockerWorkflowVersion;
-      if (this.conf.projectType === 'module') {
-        this.conf.selectorPrefix = this.conf.scope + "-" + this.conf.appNameKC;
-      } else {
-        this.conf.selectorPrefix = "app";
-      }
+      this.conf.selectorPrefix = "app";
       return this.config.set({
         scope: this.answers.scope
       });
@@ -120,27 +108,10 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
       this.fs.copyTpl(this.templatePath('dotfiles/_env'), this.destinationPath("./.env"), {
         conf: this.conf
       });
+      this.fs.copyTpl(this.templatePath('dotfiles/_package.json'), this.destinationPath("./package.json"), {
+        conf: this.conf
+      });
       return cb();
-    },
-    projectTypeFiles: function() {
-      if (this.conf.projectType === 'module') {
-        this.fs.copyTpl(this.templatePath('module/**/*'), this.destinationPath("./"), {
-          conf: this.conf
-        });
-        return this.fs.copyTpl(this.templatePath('dotfiles/module/_package.json'), this.destinationPath("./package.json"), {
-          conf: this.conf
-        });
-      } else {
-        this.fs.copyTpl(this.templatePath('dotfiles/site/_package.json'), this.destinationPath("./package.json"), {
-          conf: this.conf
-        });
-        return this.fs.copyTpl(this.templatePath('site/**/*'), this.destinationPath("./"), {
-          conf: this.conf
-        });
-      }
-    },
-    dotfiles: function() {
-      return this.fs.copy(this.templatePath('default/.*'), this.destinationPath("./"));
     }
   },
   end: {
@@ -171,25 +142,27 @@ GarlicWebappGenerator = yeoman.generators.Base.extend({
         return cb();
       }
     },
-    commitizen: function() {
-      var cb;
-      cb = this.async();
-      this.composeWith('garlic-webapp:commitizen', {
-        options: {
-          answers: this.answers
-        }
-      });
-      return cb();
+    "subrepos": function() {
+      var done;
+      done = this.async();
+      generatorLib.execute("git add .");
+      generatorLib.execute("git commit -m 'Initial commit'");
+      generatorLib.execute("git checkout -b staging");
+      generatorLib.execute("git subrepo clone git@github.com:garlictech/workflows-scripts.git workflows-scripts");
+      generatorLib.execute("git subrepo clone git@github.com:garlictech/forms-ngx.git  src/subrepos/forms-ngx");
+      generatorLib.execute("git subrepo clone git@github.com:garlictech/localize-ngx.git  src/subrepos/localize-ngx");
+      generatorLib.execute("pushd docker; ln -sf ../workflows-scripts/webclient/docker/* .; popd");
+      generatorLib.execute("mkdir -p hooks/travis; pushd hooks/travis; ln -sf ../workflows-scripts/webclient/hooks/travis/* .; popd");
+      return done();
     },
-    "semantic-release": function() {
-      var cb;
-      cb = this.async();
-      this.composeWith('garlic-webapp:semantic-release', {
-        options: {
-          answers: this.answers
-        }
-      });
-      return cb();
+    "build": function() {
+      var done;
+      done = this.async();
+      generatorLib.execute("npm install");
+      generatorLib.execute("npm run build");
+      generatorLib.execute("npm run setup");
+      generatorLib.execute("npm install");
+      return done();
     }
   }
 });
