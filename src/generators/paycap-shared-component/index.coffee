@@ -53,7 +53,7 @@ GarlicWebappPaycapSharedComponentGenerator = yeoman.generators.Base.extend
       @conf.selector = "pay-#{@answers.project}-#{@answers.name}"
       @conf.nativeSelector = "pay-native-#{@answers.name}"
       @conf.componentSlug = "#{@answers.name}"
-      @conf.templateType = 'pug'
+      @conf.templateType = 'html'
 
 
     sharedFiles: ->

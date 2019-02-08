@@ -67,7 +67,7 @@ GarlicWebappPaycapSharedComponentGenerator = yeoman.generators.Base.extend({
       this.conf.selector = "pay-" + this.answers.project + "-" + this.answers.name;
       this.conf.nativeSelector = "pay-native-" + this.answers.name;
       this.conf.componentSlug = "" + this.answers.name;
-      return this.conf.templateType = 'pug';
+      return this.conf.templateType = 'html';
     },
     sharedFiles: function() {
       return this.fs.copyTpl(this.templatePath('shared/**/*'), this.destinationPath("./src/common/native/" + this.answers.baseFolder + "/" + this.answers.name), {
