@@ -2,7 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducer, featureName } from '@features/common/foobar/store'
-
+import { TranslateModule } from '@ngx-translate/core';
+import { MockTranslatePipe } from 'common/native/test/mocks/mock-translate.pipe';
 
 import { <%= c.componentName %> } from '../';
 
@@ -11,10 +12,10 @@ describe('<%= c.componentName %>', () => {
   let fixture: ComponentFixture<<%= c.componentName %>>;
   let store: Store<any>;
 
-  const initTestBed = () => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), StoreModule.forFeature(featureName, reducer)],
-      declarations: [<%= c.componentName %>],
+  const initTestBed = async () => {
+    await TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({}), StoreModule.forFeature(featureName, reducer), TranslateModule],
+      declarations: [<%= c.componentName %>, MockTranslatePipe],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
